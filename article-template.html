@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Title | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;       /* Your Corporate Blue */
+            --bg-light: #F9FAFB;      /* Off-white for section backgrounds */
+            --text-dark: #111827;     /* High contrast for readability */
+            --text-muted: #4B5563;    /* Grey for body text */
+            --border: #E5E7EB;        /* Subtle divider color */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Articles stay on white for clarity */
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8; /* Generous spacing for technical reading */
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--sap-blue); }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* --- ARTICLE WRAPPER --- */
+        article {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 20px;
+        }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .meta-data {
+            font-size: 0.9rem;
+            color: #9CA3AF;
+            margin-bottom: 3rem;
+            display: block;
+        }
+
+        /* --- VIDEO PLAYER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            margin: 3rem 0;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- CONTENT TYPOGRAPHY --- */
+        .content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .content h2 {
+            color: var(--text-dark);
+            margin-top: 3.5rem;
+            font-size: 1.8rem;
+        }
+
+        /* --- IMAGE & SCREENSHOT STYLES --- */
+        .screenshot-container {
+            margin: 3.5rem 0;
+            text-align: center;
+        }
+
+        .screenshot-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .caption {
+            display: block;
+            font-size: 0.85rem;
+            color: #6B7280;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* --- TECHNICAL BLOCKS (CODE/BAdIs) --- */
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            border-left: 4px solid var(--sap-blue);
+            color: #1F2937;
+            margin: 2rem 0;
+        }
+
+        /* --- FREELANCE CALL-TO-ACTION --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .freelancer-cta p { margin-bottom: 1.5rem; }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn-freelance:hover { opacity: 0.9; }
+
+        footer {
+            padding: 4rem 10%;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #9CA3AF;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">WM<span>experts</span></a>
+        <nav>
+            <a href="index.html">← Back to Feed</a>
+        </nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Reveal SAP EWM</div>
+        <h1>Warehouse Order sorting in Queues</h1>
+        <span class="meta-data">Last updated: February 2026 • 8 min read</span>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/EXAMPLE_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p>In this post, I delve deep behind the scenes and reveal a few secrets about how warehouse orders are technically being sorted in a queue.</p>
+            
+            <h2>Technical Sorting Criteria</h2>
+            <p>By default, the EWM standard sorts the WOs within the queues based on two primary values saved in the table <code>/SCWM/WO_RSRC_TY</code>.</p>
+
+            <div class="screenshot-container">
+                <img src="https://via.placeholder.com/800x450.png?text=SAP+EWM+Screenshot+Placeholder" alt="SAP EWM sorting table logic">
+                <span class="caption">Figure 1: Evaluating the Latest Start Date (LSD) and Priority in the monitor.</span>
+            </div>
+
+            <h2>Custom Logic via BAdI</h2>
+            <p>If the standard sorting does not fit your business requirements, you can intervene using a specific enhancement point:</p>
+            
+            <pre>/SCWM/EX_RSRC_PROC_SEL</pre>
+            
+            <p>This allows you to resort the manual assigned warehouse orders or even filter them out based on custom resource constraints.</p>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need specialized EWM support?</strong><br>
+            WMexperts is the knowledge project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Portfolio & Services →</a>
+        </div>
+    </article>
+
+    <footer>
+        &copy; 2026 WMexperts.online • Functional & Technical Excellence
+    </footer>
+
+</body>
+</html>

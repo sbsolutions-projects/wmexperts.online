@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WMexperts | SAP EWM Knowledge Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- THIS IS THE STYLE SECTION --- */
+        :root {
+            --sap-blue: #005597;       /* Your Corporate Blue */
+            --bg-light: #F9FAFB;      /* Bright off-white */
+            --text-dark: #111827;     /* Professional dark grey */
+            --text-muted: #4B5563;    
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--sap-blue); }
+
+        nav a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .hero {
+            padding: 5rem 10% 3rem 10%;
+            max-width: 850px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        /* --- THE BLOG GRID --- */
+        .grid {
+            padding: 2rem 10% 5rem 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+
+        .card {
+            text-decoration: none;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* The Updated Category Tags */
+        .tag {
+            display: inline-block;
+            background: #eef6fc; /* Very light blue */
+            color: var(--sap-blue);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            border: 1px solid rgba(0, 85, 151, 0.1);
+        }
+
+        .card h2 {
+            margin: 0 0 0.75rem 0;
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            line-height: 1.3;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Freelancer Hint Section */
+        .freelancer-footer {
+            background: #fff;
+            border-top: 1px solid var(--border);
+            padding: 4rem 10%;
+            text-align: center;
+        }
+
+        .freelancer-footer p { margin-bottom: 1.5rem; }
+
+        .btn-link {
+            color: var(--sap-blue);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid var(--sap-blue);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">WM<span>experts</span></a>
+        <nav>
+            <a href="#">Blog</a>
+            <a href="#">About</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Mastering SAP EWM.</h1>
+        <p>Expert-level functional and technical insights, shared to simplify the complex world of intralogistics.</p>
+    </section>
+
+    <main class="grid">
+        <a href="#" class="card">
+            <span class="tag">Understand SAP EWM</span>
+            <h2>Basics of Warehouse Tasks</h2>
+            <p>How the system translates a movement request into a physical instruction...</p>
+        </a>
+
+        <a href="#" class="card">
+            <span class="tag">Discover SAP EWM MFS</span>
+            <h2>PLC Communication Layer</h2>
+            <p>Decoding the telegrams sent between SAP and the conveyor controller...</p>
+        </a>
+
+        <a href="#" class="card">
+            <span class="tag">Enhance SAP EWM</span>
+            <h2>BAdI Implementation for RF</h2>
+            <p>A step-by-step guide to adding custom logic to standard mobile screens...</p>
+        </a>
+
+        <a href="#" class="card">
+            <span class="tag">Reveal SAP EWM</span>
+            <h2>Hidden Monitor Features</h2>
+            <p>Unlocking the full potential of the Warehouse Management Monitor...</p>
+        </a>
+
+        <a href="#" class="card">
+            <span class="tag">Working as a SAP EWM Consultant</span>
+            <h2>Effective Client Workshops</h2>
+            <p>How to gather requirements without getting lost in technical details...</p>
+        </a>
+
+        <a href="#" class="card">
+            <span class="tag">Around SAP EWM</span>
+            <h2>S/4HANA vs. Decentralized EWM</h2>
+            <p>Comparing the architectural differences for 2026 implementations...</p>
+        </a>
+    </main>
+
+    <section class="freelancer-footer">
+        <p>Looking for a Senior EWM Consultant for your next project?<br>
+        <strong>WMexperts</strong> is the knowledge hub of Hendrik, an independent SAP EWM Freelancer.</p>
+        <a href="#" class="btn-link">Explore my Freelance Profile →</a>
+    </section>
+
+    <footer style="padding: 2rem; text-align: center; font-size: 0.8rem; color: #999;">
+        &copy; 2026 WMexperts.online
+    </footer>
+
+</body>
+</html>
