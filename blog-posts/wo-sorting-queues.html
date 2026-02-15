@@ -60,11 +60,10 @@
             padding-bottom: 56.25%; /* 16:9 aspect ratio */
             height: 0;
             overflow: hidden;
-            margin: 2.5rem auto;
+            margin: 2.5rem 0;
             border-radius: 12px;
             background: #000;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 56%;
         }
         
         .video-wrapper iframe {
@@ -284,17 +283,17 @@
         <h1>Reveal SAP EWM - Warehouse Order sorting in Queues</h1>
 
         <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/lgaWhMSRXnM" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div class="content">
             <p>My new blog post is offers a comprehensive summary of warehouse order sorting in queues. I delve deep behind the scenes and reveal a few secrets along the way.</p>
             <p>The article begins with the basics, explains sorting with and without pre-assignment of warehouse orders to resources, and concludes with an analysis of the logic in the context of physical inventory and task interleaving.</p>
-
+            
             <h2>Context</h2>
             <p>It is important to understand that we are only talking about the sorting within <u>one</u> queue. With a system-guided selection or with a task interleaving approach the resource group of the current resource might be assigned to multiple queues and the queue sequence as such is evaluated before the sorting within one queue becomes relevant. With this article however, we are looking at one single queue only and the sorting within this queue.</p>
             <p>Also certain warehouse orders in the queues might not be considered for the resource type of the resource which the current user used to login (e.g. resource execution constraints). This filtering of warehouse orders is also not in scope for this article as it has no impact on the actual sorting of applicable WOs. To say it again – Pure sorting, nothing else!</p>
-
+            
             <h2>Agenda for this blog-post</h2>
             <ul>
                 <li><em>Main part: How are WOs technically being sorted in a queue?</em>
@@ -314,7 +313,7 @@
 
             <h2>How does the sorting work?</h2>
             <p>Let us start again from the SAP help text</p>
-            <p><em>If more than one WO falls within any of these queue classifications, the WOs are sorted as follows:</em><br /><em>In ascending order, by latest starting date (LSD)</em><br /><em>In descending order, by execution priority.</em></p>
+            <p><em>If more than one WO falls within any of these queue classifications, the WOs are sorted as follows:</em><br><em>In ascending order, by latest starting date (LSD)</em><br><em>In descending order, by execution priority.</em></p>
             <p>So we learned that the sorting depends on two values:</p>
             <p>LSD calculation: This is explained in my other video or blog-post: It is calculated based on the following formula: <strong><i>LSD = WO due date – (planned execution duration + planned movements duration)</i></strong></p>
             <p>WO Prioritization: This has a good SAP help text with lots of examples for the calculation. For <u>each WT</u> in the WO the priority is calculated with the following formula: <strong><i>Priority = (BAT Weighting/100 x BAT Priority Value) + (HUTG Weighting/100 x HUTG Priority Value) + (WPC Weighting/100 x WPC Priority Value)</i>. </strong>The WO priority is then set to the priority of its WT with the highest priority value.</p>
@@ -366,7 +365,7 @@
 
             <h2>Options for enhancement</h2>
             <p>What is surprising though, is that EWM offers an option for a custom sorting in the pre-assignment context, which is not offered in the scenario where the WOs are not pre-assigned.</p>
-
+            
             <pre>BAdi /SCWM/EX_RSRC_PROC_SEL
 * With this BAdI you can influence the WO selection.
 * You get the list of manual assigned WO's and can
@@ -395,9 +394,9 @@
             </ul>
 
             <h2>Fun facts / Party-knowledge</h2>
-            <p><strong>Sorting of WOs for physical inventory</strong></p>
+            <p><u>Sorting of WOs for physical inventory</u></p>
             <p>Nothing to reveal here. The sorting for PI WOs is based on the same criteria as for the normal WOs discussed above. As you learned in my campaign (video & blog-post) about the LSD calculation, for PI documents the LSD is derived from the planned count date. The priority is coming from the PI customizing.</p>
-            <p><strong>Sorting in case of Task Interleaving</strong></p>
+            <p><u>Sorting in case of Task Interleaving</u></p>
             <p>This is the most interesting part of this article in my opinion. If interleaving is active (refer to this video & blog-post if you are not familiar with the interleaving concept as such), EWM applies a slightly different logic for WO sorting, which I found only in the code (spent not that much time to browse all books to be honest). This occurs at the end of the function module FM <code>/SCWM/RSRC_QUALIF_QUEUE_CHECK</code>. Here, EWM considers the <u>distance</u> between the WOs instead of the priority used previously.</p>
 
             <div class="screenshot-container">
@@ -407,7 +406,7 @@
             <p>EWM loops over all WOs in the interleaving queue (~ the next queue from which it is supposed to pick a WO, based on the interleaving settings) and calculates the distances between the current position of the resource and the distance to the source bin of the first WT in every waiting WO in that queue:</p>
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_08 2.png" alt="Warehouse order sorting in queues_08-2">
+                <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_08-2.png" alt="Warehouse order sorting in queues_08-2">
             </div>
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_09.png" alt="Warehouse order sorting in queues_09">
@@ -424,17 +423,14 @@
 
             <p>At the end can see that the LSD still has the highest value, but now the distance has a higher value than the ‘priority’ (which is no longer used in the context of interleaving).</p>
             <p>A closing remark that I couldn’t overlook: I have great respect for the developers and I am forever grateful to have the opportunity to work with this software, but why the hell does a 300 billion company like SAP still ships software with so many typos in the comments of their code? Can’t the pretty printer check that as well? …or any kind of AI browsing through the code before it is being shipped?</p>
-
-            <div class="screenshot-container">
-                <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_10.png" alt="Warehouse order sorting in queues_10">
-            </div>
-
-            <p>Sorry… Back to our topic –</p>
+            <p>Sorry… Back to our topic – </p>
             <p>The following example visualizes the approach for sorting during interleaving, that I explained above:</p>
 
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_11.png" alt="Warehouse order sorting in queues_11">
             </div>
+
+            <p>…and that completes the last subtopic that I wanted to address here. As usual, I will not let you go without a quick summary of the most important points.</p>
 
             <h2>Summary</h2>
             <ul>
