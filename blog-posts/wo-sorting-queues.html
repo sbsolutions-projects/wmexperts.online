@@ -1,4 +1,4 @@
-blog-posts/ <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -272,44 +272,38 @@ blog-posts/ <!DOCTYPE html>
         <div class="content">
             <p>My new blog post is offers a comprehensive summary of warehouse order sorting in queues. I delve deep behind the scenes and reveal a few secrets along the way.</p>
             <p>The article begins with the basics, explains sorting with and without pre-assignment of warehouse orders to resources, and concludes with an analysis of the logic in the context of physical inventory and task interleaving.</p>
-            
+
             <h2>Context</h2>
             <p>It is important to understand that we are only talking about the sorting within <u>one</u> queue. With a system-guided selection or with a task interleaving approach the resource group of the current resource might be assigned to multiple queues and the queue sequence as such is evaluated before the sorting within one queue becomes relevant. With this article however, we are looking at one single queue only and the sorting within this queue.</p>
             <p>Also certain warehouse orders in the queues might not be considered for the resource type of the resource which the current user used to login (e.g. resource execution constraints). This filtering of warehouse orders is also not in scope for this article as it has no impact on the actual sorting of applicable WOs. To say it again – Pure sorting, nothing else!</p>
-            
+
             <h2>Agenda for this blog-post</h2>
             <ul>
-                <li>Main part: How are WOs technically being sorted in a queue?
+                <li><em>Main part: How are WOs technically being sorted in a queue?</em>
                     <ul>
-                        <li>How does the EWM standard sort the WOs within the queues? Which factors have an impact? How are those factors being calculated?</li>
-                        <li>How does this sorting logic change in case multiple WOs are pre-assigned to the current resource?</li>
-                        <li>What options does EWM offer to implement a custom logic for the sorting?</li>
+                        <li><em>How does the EWM standard sort the WOs within the queues? Which factors have an impact? How are those factors being calculated?</em></li>
+                        <li><em>How does this sorting logic change in case multiple WOs are pre-assigned to the current resource?</em></li>
+                        <li><em>What options does EWM offer to implement a custom logic for the sorting?</em></li>
                     </ul>
                 </li>
-                <li>Party-knowledge
+                <li><em>Party-knowledge</em>
                     <ul>
-                        <li>Sorting of WOs for physical inventory</li>
-                        <li>Sorting while interleaving being active</li>
+                        <li><em>Sorting of WOs for physical inventory</em></li>
+                        <li><em>Sorting while interleaving being active</em></li>
                     </ul>
                 </li>
             </ul>
 
             <h2>How does the sorting work?</h2>
             <p>Let us start again from the SAP help text.</p>
-            <p><em>If more than one WO falls within any of these queue classifications, the WOs are sorted as follows:<br>In ascending order, by latest starting date (LSD)<br>In descending order, by execution priority.</em></p>
+            <p><em>If more than one WO falls within any of these queue classifications, the WOs are sorted as follows:</em><br>
+            <em>In ascending order, by latest starting date (LSD)</em><br>
+            <em>In descending order, by execution priority.</em></p>
+
             <p>So we learned that the sorting depends on two values:</p>
-            <p>LSD calculation: This is explained in my other video or blog-post: It is calculated based on the following formula:</p>
-            <p><strong>LSD = WO due date – (planned execution duration + planned movements duration)</strong></p>
-            <p>WO Prioritization: This has a good SAP help text with lots of examples for the calculation. For <u>each WT</u> in the WO the priority is calculated with the following formula:</p>
-            <p><strong>Priority = (BAT Weighting/100 x BAT Priority Value) + (HUTG Weighting/100 x HUTG Priority Value) + (WPC Weighting/100 x WPC Priority Value).</strong></p>
-            <p>The WO priority is then set to the priority of its WT with the highest priority value.</p>
-            <p><strong>Important:</strong> Both values are <u>calculated during warehouse order creation</u>, well before the actual sorting occurs during warehouse order processing. Therefore, if you change your customization settings later, do not be surprised if nothing changes. Both values are saved in the table:</p>
-            <pre>/SCWM/WO_RSRC_TY</pre>
-            <p>(the LSD is also saved in table <strong>/SCWM/WHO</strong>, but this table is not relevant for our context here). The calculation for both values is initiated by the function module:</p>
-            <pre>/SCWM/RSRC_WHO_CREATE</pre>
-            <p>during warehouse order creation, which also calls FM:</p>
-            <pre>/SCWM/WHO_RSRC_TYP_SET</pre>
-            <p>to write the result to the database.</p>
+            <p>LSD calculation: This is explained in my other video or blog-post: It is calculated based on the following formula: <strong>LSD = WO due date – (planned execution duration + planned movements duration)</strong></p>
+            <p>WO Prioritization: This has a good SAP help text with lots of examples for the calculation. For <u>each WT</u> in the WO the priority is calculated with the following formula: <strong>Priority = (BAT Weighting/100 x BAT Priority Value) + (HUTG Weighting/100 x HUTG Priority Value) + (WPC Weighting/100 x WPC Priority Value).</strong> The WO priority is then set to the priority of its WT with the highest priority value.</p>
+            <p><strong>Important:</strong> Both values are <u>calculated during warehouse order creation</u>, well before the actual sorting occurs during warehouse order processing. Therefore, if you change your customization settings later, do not be surprised if nothing changes. Both values are saved in the table <code>/SCWM/WO_RSRC_TY</code> (the LSD is also saved in table <code>/SCWM/WHO</code>, but this table is not relevant for our context here). The calculation for both values is initiated by the function module FM <code>/SCWM/RSRC_WHO_CREATE</code> during warehouse order creation, which also calls FM <code>/SCWM/WHO_RSRC_TYP_SET</code> to write the result to the database.</p>
 
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_01.png" alt="Warehouse order sorting in queues_01">
@@ -318,13 +312,7 @@ blog-posts/ <!DOCTYPE html>
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_02.png" alt="Warehouse order sorting in queues_02">
             </div>
 
-            <p>During warehouse order processing, EWM selects records from this table and sorts them accordingly. This process is executed via the function module:</p>
-            <pre>/SCWM/RSRC_WHO_SELECT</pre>
-            <p>which calls FM:</p>
-            <pre>/SCWM/RSRC_QUALIF_QUEUE_CHECK</pre>
-            <p>and subsequently calls FM:</p>
-            <pre>/SCWM/RSRC_WHO_RSTYP_GET</pre>
-            <p>This FM reads the table entries from <strong>/SCWM/WO_RSRC_TY</strong> before filtering and determining the applicable warehouse orders for the given resource type (details of which are not explained here).</p>
+            <p>During warehouse order processing, EWM selects records from this table and sorts them accordingly. This process is executed via the function module <code>/SCWM/RSRC_WHO_SELECT</code>, which calls FM <code>/SCWM/RSRC_QUALIF_QUEUE_CHECK</code>, and subsequently calls FM <code>/SCWM/RSRC_WHO_RSTYP_GET</code>. This FM reads the table entries from <code>/SCWM/WO_RSRC_TY</code> before filtering and determining the applicable warehouse orders for the given resource type (details of which are not explained here)</p>
 
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_03_01.png" alt="Warehouse order sorting in queues_03_01">
@@ -333,7 +321,7 @@ blog-posts/ <!DOCTYPE html>
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_03_02.png" alt="Warehouse order sorting in queues_03_02">
             </div>
 
-            <p>The same sorting is applied again a few lines later when the internal table is handed over to the calling function module FM <strong>/SCWM/RSRC_QUALIF_QUEUE_CHECK</strong>. This seems redundant, but there could be technical reasons for it (Is a developer amongst you able to explain the technical reason for sorting two times here in the comments of the corresponding video!?).</p>
+            <p>The same sorting is applied again a few lines later when the internal table is handed over to the calling function module FM <code>/SCWM/RSRC_QUALIF_QUEUE_CHECK</code>. This seems redundant, but there could be technical reasons for it (Is a developer amongst you able to explain the technical reason for sorting two times here in the comments of the corresponding video!?).</p>
 
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_04.png" alt="Warehouse order sorting in queues_04">
@@ -346,7 +334,7 @@ blog-posts/ <!DOCTYPE html>
             </div>
 
             <p>At the end, EWM just proceeds with the first WO from the list/table.</p>
-            <p>That was straightforward right!? This scenario however, is only executed if there are no manually assigned WOs. The latter is always checked one step earlier. Let’s assume a list of WOs has been manually assigned to the resource by the warehouse supervisor (e.g., via the warehouse monitor option, calling FM <strong>/SCWM/RSRC_WO_RSRC_ASSIGN_MON</strong>, which in turn calls FM <strong>/SCWM/RSRC_WHO_SELECT</strong>).</p>
+            <p>That was straightforward right!? This scenario however, is only executed if there are no manually assigned WOs. The latter is always checked one step earlier. Let’s assume a list of WOs has been manually assigned to the resource by the warehouse supervisor (e.g., via the warehouse monitor option, calling FM <code>/SCWM/RSRC_WO_RSRC_ASSIGN_MON</code>, which in turn calls FM <code>/SCWM/RSRC_WHO_SELECT</code>).</p>
 
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_13.png" alt="Warehouse order sorting in queues_13">
@@ -355,7 +343,7 @@ blog-posts/ <!DOCTYPE html>
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_14.png" alt="Warehouse order sorting in queues_14">
             </div>
 
-            <p>Assignments are read via FM <strong>/SCWM/RSRC_WHO_RSTYP_GET</strong> and, of course, always have a higher priority than non-assigned WOs. The sorting in this case – no surprise over here – is making use of the same ruleset that we saw before:</p>
+            <p>Assignments are read via FM <code>/SCWM/RSRC_WHO_RSTYP_GET</code> and, of course, always have a higher priority than non-assigned WOs. The sorting in this case – no surprise over here – is making use of the same ruleset that we saw before:</p>
 
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_06.png" alt="Warehouse order sorting in queues_06">
@@ -363,7 +351,7 @@ blog-posts/ <!DOCTYPE html>
 
             <h2>Options for enhancement</h2>
             <p>What is surprising though, is that EWM offers an option for a custom sorting in the pre-assignment context, which is not offered in the scenario where the WOs are not pre-assigned.</p>
-            
+
             <pre>BAdi /SCWM/EX_RSRC_PROC_SEL
 * With this BAdI you can influence the WO selection.
 * You get the list of manual assigned WO's and can
@@ -385,20 +373,17 @@ blog-posts/ <!DOCTYPE html>
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_15.png" alt="Warehouse order sorting in queues_15">
             </div>
 
-            <p>The <em>filter_wo</em> subroutine does not offer any option to manipulate the sorting here. Therefore, the only option to enhance the sorting is to intervene <u>before</u> the actual WO processing. You can include your own logic at the point when EWM <u>creates</u> the WOs and calculates the two values that are later used for sorting.</p>
+            <p>The <code>filter_wo</code> subroutine does not offer any option to manipulate the sorting here. Therefore, the only option to enhance the sorting is to intervene <u>before</u> the actual WO processing. You can include your own logic at the point when EWM <u>creates</u> the WOs and calculates the two values that are later used for sorting.</p>
             <ul>
-                <li>LSD: I explained the option to enhance the LSD in this video and blog-post.</li>
-                <li>Prioritization: The prioritization as the second sorting criterion can be manipulated via a custom logic using BAdi:</li>
+                <li>LSD: I explained the option to enhance the LSD in this video (video & blog-post).</li>
+                <li>Prioritization: The prioritization as the second sorting criterion can be manipulated via a custom logic using BAdi <code>/SCWM/EX_RSRC_PROC_WO</code>.</li>
             </ul>
-            <pre>/SCWM/EX_RSRC_PROC_WO</pre>
 
             <h2>Fun facts / Party-knowledge</h2>
-            
-            <h2>Sorting of WOs for physical inventory</h2>
-            <p>Nothing to reveal here. The sorting for PI WOs is based on the same criteria as for the normal WOs discussed above. As you learned in my campaign about the LSD calculation, for PI documents the LSD is derived from the planned count date. The priority is coming from the PI customizing.</p>
-
-            <h2>Sorting in case of Task Interleaving</h2>
-            <p>This is the most interesting part of this article in my opinion. If interleaving is active (refer to this video & blog-post if you are not familiar with the interleaving concept as such), EWM applies a slightly different logic for WO sorting, which I found only in the code (spent not that much time to browse all books to be honest). This occurs at the end of the function module FM <strong>/SCWM/RSRC_QUALIF_QUEUE_CHECK</strong>. Here, EWM considers the <u>distance</u> between the WOs instead of the priority used previously.</p>
+            <p><u>Sorting of WOs for physical inventory</u></p>
+            <p>Nothing to reveal here. The sorting for PI WOs is based on the same criteria as for the normal WOs discussed above. As you learned in my campaign (video & blog-post) about the LSD calculation, for PI documents the LSD is derived from the planned count date. The priority is coming from the PI customizing.</p>
+            <p><u>Sorting in case of Task Interleaving</u></p>
+            <p>This is the most interesting part of this article in my opinion. If interleaving is active (refer to this video & blog-post if you are not familiar with the interleaving concept as such), EWM applies a slightly different logic for WO sorting, which I found only in the code (spent not that much time to browse all books to be honest). This occurs at the end of the function module FM <code>/SCWM/RSRC_QUALIF_QUEUE_CHECK</code>. Here, EWM considers the <u>distance</u> between the WOs instead of the priority used previously.</p>
 
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_08.png" alt="Warehouse order sorting in queues_08">
@@ -407,15 +392,13 @@ blog-posts/ <!DOCTYPE html>
             <p>EWM loops over all WOs in the interleaving queue (~ the next queue from which it is supposed to pick a WO, based on the interleaving settings) and calculates the distances between the current position of the resource and the distance to the source bin of the first WT in every waiting WO in that queue:</p>
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_08 2.png" alt="Warehouse order sorting in queues_08-2">
+                <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_08 2.png" alt="Warehouse order sorting in queues_08 2">
             </div>
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_09.png" alt="Warehouse order sorting in queues_09">
             </div>
 
-            <p>The distance calculation can be manipulated via BAdi:</p>
-            <pre>/SCWM/EX_TDC_START</pre>
-            <p>EWM itself calculates with the example/fallback class <strong>/SCWM/CL_EX_TDC_START_D</strong> of this BAdi (you should copy that class and use it as a base in case you want to include your custom logic here).</p>
+            <p>The distance calculation can be manipulated via BAdi <code>/SCWM/EX_TDC_START</code>. EWM itself calculates with the example/fallback class <code>/SCWM/CL_EX_TDC_START_D</code> of this BAdi (you should copy that class and use it as a base in case you want to include your custom logic here).</p>
 
             <div class="screenshot-container">
                 <img src="../assets/images/reveal-sap-ewm/wo-sorting-queues/Warehouse order sorting in queues_17.png" alt="Warehouse order sorting in queues_17">
@@ -447,6 +430,7 @@ blog-posts/ <!DOCTYPE html>
                 <li>PI WOs are being sorted based on the same criteria as other WOs</li>
                 <li>In the context of task interleaving, the priority as a sorting criteria is replaced by the distance between the processing resource and the source bin of the first WT in the next WO</li>
             </ul>
+
             <p>As we wrap up this blog post, I hope you found the information presented in a clear and digestible manner. While there may not have been many surprises, I trust that these last few minutes of reading have added to your EWM knowledge stack. Thank you for taking the time to read through!</p>
         </div>
 
