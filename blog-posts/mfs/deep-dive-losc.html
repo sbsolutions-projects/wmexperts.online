@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Deep-dive into the technical details of the Layout-oriented storage control in SAP EWM MFS. Learn about /SCWM/TROUTL_DET and routing logic.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, MFS, Layout-oriented storage control, LOSC, /SCWM/TROUTL_DET, Material Flow System">
+    <meta name="author" content="Hendrik">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Discover SAP EWM MFS - Layout-oriented Storage Control | WMexperts">
+    <meta property="og:description" content="Deep-dive into the technical details of the Layout-oriented storage control in SAP EWM MFS. Learn about /SCWM/TROUTL_DET and routing logic.">
+    <meta property="article:published_time" content="2022-08-27">
+    <meta property="article:modified_time" content="2025-11-12">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS - Layout-oriented Storage Control",
+        "description": "Deep-dive into the technical details of the Layout-oriented storage control in SAP EWM MFS. Learn about /SCWM/TROUTL_DET and routing logic.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2022-08-27",
+        "dateModified": "2025-11-12",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/mfs-losc.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>Discover SAP EWM MFS - Layout-oriented Storage Control | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 100%;
+            height: auto;
+            /* Reserve space before image loads to prevent layout shift.
+               Most screenshots will be 16:9. Adjust width/height on <img> tag for other ratios. */
+            aspect-ratio: 16 / 9;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Discover SAP EWM MFS</div>
+        <h1>Discover SAP EWM MFS - Layout-oriented Storage Control</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/_rJLZoennrM" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p>This blog is part of the series ‘<em>SAP EWM meets Automation – Discover EWM MFS</em>’ and ventures to deep-dive into the usage of the layout-oriented storage control (LOSC) in the context of MFS processes. We will assume that we are in a slow-moving MFS-environment, moving a HUs across MFS-relevant storage bins (~ communication points). To be more specific, we will look at pallets moving across a conveyor. For fast-moving environments (e.g. case conveyors) the LOSC might not be the optimal solution and you should explore the usage of EWMs Case Conveyor Routing. The latter is not in scope of this blog post though.</p>
+            
+            <p>The environment that we find ourselves in here could be looking similar to this example warehouse:</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_01 1new.png" alt="SAP EWM MFS Layout-oriented storage control_01-1new" loading="lazy">
+            </div>
+
+            <p>Some parts of the logic we look at is not relevant for non-MFS movements but this deep dive will still cover everything which is also relevant for non-MFS relevant usage of the LOSC (one could also say that non-MFS LOSC logic is a subset of the MFS LOSC logic here).</p>
+            
+            <p>Note that I will not explain the basic concept of the LOSC here again. In case you are not familiar with the general approach I would suggest having a look at this blog post / video here upfront.</p>
+            
+            <p>Now let us jump into the technical details right away!</p>
+            
+            <p>Technically, the LOSC is invoked during the warehouse task creation. In the context of the HU WT creation (visible in the stack shown below), EWM calls function module <code>/SCWM/ROUTING_LAYOUT_CHECK</code> which calls FM <code>/SCWM/TROUTL_DET</code> after having collected some necessary data:</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_02.png" alt="SAP EWM MFS Layout-oriented storage control_02" loading="lazy">
+            </div>
+
+            <p>FM <code>/SCWM/TROUTL_DET</code> is the most important one in this context here. So let us have a look at it step-by-step!</p>
+
+            <h2>1. Read the LOSC customizing</h2>
+            <p>Right at the beginning we read the routing records from the customizing:</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_04.2.png" alt="SAP EWM MFS Layout-oriented storage control_04.2" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_04.1.png" alt="SAP EWM MFS Layout-oriented storage control_04.1" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_03.png" alt="SAP EWM MFS Layout-oriented storage control_03" loading="lazy">
+            </div>
+
+            <h2>2. Fire selects onto the customizing table in order to find a valid record</h2>
+            <p>We have a hard-coded access sequence here (unlike e.g. queue determination or STSS where we have an option to customize the access sequence). This is very important in order to understand which record is selected for routing (keeping a screenshot of this access table is a life hack for every EWM consultant ):</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_05.png" alt="SAP EWM MFS Layout-oriented storage control_05" loading="lazy">
+            </div>
+
+            <p>Having that many combinations we end up with almost 500 lines of code, trying to find one or more valid records. Yes – it can be multiple ones as EWM included a sequence number in the key of the table and a Do-statement in the code makes sure to select all valid ones:</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_06.png" alt="SAP EWM MFS Layout-oriented storage control_06" loading="lazy">
+            </div>
+
+            <p>Note that EWM standard will always apply the matching record on sequence number #1. We will come back to the usage of the other records later, when we look at options for enhancements (Prio BAdi).</p>
+
+            <h2>3. Capacity check</h2>
+            <p>Note: Have a look at this blog post in case you want to make yourself familiar with important MFS objects (like the communication point).</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_07.png" alt="SAP EWM MFS Layout-oriented storage control_07" loading="lazy">
+            </div>
+
+            <p>Right at the beginning we read the customizing and application data of the segment and the communication point. Of course this is only needed in case we are in a MFS environment which we assume for this blog post (mentioned above already):</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_08.png" alt="SAP EWM MFS Layout-oriented storage control_08" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_09.png" alt="SAP EWM MFS Layout-oriented storage control_09" loading="lazy">
+            </div>
+
+            <p>EWM checks whether any kind of exceptions are set on the source communication point or on the communication point which had been determined as intermediate destination here. We do not want to dive deeper into those exception scenarios here.</p>
+            <p>The next important step is the validation against the capacity which had been determined before. Note that it is not mandatory to define and check the capacity for each communication point using EWM MFS.</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_10.png" alt="SAP EWM MFS Layout-oriented storage control_10" loading="lazy">
+            </div>
+
+            <p>The capacity calculation here depends on the capacity mode of the given destination communication point (e.g. consideration of HUs with open tasks):</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_11.png" alt="SAP EWM MFS Layout-oriented storage control_11" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_12.png" alt="SAP EWM MFS Layout-oriented storage control_12" loading="lazy">
+            </div>
+
+            <p>We finalize the logic for the capacity checks here by calling BAdi <code>/SCWM/EX_CORE_LSC_CAPA</code> where you can include a custom logic for evaluating the capacity of the proposed destination:</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_13.png" alt="SAP EWM MFS Layout-oriented storage control_13" loading="lazy">
+            </div>
+
+            <p>We are back at function module <code>/SCWM/TROUTL_DET</code> now and call BAdi <code>/SCWM/EX_CORE_LSC_PRIO</code>. This BAdi is importing the table of possible records which had been read from the customizing before (remember there could be multiple valid ones with different sequence numbers):</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_14.png" alt="SAP EWM MFS Layout-oriented storage control_14" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_15.png" alt="SAP EWM MFS Layout-oriented storage control_15" loading="lazy">
+            </div>
+
+            <p>This BAdi imports a table of valid options and returns one of those options (table in – structure out):</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_16.png" alt="SAP EWM MFS Layout-oriented storage control_16" loading="lazy">
+            </div>
+
+            <p>Potential use cases –<br>
+            – Manipulate the routing based on the HU type (examine the HU header data which is also imported to the BAdi)<br>
+            – Equally distribute HUs across areas of the conveyor (while considering the destination of the last WT from the given communication point)</p>
+
+            <h2>5. Exception handling in case of capacity issues</h2>
+            <p>It is possible that we determined one or multiple valid destinations but they did not pass the capacity check.</p>
+            <p>In this case we call the Prio-BAdi a 2nd time for those routes where the capacity check failed. If the BAdi does not clear all of those options, we decide based on the exception code determined before whether<br>
+            – we create a WT for the HU but simply not sent it to the PLC via telegram (this is the default approach > telegram will be sent once capacity is available)<br>
+            – we create a WT for the HU to move to the clarification bin of the communication point<br>
+            – we do not create a task at all</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_17.png" alt="SAP EWM MFS Layout-oriented storage control_17" loading="lazy">
+            </div>
+
+            <h2>6. Finalization</h2>
+            <p>Finally – if an intermediate step had been determined - the data for the task to be created is collected in the local variables (1).<br>
+            In case we did not determine an intermediate step (not with and not without capacity), EWM checks whether the destination of the initial/imported WT is customized to be an End-point CP or clarification CP.<br>
+            If this is the case, no intermediate step is required and the waiting WT can be activated (2):</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_18.png" alt="SAP EWM MFS Layout-oriented storage control_18" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_19.png" alt="SAP EWM MFS Layout-oriented storage control_19" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_20.png" alt="SAP EWM MFS Layout-oriented storage control_20" loading="lazy">
+            </div>
+
+            <p>The same is true in case we are coming from a non-MFS bin and move towards an I-point/infeed:</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_21.png" alt="SAP EWM MFS Layout-oriented storage control_21" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_22.png" alt="SAP EWM MFS Layout-oriented storage control_22" loading="lazy">
+            </div>
+
+            <p>Again, with examples based on our layout:</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_23.png" alt="SAP EWM MFS Layout-oriented storage control_23" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_24.png" alt="SAP EWM MFS Layout-oriented storage control_24" loading="lazy">
+            </div>
+
+            <p>Or in case we are already at a communication point which is customized to be an End-point (outfeed CP) and we are pointing towards a non-MFS bin as a destination (e.g. the HU is about to leave the conveyor):</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_25.png" alt="SAP EWM MFS Layout-oriented storage control_25" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_26.png" alt="SAP EWM MFS Layout-oriented storage control_26" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_27.png" alt="SAP EWM MFS Layout-oriented storage control_27" loading="lazy">
+            </div>
+
+            <p>Only if none of these cases is true, EWM throws an error and holds the waiting WT in inactive status (~ that also means it is mandatory for all other MFS-related movements to provide a record in the LOSC customizing).</p>
+            <p>So to sum it up again –<br>
+            EWM will return an error and keep the waiting WT as inactive in case we<br>
+            – could not find data for an intermediate step (with or without capacity > remember that even without capacity at the destination we might create the task but do not send it to the subsystem yet)<br>
+            – are not moving towards an End- or clarification point<br>
+            – are not coming from non-MFS bin pointing towards an I-point/infeed<br>
+            – are not at an End-point, pointing towards a non-MFS destination bin</p>
+
+            <h2>7. Change Everything!</h2>
+            <p>The last step after EWM standard has prepared everything to complete the step is the call of FM <code>/SCWM/BADI_STORAGE_CTRL_LAYOUT</code> which calls a potential implementation of BAdi <code>/SCWM/EX_CORE_LSC_LAYOUT</code>. As you can see at the interface, this BAdi imports lots of local data and allows you to change almost everything (~ implement a comprehensive custom routing):</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_28.png" alt="SAP EWM MFS Layout-oriented storage control_28" loading="lazy">
+            </div>
+
+            <p>This could for instance be used to handle customer/project specific exceptions or integrate routing for more complex automation equipment (e.g. special requirements for AGVs, monorail, robots etc.).</p>
+            <p>Done!</p>
+            <p>FM <code>/SCWM/TROUTL_DET</code> is completed and returned the routing decision!</p>
+
+            <h2>Appendix:</h2>
+            <p>It is important to note that EWM sets an exception code to the HU header in case the determination of the next destination failed (~ a situation where no intermediate destination found and not allowed to activate the waiting task). This exception code stays in the field <code>MFSERROR</code> of table <code>/SCWM/HUHDR</code> and will be evaluated and used for the next routing steps, once the HU arrives at the next communication point (based on this the HU can now route itself step-by-step towards the clarification point).</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_29.png" alt="SAP EWM MFS Layout-oriented storage control_29" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_30.png" alt="SAP EWM MFS Layout-oriented storage control_30" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_30 1.png" alt="SAP EWM MFS Layout-oriented storage control_30" loading="lazy">
+            </div>
+
+            <h2>Summary of possibilities for enhancements –</h2>
+            <p>Enhancement spot <code>/SCWM/ES_CORE_LSC</code> holds the three different BAdis which I mentioned during our deep-dive above:</p>
+
+            <div class="screenshot-container">
+                <img src="../assets/images/mfs/deep-losc/SAP EWM MFS Layout oriented storage control_31.png" alt="SAP EWM MFS Layout-oriented storage control_31" loading="lazy">
+            </div>
+
+            <p>That is all for this month’s post! I hope you have a good understanding of the layout-oriented storage control now. I you feel overwhelmed I would recommend watching my introduction video about the LOSC in order to tighten your basic understanding of the concept!</p>
+            <p><em>I hope this blog post provides value to you and you could learn something. Please feel free to subscribe to my blog updates or my youtube channel in case you want to be notified about new posts!</em></p>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>
