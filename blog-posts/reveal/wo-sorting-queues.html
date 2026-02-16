@@ -139,9 +139,6 @@
         .screenshot-container img {
             max-width: 100%;
             height: auto;
-            /* Reserve space before image loads to prevent layout shift.
-               Most screenshots will be 16:9. Adjust width/height on <img> tag for other ratios. */
-            aspect-ratio: 16 / 9;
             background-color: var(--bg-light);
             border: 1px solid var(--border);
             border-radius: 6px;
