@@ -111,12 +111,17 @@
         }
 
         .section-header h2 {
+            /* This is now part of a grouped selector for DRYness */
+        }
+
+        .section-header h2,
+        .freelancer-cta h2 {
             font-size: 1.8rem;
             color: var(--text-dark);
             font-weight: 700;
         }
 
-        .section-header h2 span {
+        .section-header h2 span { /* This remains specific */
             color: var(--sap-blue);
         }
 
@@ -258,10 +263,7 @@
         }
 
         .freelancer-cta h2 {
-            font-size: 1.8rem;
-            color: var(--text-dark);
             margin-bottom: 1rem;
-            font-weight: 700;
         }
 
         .freelancer-cta p {
@@ -356,90 +358,94 @@
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>Mastering SAP EWM.</h1>
-        <p>Functional and technical insights, shared to simplify the complex world of intralogistics & SAP EWM and make you a better key-user, consultant or developer.</p>
-    </section>
+    <main>
+        <section class="hero">
+            <h1>Mastering SAP EWM.</h1>
+            <p>Functional and technical insights, shared to simplify the complex world of intralogistics & SAP EWM and make you a better key-user, consultant or developer.</p>
+        </section>
 
-    <!-- LATEST ARTICLES -->
-    <div class="section-header" id="latest">
-        <h2>what's <span>new</span></h2>
-        <a href="blog-overview.html" class="view-all">view all articles →</a>
-    </div>
+        <!-- LATEST ARTICLES -->
+        <section id="latest" aria-labelledby="latest-heading">
+            <div class="section-header">
+                <h2 id="latest-heading">what's <span>new</span></h2>
+                <a href="blog-overview.html" class="view-all">view all articles →</a>
+            </div>
 
-    <main class="grid">
-        <a href="blog-posts/wo-sorting-queues.html" class="card featured">
-            <div class="card-header">
-                <span class="tag">📌 Featured</span>
-            </div>
-            <h3>Warehouse Order Sorting in Queues</h3>
-            <p>I delve deep behind the scenes and reveal a few secrets about how warehouse orders are technically sorted in SAP EWM. Learn the inner workings of queue management and optimization strategies.</p>
-            <div class="card-meta">
-                <span>🕒 8 min read</span>
-                <span>📅 Feb 2026</span>
-            </div>
-        </a>
+            <div class="grid">
+                <a href="blog-posts/wo-sorting-queues.html" class="card featured">
+                    <div class="card-header">
+                        <span class="tag">📌 Featured</span>
+                    </div>
+                    <h3>Warehouse Order Sorting in Queues</h3>
+                    <p>I delve deep behind the scenes and reveal a few secrets about how warehouse orders are technically sorted in SAP EWM. Learn the inner workings of queue management and optimization strategies.</p>
+                    <div class="card-meta">
+                        <span>🕒 8 min read</span>
+                        <span>📅 Feb 2026</span>
+                    </div>
+                </a>
 
-        <a href="#" class="card">
-            <div class="card-header">
-                <div class="icon">💡</div>
-                <span class="tag">Understand SAP EWM</span>
-            </div>
-            <h3>Basics of Warehouse Tasks</h3>
-            <p>How the system translates a movement request into a physical instruction that warehouse operators can execute.</p>
-            <div class="card-meta">
-                <span>🕒 5 min read</span>
-            </div>
-        </a>
+                <a href="#" class="card">
+                    <div class="card-header">
+                        <div class="icon">💡</div>
+                        <span class="tag">Understand SAP EWM</span>
+                    </div>
+                    <h3>Basics of Warehouse Tasks</h3>
+                    <p>How the system translates a movement request into a physical instruction that warehouse operators can execute.</p>
+                    <div class="card-meta">
+                        <span>🕒 5 min read</span>
+                    </div>
+                </a>
 
-        <a href="#" class="card">
-            <div class="card-header">
-                <div class="icon">🏗️</div>
-                <span class="tag">Discover SAP EWM MFS</span>
-            </div>
-            <h3>PLC Communication Layer</h3>
-            <p>Decoding the telegrams sent between SAP and the conveyor controller in material flow systems.</p>
-            <div class="card-meta">
-                <span>🕒 12 min read</span>
-            </div>
-        </a>
+                <a href="#" class="card">
+                    <div class="card-header">
+                        <div class="icon">🏗️</div>
+                        <span class="tag">Discover SAP EWM MFS</span>
+                    </div>
+                    <h3>PLC Communication Layer</h3>
+                    <p>Decoding the telegrams sent between SAP and the conveyor controller in material flow systems.</p>
+                    <div class="card-meta">
+                        <span>🕒 12 min read</span>
+                    </div>
+                </a>
 
-        <a href="#" class="card">
-            <div class="card-header">
-                <div class="icon">⚙️</div>
-                <span class="tag">Enhance SAP EWM</span>
-            </div>
-            <h3>BAdI Implementation for RF</h3>
-            <p>A step-by-step guide to adding custom logic to standard mobile screens using Business Add-Ins.</p>
-            <div class="card-meta">
-                <span>🕒 10 min read</span>
-            </div>
-        </a>
+                <a href="#" class="card">
+                    <div class="card-header">
+                        <div class="icon">⚙️</div>
+                        <span class="tag">Enhance SAP EWM</span>
+                    </div>
+                    <h3>BAdI Implementation for RF</h3>
+                    <p>A step-by-step guide to adding custom logic to standard mobile screens using Business Add-Ins.</p>
+                    <div class="card-meta">
+                        <span>🕒 10 min read</span>
+                    </div>
+                </a>
 
-        <a href="#" class="card">
-            <div class="card-header">
-                <div class="icon">💼</div>
-                <span class="tag">Working as SAP EWM Consultant</span>
+                <a href="#" class="card">
+                    <div class="card-header">
+                        <div class="icon">💼</div>
+                        <span class="tag">Working as SAP EWM Consultant</span>
+                    </div>
+                    <h3>Effective Client Workshops</h3>
+                    <p>How to gather requirements without getting lost in technical details and ensure stakeholder alignment.</p>
+                    <div class="card-meta">
+                        <span>🕒 7 min read</span>
+                    </div>
+                </a>
             </div>
-            <h3>Effective Client Workshops</h3>
-            <p>How to gather requirements without getting lost in technical details and ensure stakeholder alignment.</p>
-            <div class="card-meta">
-                <span>🕒 7 min read</span>
+
+            <!-- VIEW ALL LINK -->
+            <div class="view-all-section">
+                <a href="blog-overview.html" class="btn-secondary">View All Articles →</a>
             </div>
-        </a>
+        </section>
+
+        <!-- FREELANCER CTA -->
+        <section class="freelancer-cta" aria-labelledby="cta-heading">
+            <h2 id="cta-heading">Need Specialized EWM Support?</h2>
+            <p>WMexperts is the knowledge hub of Hendrik, a Senior SAP EWM Freelancer with expertise in functional design, technical implementation, and project leadership.</p>
+            <a href="#" class="btn-primary">Explore My Freelance Profile →</a>
+        </section>
     </main>
-
-    <!-- VIEW ALL LINK -->
-    <div class="view-all-section">
-        <a href="blog-overview.html" class="btn-secondary">View All Articles →</a>
-    </div>
-
-    <!-- FREELANCER CTA -->
-    <section class="freelancer-cta">
-        <h2>Need Specialized EWM Support?</h2>
-        <p>WMexperts is the knowledge hub of Hendrik, a Senior SAP EWM Freelancer with expertise in functional design, technical implementation, and project leadership.</p>
-        <a href="#" class="btn-primary">Explore My Freelance Profile →</a>
-    </section>
 
     <footer>
         <p>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</p>

@@ -139,6 +139,10 @@
         .screenshot-container img {
             max-width: 100%;
             height: auto;
+            /* Reserve space before image loads to prevent layout shift.
+               Most screenshots will be 16:9. Adjust width/height on <img> tag for other ratios. */
+            aspect-ratio: 16 / 9;
+            background-color: var(--bg-light);
             border: 1px solid var(--border);
             border-radius: 6px;
             cursor: zoom-in;
@@ -342,7 +346,7 @@
         <div class="content">
             <p>Example paragraph text.</p>
             <div class="screenshot-container">
-                <img src="../assets/images/placeholder.png" alt="Description" width="800" height="450" loading="lazy">
+                <img src="../assets/images/placeholder.png" alt="Descriptive alt text for the image" width="800" height="450" loading="lazy">
             </div>
             <pre>/SCWM/TECHNICAL_DETAILS</pre>
         </div>
