@@ -8,8 +8,7 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://wmexperts.online/blog-posts/wo-sorting-queues.html">
-    <meta property="og:title" content="Reveal SAP EWM - Warehouse Order sorting in Queues | WMexperts">
+    <meta property="og:url" content="https://wmexperts.online/blog-posts/Whting in Queues | WMexperts">
     <meta property="og:description" content="Deep dive into SAP EWM Warehouse Order sorting logic. Understand how LSD, Priority, and Task Interleaving (distance calculation) influence queue processing order.">
     <meta property="og:image" content="https://wmexperts.online/assets/images/reveal/wo-sorting-queues/Warehouse%20order%20sorting%20in%20queues_01.png">
 
@@ -308,10 +307,8 @@
 <body>
 
     <header>
-        <a href="../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../index.html">← Back to Blog</a></nav>
-    </header>
-
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href.
     <article>
         <div class="breadcrumb">Reveal SAP EWM</div>
         <h1>Reveal SAP EWM - Warehouse Order sorting in Queues</h1>
@@ -354,124 +351,107 @@
             <p><strong>Important:</strong> Both values are <u>calculated during warehouse order creation</u>, well before the actual sorting occurs during warehouse order processing. Therefore, if you change your customization settings later, do not be surprised if nothing changes. Both values are saved in the table <code>/SCWM/WO_RSRC_TY</code> (the LSD is also saved in table <code>/SCWM/WHO</code>, but this table is not relevant for our context here). The calculation for both values is initiated by the function module FM <code>/SCWM/RSRC_WHO_CREATE</code> during warehouse order creation, which also calls FM <code>/SCWM/WHO_RSRC_TYP_SET</code> to write the result to the database.</p>
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_01.png" alt="Warehouse order sorting in queues_01">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_01.png" alt="Warehouse order sorting in queues_01">
             </div>
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_02.png" alt="Warehouse order sorting in queues_02">
-            </div>
+                <img src="../_
 
-            <p>During warehouse order processing, EWM selects records from this table and sorts them accordingly. This process is executed via the function module <code>/SCWM/RSRC_WHO_SELECT</code>, which calls FM <code>/SCWM/RSRC_QUALIF_QUEUE_CHECK</code>, and subsequently calls FM <code>/SCWM/RSRC_WHO_RSTYP_GET</code>. This FM reads the table entries from <code>/SCWM/WO_RSRC_TY</code> before filtering and determining the applicable warehouse orders for the given resource type (details of which are not explained here)</p>
-
+            <p>During warehouse order p
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_03_01.png" alt="Warehouse order sorting in queues_03_01">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_03_01.png" alt="Warehouse order sorting in queues_03_01">
             </div>
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_03_02.png" alt="Warehouse order sorting in queues_03_02">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_03_02.png" alt="Warehouse order sorting in queues_03_02">
             </div>
-
             <p>The same sorting is applied again a few lines later when the internal table is handed over to the calling function module FM <code>/SCWM/RSRC_QUALIF_QUEUE_CHECK</code>. This seems redundant, but there could be technical reasons for it (Is a developer amongst you able to explain the technical reason for sorting two times here in the comments of the corresponding video!?).</p>
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_04.png" alt="Warehouse order sorting in queues_04">
-            </div>
+                <img src="..e
 
             <p>The example below highlights the way of sorting, based on the 3 values listed above:</p>
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_05.png" alt="Warehouse order sorting in queues_05">
-            </div>
+                <img src="../../assets/i
 
             <p>At the end, EWM just proceeds with the first WO from the list/table.</p>
             <p>That was straightforward right!? This scenario however, is only executed if there are no manually assigned WOs. The latter is always checked one step earlier. Let’s assume a list of WOs has been manually assigned to the resource by the warehouse supervisor (e.g., via the warehouse monitor option, calling FM <code>/SCWM/RSRC_WO_RSRC_ASSIGN_MON</code>, which in turn calls FM <code>/SCWM/RSRC_WHO_SELECT</code>).</p>
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_13.png" alt="Warehouse order sorting in queues_13">
-            </div>
+                <img src="../../assets
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_14.png" alt="Warehouse order sorting in queues_14">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_14.png" alt="Warehouse order sorting in queues_14">
             </div>
 
             <p>Assignments are read via FM <code>/SCWM/RSRC_WHO_RSTYP_GET</code> and, of course, always have a higher priority than non-assigned WOs. The sorting in this case – no surprise over here – is making use of the same ruleset that we saw before:</p>
 
-            <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_06.png" alt="Warehouse order sorting in queues_06">
+            <div class="screenshot-conssngue_06">
             </div>
 
-            <h2>Options for enhancement</h2>
-            <p>What is surprising though, is that EWM offers an option for a custom sorting in the pre-assignment context, which is not offered in the scenario where the WOs are not pre-assigned.</p>
+            <h2>Options for enhancemen ginetscenario where the WOs are not pre-assigned.</p>
             
             <pre>BAdi /SCWM/EX_RSRC_PROC_SEL
 * With this BAdI you can influence the WO selection.
 * You get the list of manual assigned WO's and can
 * resort them or
 * delete WO from the list or
-* return a new WO according your own selection (You must set LGNUM, WHO
-* & CONTENT at least)</pre>
+* return a new WO according o
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_07.png" alt="Warehouse order sorting in queues_07">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_07.png" alt="Warehouse order sorting in queues_07">
             </div>
 
             <p>Question from a stupid EWM Consultant: Can somebody explain why this is BAdi not simply called in the same way in the non-pre-assignment context? If yes, please add your thoughts as a comment to the corresponding video!</p>
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_16.png" alt="Warehouse order sorting in queues_16">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_16.png" alt="Warehouse order sorting in queues_16">
             </div>
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_15.png" alt="Warehouse order sorting in queues_15">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_15.png" alt="Warehouse order sorting in queues_15">
             </div>
-
-            <p>The <code>filter_wo</code> subroutine does not offer any option to manipulate the sorting here. Therefore, the only option to enhance the sorting is to intervene <u>before</u> the actual WO processing. You can include your own logic at the point when EWM <u>creates</u> the WOs and calculates the two values that are later used for sorting.</p>
+n troe sorting is to intervene <u>before</u> the actual WO processing. You can include your own logic at the point when EWM <u>creates</u> the WOs and calculates the two values that are later used for sorting.</p>
             <ul>
                 <li>LSD: I explained the option to enhance the LSD in this video (video & blog-post).</li>
                 <li>Prioritization: The prioritization as the second sorting criterion can be manipulated via a custom logic using BAdi <code>/SCWM/EX_RSRC_PROC_WO</code>.</li>
             </ul>
 
-            <h2>Fun facts / Party-knowledge</h2>
-            <p><u>Sorting of WOs for physical inventory</u></p>
+            <h2>Fun facts / Party-knogfnu
             <p>Nothing to reveal here. The sorting for PI WOs is based on the same criteria as for the normal WOs discussed above. As you learned in my campaign (video & blog-post) about the LSD calculation, for PI documents the LSD is derived from the planned count date. The priority is coming from the PI customizing.</p>
             <p><u>Sorting in case of Task Interleaving</u></p>
-            <p>This is the most interesting part of this article in my opinion. If interleaving is active (refer to this video & blog-post if you are not familiar with the interleaving concept as such), EWM applies a slightly different logic for WO sorting, which I found only in the code (spent not that much time to browse all books to be honest). This occurs at the end of the function module FM <code>/SCWM/RSRC_QUALIF_QUEUE_CHECK</code>. Here, EWM considers the <u>distance</u> between the WOs instead of the priority used previously.</p>
-
+            <p>This is the most intern
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_08.png" alt="Warehouse order sorting in queues_08">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_08.png" alt="Warehouse order sorting in queues_08">
             </div>
 
             <p>EWM loops over all WOs in the interleaving queue (~ the next queue from which it is supposed to pick a WO, based on the interleaving settings) and calculates the distances between the current position of the resource and the distance to the source bin of the first WT in every waiting WO in that queue:</p>
 
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_08-2.png" alt="Warehouse order sorting in queues_08-2">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_08-2.png" alt="Warehouse order sorting in queues_08-2">
             </div>
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_09.png" alt="Warehouse order sorting in queues_09">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_09.png" alt="Warehouse order sorting in queues_09">
             </div>
 
             <p>The distance calculation can be manipulated via BAdi <code>/SCWM/EX_TDC_START</code>. EWM itself calculates with the example/fallback class <code>/SCWM/CL_EX_TDC_START_D</code> of this BAdi (you should copy that class and use it as a base in case you want to include your custom logic here).</p>
 
-            <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_17.png" alt="Warehouse order sorting in queues_17">
+            <div class="screenshot-contang "_17">
             </div>
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_12.png" alt="Warehouse order sorting in queues_12">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_12.png" alt="Warehouse order sorting in queues_12">
             </div>
 
-            <p>At the end can see that the LSD still has the highest value, but now the distance has a higher value than the ‘priority’ (which is no longer used in the context of interleaving).</p>
-            <p>A closing remark that I couldn’t overlook: I have great respect for the developers and I am forever grateful to have the opportunity to work with this software, but why the hell does a 300 billion company like SAP still ships software with so many typos in the comments of their code? Can’t the pretty printer check that as well? …or any kind of AI browsing through the code before it is being shipped?</p>
+            <p>At the end can see thaeh  of  with this software, but why the hell does a 300 billion company like SAP still ships software with so many typos in the comments of their code? Can’t the pretty printer check that as well? …or any kind of AI browsing through the code before it is being shipped?</p>
             <p>Sorry… Back to our topic – </p>
             <p>The following example visualizes the approach for sorting during interleaving, that I explained above:</p>
 
-            <div class="screenshot-container">
-                <img src="../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_11.png" alt="Warehouse order sorting in queues_11">
+                <img src="../../assets/images/reveal/wo-sorting-queues/Warehouse order sorting in queues_11.png" alt="Warehouse order sorting in queues_11">
             </div>
 
             <p>…and that completes the last subtopic that I wanted to address here. As usual, I will not let you go without a quick summary of the most important points.</p>
 
             <h2>Summary</h2>
-            <ul>
                 <li>Sorting is the same with or without manual pre-assignment of warehouse orders to resources (1.LSD > 2.Priority > 3.WO number)</li>
                 <li>Only with manual pre-assignment the sorting can be changed in a clean and simple way (EWM offers a BAdi). Without manual pre-assignment, LSD and priority have to be manipulated during WO creation in order to implicitly change the sorting later</li>
-                <li>PI WOs are being sorted based on the same criteria as other WOs</li>
-                <li>In the context of task interleaving, the priority as a sorting criteria is replaced by the distance between the processing resource and the source bin of the first WT in the next WO</li>
+                <li>PI WOs are being strthen and the source bin of the first WT in the next WO</li>
             </ul>
             <p>As we wrap up this blog post, I hope you found the information presented in a clear and digestible manner. While there may not have been many surprises, I trust that these last few minutes of reading have added to your EWM knowledge stack. Thank you for taking the time to read through!</p>
         </div>
@@ -481,7 +461,6 @@
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
             <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
         </div>
-    </article>
 
     <!-- ENHANCED LIGHTBOX OVERLAY -->
     <div id="lightbox">
