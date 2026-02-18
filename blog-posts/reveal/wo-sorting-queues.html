@@ -137,8 +137,10 @@
         .screenshot-container { margin: 1.75rem 0; text-align: center; }
         
         .screenshot-container img {
-            max-width: 100%;
+            max-width: 66.67%;
             height: auto;
+            display: block;
+            margin: 0 auto;
             background-color: var(--bg-light);
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -294,6 +296,103 @@
         /* Prevent body scroll when lightbox is open */
         body.lightbox-open {
             overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
 
         /* --- FOOTER & CTA --- */
@@ -499,6 +598,33 @@
                 <li>In the context of task interleaving, the priority as a sorting criteria is replaced by the distance between the processing resource and the source bin of the first WT in the next WO</li>
             </ul>
             <p>As we wrap up this blog post, I hope you found the information presented in a clear and digestible manner. While there may not have been many surprises, I trust that these last few minutes of reading have added to your EWM knowledge stack. Thank you for taking the time to read through!</p>
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
         </div>
 
         <div class="freelancer-cta">
