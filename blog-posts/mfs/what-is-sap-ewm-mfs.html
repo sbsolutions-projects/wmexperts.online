@@ -1,51 +1,17 @@
-<h1>Discover SAP EWM MFS</h1><h2>What is SAP EWM MFS?</h2><p>This blog is part of the series ‘<em>SAP EWM meets Automation – Discover EWM MFS’</em>. As with all posts of this series, the content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management">website</a> in case you want to learn more about the services offered by Swisslog or to browse open positions within their EWM team!</p><p>This blog post is intended for those of you who never implemented an automated warehouse with EWM MFS or even never used <a href="https://wmexperts.online/guide-subscription-5-characteristics-sap-ewm-consulting/" target="_blank" rel="noopener">SAP EWM</a> before. I wrote this article as I noticed that some of my subscribers/readers are actually part of this group. This is not a problem at all but I thought it might be beneficial to induct those with a very simple post answering this apparently simple question (did not think of this when I started this series initially – otherwise that would have been the very first post).</p><p>You should indeed have a rough understanding about what a WMS (Warehouse Management System) is doing and that S<a href="https://wmexperts.online/guide-subscription-5-steps-to-create-workable-requirement-in-sap-ewm/" target="_blank" rel="noopener">AP EWM</a> is such a system. But apart from this - I do not request any additional prior knowledge here.</p><p>My proposal -</p><p>This blog post exchanges 5 minutes of your life against the answer to the question ‘<em>What is EWM MFS</em>?’</p><p>Expect a short, compact and simple summary!</p><p>Technically, EWM MFS is a <u>package of code </u>sitting in <a href="https://wmexperts.online/reveal-sap-ewm-options-for-the-destination-of-loading-tasks/">SAP EWM</a> which enables EWM to <u>talk directly</u> with different kind of <u>automation equipment</u>.</p><p>Let us break this into smaller pieces / keywords in order to understand it:</p><ol><li>Package of code</li><li>Talk directly</li><li>Automation equipment</li></ol><p>We start with the last one to have something physical in mind right from the beginning -</p><p>What is <em>automation equipment </em>in this context? That could basically be everything that moves without direct operator control within a warehouse and is controlled by a PLC (Programmable Logic Controller). So technically EWM talks to the PLC and not directly to the equipment (this is an important difference). Automation equipment in this context could be conveyors of all different kinds, Automated Storage and Retrieval Systems (ASRS) operated by cranes, Monorails and many more:</p>		
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_01.jpg" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzIsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wMS5qcGcifQ%3D%3D">
-							<img width="243" height="182" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_01.jpg" alt="What is SAP EWM MFS_01" />								</a>
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_02.jpg" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzMsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wMi5qcGcifQ%3D%3D">
-							<img width="233" height="175" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_02.jpg" alt="What is SAP EWM MFS_02" />								</a>
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_03.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzQsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wMy5wbmcifQ%3D%3D">
-							<img width="300" height="297" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_03-300x297.png" alt="What is SAP EWM MFS_03" srcset="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_03-300x297.png 300w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_03-150x150.png 150w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_03.png 629w" sizes="(max-width: 300px) 100vw, 300px" />								</a>
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_04.jpg" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzUsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wNC5qcGcifQ%3D%3D">
-							<img width="300" height="225" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_04.jpg" alt="What is SAP EWM MFS_04" />								</a>
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_05.jpg" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzYsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wNS5qcGcifQ%3D%3D">
-							<img width="352" height="264" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_05.jpg" alt="What is SAP EWM MFS_05" srcset="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_05.jpg 352w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_05-300x225.jpg 300w" sizes="(max-width: 352px) 100vw, 352px" />								</a>
-		<p>So this is the stuff that EWM MFS is talking to via the PLC (EWM &gt; PLC &gt; Automation Hardware).</p><p>It is realized by what I mentioned as <em>package of code</em> in my definition above. This package is part of SAP EWM since 2008 with the release of EWM 5.1. Post this release, it was no longer required to install external middleware or warehouse control units in order to run automated warehouses with SAP EWM (so you could actually communicate with PLCs and the automation hardware already before that but not without using an additional middleware or control unit in between &gt; more details further below).</p>		
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_06.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzcsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wNi5wbmcifQ%3D%3D">
-							<img width="936" height="406" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_06.png" alt="What is SAP EWM MFS_06" srcset="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_06.png 936w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_06-300x130.png 300w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_06-768x333.png 768w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_06-640x278.png 640w" sizes="(max-width: 936px) 100vw, 936px" />								</a>
-		<p>The master &amp; application data which is used by this package of code and required to make everything work is sitting here in the Easy Access menu:</p><p><em>SAP Menu &gt; SCM Extended Warehouse Management &gt; Extended Warehouse Management &gt; Master Data &gt; Material Flow System (MFS)</em></p>		
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_07.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzgsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wNy5wbmcifQ%3D%3D">
-							<img width="768" height="507" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_07-768x507.png" alt="What is SAP EWM MFS_07" srcset="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_07-768x507.png 768w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_07-300x198.png 300w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_07-640x423.png 640w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_07.png 813w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
-		<p>And the customizing which has its stake in controlling the MFS processes is sitting here:</p><p><em>SAP Customizing Implementation Guide &gt; SCM Extended Warehouse Management &gt; Extended Warehouse Management &gt; Material Flow System (MFS)</em></p>		
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_08.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzksInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wOC5wbmcifQ%3D%3D">
-							<img width="557" height="700" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_08.png" alt="What is SAP EWM MFS_08" srcset="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_08.png 557w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_08-239x300.png 239w" sizes="(max-width: 557px) 100vw, 557px" />								</a>
-		<p>Last but not least, I explain what I have in mind when I say <em>talk directly to</em> automation equipment?</p><p>I provided a short hint already above, mentioning the ‘middleware’ or ‘control unit’. To make this more tangible, let us look at the warehouse automation layer model published via <a href="https://www.vdi.de/en/home/vdi-standards#:~:text=A%20VDI%20Standard%20is%20a,benchmark%20for%20flawless%20technical%20procedures.">VDI standard</a> 3962. EWM as our warehouse management system is sitting right under the inventory management system which is managing orders, creating deliveries and pushes those towards EWM:</p>		
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_09.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwODAsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18wOS5wbmcifQ%3D%3D">
-							<img width="936" height="404" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_09.png" alt="What is SAP EWM MFS_09" srcset="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_09.png 936w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_09-300x129.png 300w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_09-768x331.png 768w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_09-640x276.png 640w" sizes="(max-width: 936px) 100vw, 936px" />								</a>
-		<p>EWM - before the integration of its MFS component - was mainly managing stock per HU/storage bin and creating tasks against deliveries in order to move this stock into or out of the warehouse. In order to talk to automation equipment (<em>programmable logic controllers</em> to be precise again) it required an additional middleware (here shown as ‘Material flow control’ layer):</p>		
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_10.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwODEsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18xMC5wbmcifQ%3D%3D">
-							<img width="936" height="404" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_10.png" alt="What is SAP EWM MFS_10" srcset="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_10.png 936w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_10-300x129.png 300w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_10-768x331.png 768w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_10-640x276.png 640w" sizes="(max-width: 936px) 100vw, 936px" />								</a>
-		<p>Now with EWM MFS we have the Material Flow Control layer directly integrated within EWM. So this package of ABAP code I was talking about above represents this layer end enables EWM to talk to the PLCs directly without an additional control unit / middleware in between:</p>		
-																<a href="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_11.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTgwNzEsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIyXC8wOVwvV2hhdC1pcy1TQVAtRVdNLU1GU18xMS5wbmcifQ%3D%3D">
-							<img width="936" height="360" src="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_11.png" alt="What is SAP EWM MFS_11" srcset="https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_11.png 936w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_11-300x115.png 300w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_11-768x295.png 768w, https://wmexperts.online/wp-content/uploads/2022/09/What-is-SAP-EWM-MFS_11-640x246.png 640w" sizes="(max-width: 936px) 100vw, 936px" />								</a>
-		<p>And what does it technically mean when I say ‘<em>talking’ </em>to automation equipment? At the end it is all about exchanging strings of data based on a pre-defined protocol, which helps to enable a stable communication and to interpret the data which is being exchanged. These data strings are what we call <em>telegrams</em> in the context of EWM MFS.</p><p>At this point we are on the edge of leaving the surface and digging into detail which was not the intention of this blog post. I hope the question ‘<em>What is EWM MFS?</em>’ has been answered for you in an easy &amp; understandable way.</p><p>For those who are interested in further details I can recommend these blogs/videos:</p><ul><li>Check <a href="https://wmexperts.online/mfs-role-of-the-plc/" target="_blank" rel="noopener">this blog post</a> in order to understand what a PLC is and what it is doing in the context of automation with EWM MFS.</li><li>Check <a href="https://wmexperts.online/mfs-ewm-plc-integration/" target="_blank" rel="noopener">this blog post</a> in order to understand the role of important objects in SAP EWM MFS.</li><li>Check <a href="https://wmexperts.online/mfs-ewm-plc-communication/" target="_blank" rel="noopener">this blog post</a> in order to understand how EWM MFS talks to the PLC.</li></ul><p><em>I hope this blog post provides value to you and you could learn something. Please feel free to s</em><em>ubscribe to my <strong><a href="https://wmexperts.online/blog-newsletter/" target="_blank" rel="noopener">blog updates </a></strong>or my <strong><a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1">youtube channel </a></strong>in case you want to be notified about new posts!</em></p>		
-					<h2>Get my monthly blog-updates!</h2>				
-					<h2>Subscribe to my Youtube channel!</h2>				
-					<a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank">
-									Subscribe
-					</a><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
-    <meta name="keywords" content="SAP EWM, Warehouse Management, [Topic Keywords]">
+    <meta name="description" content="In-depth article about SAP EWM MFS. Learn what SAP EWM MFS is, how it connects to PLCs, and the role of the Material Flow System in automated warehouses.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, MFS, Material Flow System, Automation, PLC">
     <meta name="author" content="Hendrik">
     <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Article Title | WMexperts">
-    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
+    <meta property="og:title" content="Discover SAP EWM MFS | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM MFS. Learn what SAP EWM MFS is, how it connects to PLCs, and the role of the Material Flow System in automated warehouses.">
     <meta property="article:published_time" content="2024-01-01">
     <meta property="article:modified_time" content="2024-01-01">
 
@@ -55,8 +21,8 @@
       {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "Article Title",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic].",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM MFS. Learn what SAP EWM MFS is, how it connects to PLCs, and the role of the Material Flow System in automated warehouses.",
         "image": "https://wmexperts.online/assets/images/placeholder.png",
         "datePublished": "2024-01-01",
         "dateModified": "2024-01-01",
@@ -85,13 +51,13 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+          "item": "https://wmexperts.online/blog-posts/category/sap-ewm-mfs.html"
         }]
       }
     ]
     </script>
 
-    <title>Article Title | WMexperts</title>
+    <title>Discover SAP EWM MFS | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -467,19 +433,94 @@
     </header>
 
     <article>
-        <div class="breadcrumb">Category Name</div>
-        <h1>Your Great SAP EWM Insight</h1>
+        <div class="breadcrumb">Discover SAP EWM MFS</div>
+        <h1>What is SAP EWM MFS?</h1>
 
         <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/tDcEeMhoPWc" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div class="content">
-            <p>Example paragraph text.</p>
+            <p>This blog is part of the series ‘<em>SAP EWM meets Automation – Discover EWM MFS’</em>. As with all posts of this series, the content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management">website</a> in case you want to learn more about the services offered by Swisslog or to browse open positions within their EWM team!</p>
+            <p>This blog post is intended for those of you who never implemented an automated warehouse with EWM MFS or even never used <a href="https://wmexperts.online/guide-subscription-5-characteristics-sap-ewm-consulting/" target="_blank" rel="noopener">SAP EWM</a> before. I wrote this article as I noticed that some of my subscribers/readers are actually part of this group. This is not a problem at all but I thought it might be beneficial to induct those with a very simple post answering this apparently simple question (did not think of this when I started this series initially – otherwise that would have been the very first post).</p>
+            <p>You should indeed have a rough understanding about what a WMS (Warehouse Management System) is doing and that S<a href="https://wmexperts.online/guide-subscription-5-steps-to-create-workable-requirement-in-sap-ewm/" target="_blank" rel="noopener">AP EWM</a> is such a system. But apart from this - I do not request any additional prior knowledge here.</p>
+            <p>My proposal -</p>
+            <p>This blog post exchanges 5 minutes of your life against the answer to the question ‘<em>What is EWM MFS</em>?’</p>
+            <p>Expect a short, compact and simple summary!</p>
+            <p>Technically, EWM MFS is a <u>package of code </u>sitting in <a href="https://wmexperts.online/reveal-sap-ewm-options-for-the-destination-of-loading-tasks/">SAP EWM</a> which enables EWM to <u>talk directly</u> with different kind of <u>automation equipment</u>.</p>
+            <p>Let us break this into smaller pieces / keywords in order to understand it:</p>
+            <ol>
+                <li>Package of code</li>
+                <li>Talk directly</li>
+                <li>Automation equipment</li>
+            </ol>
+            <p>We start with the last one to have something physical in mind right from the beginning -</p>
+            <p>What is <em>automation equipment </em>in this context? That could basically be everything that moves without direct operator control within a warehouse and is controlled by a PLC (Programmable Logic Controller). So technically EWM talks to the PLC and not directly to the equipment (this is an important difference). Automation equipment in this context could be conveyors of all different kinds, Automated Storage and Retrieval Systems (ASRS) operated by cranes, Monorails and many more:</p>
+            
             <div class="screenshot-container">
-                <img src="../../assets/images/placeholder.png" alt="Descriptive alt text for the image" width="800" height="450" loading="lazy">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_01.jpg" alt="What is SAP EWM MFS_01" loading="lazy">
             </div>
-            <pre>/SCWM/TECHNICAL_DETAILS</pre>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_02.jpg" alt="What is SAP EWM MFS_02" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_03.png" alt="What is SAP EWM MFS_03" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_04.jpg" alt="What is SAP EWM MFS_04" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_05.jpg" alt="What is SAP EWM MFS_05" loading="lazy">
+            </div>
+
+            <p>So this is the stuff that EWM MFS is talking to via the PLC (EWM &gt; PLC &gt; Automation Hardware).</p>
+            <p>It is realized by what I mentioned as <em>package of code</em> in my definition above. This package is part of SAP EWM since 2008 with the release of EWM 5.1. Post this release, it was no longer required to install external middleware or warehouse control units in order to run automated warehouses with SAP EWM (so you could actually communicate with PLCs and the automation hardware already before that but not without using an additional middleware or control unit in between &gt; more details further below).</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_06.png" alt="What is SAP EWM MFS_06" loading="lazy">
+            </div>
+
+            <p>The master &amp; application data which is used by this package of code and required to make everything work is sitting here in the Easy Access menu:</p>
+            <p><em>SAP Menu &gt; SCM Extended Warehouse Management &gt; Extended Warehouse Management &gt; Master Data &gt; Material Flow System (MFS)</em></p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_07.png" alt="What is SAP EWM MFS_07" loading="lazy">
+            </div>
+
+            <p>And the customizing which has its stake in controlling the MFS processes is sitting here:</p>
+            <p><em>SAP Customizing Implementation Guide &gt; SCM Extended Warehouse Management &gt; Extended Warehouse Management &gt; Material Flow System (MFS)</em></p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_08.png" alt="What is SAP EWM MFS_08" loading="lazy">
+            </div>
+
+            <p>Last but not least, I explain what I have in mind when I say <em>talk directly to</em> automation equipment?</p>
+            <p>I provided a short hint already above, mentioning the ‘middleware’ or ‘control unit’. To make this more tangible, let us look at the warehouse automation layer model published via <a href="https://www.vdi.de/en/home/vdi-standards#:~:text=A%20VDI%20Standard%20is%20a,benchmark%20for%20flawless%20technical%20procedures.">VDI standard</a> 3962. EWM as our warehouse management system is sitting right under the inventory management system which is managing orders, creating deliveries and pushes those towards EWM:</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_09.png" alt="What is SAP EWM MFS_09" loading="lazy">
+            </div>
+
+            <p>EWM - before the integration of its MFS component - was mainly managing stock per HU/storage bin and creating tasks against deliveries in order to move this stock into or out of the warehouse. In order to talk to automation equipment (<em>programmable logic controllers</em> to be precise again) it required an additional middleware (here shown as ‘Material flow control’ layer):</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_10.png" alt="What is SAP EWM MFS_10" loading="lazy">
+            </div>
+
+            <p>Now with EWM MFS we have the Material Flow Control layer directly integrated within EWM. So this package of ABAP code I was talking about above represents this layer end enables EWM to talk to the PLCs directly without an additional control unit / middleware in between:</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-what-is/What is SAP EWM MFS_11.png" alt="What is SAP EWM MFS_11" loading="lazy">
+            </div>
+
+            <p>And what does it technically mean when I say ‘<em>talking’ </em>to automation equipment? At the end it is all about exchanging strings of data based on a pre-defined protocol, which helps to enable a stable communication and to interpret the data which is being exchanged. These data strings are what we call <em>telegrams</em> in the context of EWM MFS.</p>
+            <p>At this point we are on the edge of leaving the surface and digging into detail which was not the intention of this blog post. I hope the question ‘<em>What is EWM MFS?</em>’ has been answered for you in an easy &amp; understandable way.</p>
+            <p>For those who are interested in further details I can recommend these blogs/videos:</p>
+            <ul>
+                <li>Check <a href="https://wmexperts.online/mfs-role-of-the-plc/" target="_blank" rel="noopener">this blog post</a> in order to understand what a PLC is and what it is doing in the context of automation with EWM MFS.</li>
+                <li>Check <a href="https://wmexperts.online/mfs-ewm-plc-integration/" target="_blank" rel="noopener">this blog post</a> in order to understand the role of important objects in SAP EWM MFS.</li>
+                <li>Check <a href="https://wmexperts.online/mfs-ewm-plc-communication/" target="_blank" rel="noopener">this blog post</a> in order to understand how EWM MFS talks to the PLC.</li>
+            </ul>
         </div>
 
         <!-- STAY UPDATED SECTION -->

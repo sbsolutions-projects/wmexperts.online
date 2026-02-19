@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Hendrik Schulte-Bahrenberg, the voice behind WMexperts. Senior SAP EWM Freelancer and MFS Architect.">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    <title>About | WMexperts.online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --sap-blue-light: #0066B3;
+            --bg-page: #F5F7FA;
+            --bg-card: #FFFFFF;
+            --text-dark: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --accent: #EEF6FC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER (Consistent with Index) --- */
+        header {
+            background: var(--bg-card);
+            padding: 1.5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--sap-blue);
+            text-decoration: none;
+        }
+
+        nav a {
+            margin-left: 2.5rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--sap-blue);
+        }
+
+        /* --- CONTENT SECTION --- */
+        .content-container {
+            padding: 4rem 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-section {
+            display: flex;
+            gap: 4rem;
+            align-items: flex-start;
+            margin-bottom: 4rem;
+        }
+
+        .profile-image-container {
+            flex: 0 0 350px;
+        }
+
+        .profile-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            display: block;
+            margin-top: 32px; /* Move image down by ~1cm */
+        }
+
+        .profile-bio {
+            flex: 1;
+        }
+
+        .profile-bio h1 {
+            font-size: 2.8rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .quote-box {
+            border-left: 4px solid var(--sap-blue);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            font-weight: 300;
+        }
+
+        .bio-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .bio-text strong {
+            color: var(--text-dark);
+        }
+
+        /* --- CONNECT CARDS --- */
+        .connect-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .connect-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .connect-card:hover {
+            border-color: var(--sap-blue);
+            background: var(--accent);
+        }
+
+        .connect-card h4 {
+            color: var(--text-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .connect-card span {
+            font-size: 0.85rem;
+            color: var(--sap-blue);
+            font-weight: 600;
+        }
+
+        /* --- FOOTER (Consistent with Index) --- */
+        footer {
+            padding: 3rem 8%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .profile-section {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .profile-image-container {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .connect-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-bio h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">WMexperts.online</a>
+        <nav>
+            <a href="index.html#latest">Latest</a>
+            <a href="blog-overview.html">All Articles</a>
+            <a href="about.html" class="active">About</a>
+        </nav>
+    </header>
+
+    <main class="content-container">
+        <section class="profile-section">
+            <div class="profile-image-container">
+                <img src="..\assets\images\z_misc\Hendrik-7845.jpg" alt="Hendrik" class="profile-image">
+                <p style="text-align: center; margin-top: 1rem; font-size: 0.85rem; font-weight: 600; color: var(--sap-blue);">
+                    Principal Consultant | MFS Architect | Coach
+                </p>
+            </div>
+
+            <div class="profile-bio">
+                <h1>Hi, I'm Hendrik.</h1>
+                
+                <div class="quote-box">
+                    "The only way to do great work is to love what you do."
+                </div>
+
+                <div class="bio-text">
+                    <p>I am one of the lucky few who found a genuine passion in my profession. In an era where AI can generate endless streams of information, I believe it is more important than ever to ground technical content in real-world human interaction & relationship.
+                    
+                    <p>My career has been spent at the intersection of complex software, physical automation and the human dealing with that stuff. I specialize in translating the logic of SAP EWM into one that can be understood by automated material flow systems on the one side and human operators on the other.</p>
+                    
+                    <p>I don’t just work with these systems; I enjoy the challenge they present. Sharing this knowledge and spending my time deep-diving into the the logic is how I choose to contribute to the intralogistics community.</p>
+                </div>
+
+                <div class="connect-grid">
+                    <a href="https://www.linkedin.com/in/hendrik-schulte-bahrenberg-9a415339/" target="_blank" class="connect-card">
+                        <div>
+                            <h4>Contact & Network</h4>
+                            <span>View LinkedIn Profile →</span>
+                        </div>
+                    </a>
+                    <a href="https://www.youtube.com/@sapewm" target="_blank" class="connect-card">
+                        <div>
+                            <h4>Deep-Dive Tutorials</h4>
+                            <span>Visit YouTube Channel →</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</p>
+    </footer>
+
+</body>
+</html>
