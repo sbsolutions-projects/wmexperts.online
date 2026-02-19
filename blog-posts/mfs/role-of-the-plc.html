@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Introduction to the role of Programmable Logic Controllers (PLCs) in SAP EWM MFS projects. Learn about PLC components and warehouse automation.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, MFS, PLC, Automation, Material Flow System">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Discover SAP EWM MFS | WMexperts">
+    <meta property="og:description" content="Introduction to the role of Programmable Logic Controllers (PLCs) in SAP EWM MFS projects. Learn about PLC components and warehouse automation.">
+    <meta property="article:published_time" content="2025-01-01">
+    <meta property="article:modified_time" content="2025-01-01">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "Introduction to the role of Programmable Logic Controllers (PLCs) in SAP EWM MFS projects. Learn about PLC components and warehouse automation.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/mfs.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>Discover SAP EWM MFS | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Discover SAP EWM MFS</div>
+        <h1>The role of the PLC</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube-nocookie.com/embed/HeIJ33nYa_Y" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p>This blog is part of the series ‘<em>SAP EWM meets Automation – Discover EWM MFS</em>’ and gives you an introduction about the role of Programmable Logic Controllers (PLCs) as part of EWM MFS projects. I do think that Consultants &amp; Developers involved in projects where the EWM MFS component is being used should at least have a high-level understanding of what a PLC is and what it is doing. This short article will provide exactly that level of detail that you need in order to grasp the end-to-end communication flows or in order to work together closely with the PLC-teams/programmers in such projects. Note that it is not intended to give an in-depth insight into how a PLC is constructed and how it is processing signals/data. Also note that there are special types of PLCs with technical variations which are not in-line with what I explain here. We ignore those specialties as the objective is to get a basic understanding of what a typical PLC is and does in an automated warehouse.</p>
+            <p>The content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank" rel="noopener">website</a> in case you want to learn more about the services offered by Swisslog or to browse open positions within their EWM team!</p>
+            <p><strong>Agenda</strong></p>
+            <p>- Main components of a PLC and their purpose<br />- Role of a PLC in the context of warehouse automation with SAP EWM<br />- Outlook</p>
+            <p><strong>Main components/functions</strong></p>
+            <p>As an introduction, let us have a look at the VDI 3962 layer model for computer installations in automated storage systems:</p>
+            
+            <div class="screenshot-container">
+                <img width="984" height="419" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 1.png" alt="PLC in EWM MFS 1" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1010" height="438" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 2.png" alt="PLC in EWM MFS 2" loading="lazy">
+            </div>
+            
+            <p>The Inventory Management level could be covered by an ERP system like SAP S/4HANA. EWM with its in-built MFS component covers the Warehouse Management and the MFC layer:</p>
+            <p>EWMs MFS components integrates with the PLC which in turn controls sensors and drives. The latter should be our focus within this blog post:</p>
+            
+            <div class="screenshot-container">
+                <img width="1011" height="432" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 3.png" alt="PLC in EWM MFS 3" loading="lazy">
+            </div>
+            
+            <p>A PLC is a small industrial computer which consists of multiple modules. The main purpose – at least in our context – is to automize intralogistics processes. All or at least some of those modules are usually installed within such a cabinet:</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image213.jpg" alt="" width="326" height="434" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image214.jpg" alt="" width="460" height="345" loading="lazy">
+            </div>
+            
+            <p>The most important modules are inputs/outputs as well as the CPU.<br />Input modules receive digital or analogue signals from multiple different sources (switches, sensors, scanners, light barriers etc.). Here an example of a case conveyor I-point with multiple different sensors &amp; scanners. We come back to those input options later in this article:</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image215.jpg" alt="" width="301" height="374" loading="lazy">
+            </div>
+            
+            <p>The following pictures show examples of input/output modules were signals are received/send to/from the CPU:</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image216.jpg" alt="" width="390" height="263" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image217.jpg" alt="" width="199" height="266" loading="lazy">
+            </div>
+            
+            <p>An input could for example be interpreted as being active once a specific electrical voltage is recognized. The incoming signals are converted to digital bits which are processed by the CPU.</p>
+            
+            <div class="screenshot-container">
+                <img width="932" height="454" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 9.png" alt="PLC in EWM MFS 9" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="774" height="602" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 10.png" alt="PLC in EWM MFS 10" loading="lazy">
+            </div>
+            
+            <p>Alternatively, the PLC can receive data/data-strings in the format of telegrams from other systems (e.g. WMS) via TCP/IP.</p>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="362" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 11.png" alt="PLC in EWM MFS 11" loading="lazy">
+            </div>
+            
+            <p>Note that it is not mandatory but you will sometimes see middleware/services running on servers in between the WMS and the PLCs which are e.g.<br />- determining the target PLC (e.g. in case relationship between logical PLC in EWM and physical PLCs is 1-n)<br />- converting the telegram format (e.g. in case different PLC vendors are connected to one WMS/protocol or in case RFC-TCP/IP converters like Plant Connectivity are being used instead of direct TCP/IP based communication via ABAP Push Channels).</p>
+            
+            <div class="screenshot-container">
+                <img width="727" height="546" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 12.png" alt="PLC in EWM MFS 12" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="643" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 13.png" alt="PLC in EWM MFS 13" loading="lazy">
+            </div>
+            
+            <p>The CPU is the heart of the PLC and it contains a memory which holds the program/coding which is responsible to process the input. The following picture shows a CPU produced by the company Beckhoff:</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image223.jpg" alt="" width="566" height="373" loading="lazy">
+            </div>
+            
+            <p>These programs are usually written in an application on a computer and then downloaded to the PLC. The TIA portal from Siemens is one example for such an application. It allows the engineer/developer to work with somewhat ‘simple’ logical operators but also complex coding, as shown in the screenshots below:</p>
+            
+            <div class="screenshot-container">
+                <img width="763" height="560" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 15.png" alt="PLC in EWM MFS 15" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="917" height="443" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 16.png" alt="PLC in EWM MFS 16" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="902" height="815" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 17.png" alt="PLC in EWM MFS 17" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="924" height="746" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 18.png" alt="PLC in EWM MFS 18" loading="lazy">
+            </div>
+            
+            <p>The main responsibility of those programs is to<br />- process the incoming signals<br />- trigger the outgoing signals based on the input<br />So on the output side, the data which results out of the program logic (digital information in the format of bits) is converted into an electrical signal.</p>
+            
+            <div class="screenshot-container">
+                <img width="940" height="473" src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 19.png" alt="PLC in EWM MFS 19" loading="lazy">
+            </div>
+            
+            <p>Input and output modules are connected to the CPU via bus systems or ethernet computer networks. Thus, the modules might be sitting in a shared cabinet (as shown in the pictures at the beginning of the blog/video) but could also be distributed across different buildings of the warehouse. </p>
+            <p><u>Summary of what the PLC does</u><br />1. Receive an input (~ monitor the status of multiple inputs)<br />2. Perform a logic using the inputs (e.g. connecting the inputs based on logical operators or use them as variables in a program)<br />3. Activate/deactivate outputs based on the results of the logic</p>
+            <p>That should be enough to give you a high-level understanding. Based on this, let us look at some practical examples from the warehousing world.</p>
+            <p><strong>The role of the PLC in the context of warehouse automation</strong></p>
+            <p><u>We start with simple examples for a pure PLC logic</u><br />1. Scanners: Activate a barcode scanner once a position/sensor is high which detects a pallet/HU at a scanner position</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image229.jpg" alt="" width="486" height="355" loading="lazy">
+            </div>
+            
+            <p>2. Conveyor engines: Start the conveyor once a pallet/HU is dropped on an infeed position</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image230.jpg" alt="" width="274" height="364" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image231.jpg" alt="" width="576" height="280" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image232.jpg" alt="" width="517" height="368" loading="lazy">
+            </div>
+            
+            <p>3. Position tracking: Pallet/HU moves from one conveyor segment to another conveyor segment &gt; PLC receives input signals from the sensor(s) once the HU has left/arrived at a segment</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image233.jpg" alt="" width="301" height="387" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image234.jpg" alt="" width="310" height="380" loading="lazy">
+            </div>
+            
+            <p><u>Now some more complex examples where the PLC communicates with the underlying hardware as well as with EWM</u><br />1. I-Point pallet tunnel: Evaluate the status of the sensors which are installed for the tunnel check &gt; send the result to EWM via telegram.</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image235.jpg" alt="" width="346" height="358" loading="lazy">
+            </div>
+            
+            <p>2. I-Point dimension check: Evaluate the status of the sensors which are installed to check the dimensions of the object &gt; send the result to EWM via telegram</p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image236.jpg" alt="" width="302" height="403" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image237.jpg" alt="" width="317" height="394" loading="lazy">
+            </div>
+            
+            <p>3. Crane movements: Create a stock removal task for a crane to remove a pallet from a bin in the given rack &gt; start the motor to move the crane to the source position<br /></p>
+            
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\role-plc/image238.jpg" alt="" width="379" height="361" loading="lazy">
+            </div>
+            
+            <p>To sum it up, in the <u>context of warehouse automation</u> the PLC is mainly responsible to </p>
+            <p>- monitor sensors to identify/track HUs<br />- control the drives for conveyors, cranes or other kind of equipment<br />- read the result of the scanners</p>
+            <p>And as shown above, this interaction with the physics is then either an <u>input to</u> or an <u>output of</u> a pure PLC program logic or a logic which resides (partly/fully) in the WMS (e.g. SAP EWM) and is communicated from/to the PLC via telegrams.</p>
+            <p><strong>Outlook</strong></p>
+            <p>As mentioned at the beginning of this article, what you read here should serve as an introduction/basis for more complex articles which I will release during the next months. With the next post I will show you how EWM actually interlocks with the PLC before I provide a step-by-step overview of the communication from EWM to the PLC and the other way around. </p>
+            <p>And as as mentioned above, feel free to get in touch with the <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank" rel="noopener">EWM team @ Swisslog</a> in case you need support around MFS as part of your EWM projects! Browse through the open positions listed below, in case you are interested to join the team!</p>
+            <p><em>I hope this blog post provides value to you and you could learn something. Please feel free to s</em><em>ubscribe to my <strong><a href="https://wmexperts.online/blog-newsletter/" target="_blank" rel="noopener">blog updates </a></strong>or my <strong><a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank" rel="noopener">youtube channel </a></strong>in case you want to be notified about new posts!</em></p>
+            <h2>Get my monthly blog-updates!</h2>
+            <h2>Subscribe to my Youtube channel!</h2>
+            <a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank">Subscribe</a>
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>

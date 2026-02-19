@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about MFS Putaway Strategy.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, MFS Putaway Strategy, MFS, Automation">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="MFS Putaway Strategy | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about MFS Putaway Strategy.">
+    <meta property="article:published_time" content="2024-01-01">
+    <meta property="article:modified_time" content="2024-01-01">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MFS Putaway Strategy",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about MFS Putaway Strategy.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>MFS Putaway Strategy | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Discover SAP EWM MFS</div>
+        <h1>MFS Putaway Strategy</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube-nocookie.com/embed/SuFGOJvRv5s" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p><strong>Note</strong>: This blog is part of the series ‘<em>SAP EWM meets Automation</em>’ and shows an EWM standard logic which is rarely mentioned in any of the EWM books and documentations but tackles a process which becomes more and more relevant in an environment of an increasing degree of automation within warehouses. Discover SAP EWM MFS Putaway Strategy.</p>
+            <p>The content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management">website</a> in case you want to learn more about EWM @ Swisslog!</p>
+            <p>Note that you need to have a basic understanding of the MFS component as well as some ABAP knowledge in order to understand all parts of this blog post.<br>For the time being simply imagine a warehouse like this:<br>- Automated high-bay warehouse with a couple of aisles/cranes, each having one pick-up and one deposit position<br>- Pallet conveyor with a couple of infeeds, i-points and outfeeds:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 1.png" alt="SAP EWM MFS putaway strategy 1" loading="lazy">
+            </div>
+            <p>Important terminology in order to understand this article:<br>- Cranes: Operating in one aisle; executing the putaway and removal tasks<br>- Communication points: Point along the conveyor at which the communication between EWM and the PLC occurs (displayed as storage bin in EWM).<br>- Pick-up points: The communication point / part of the conveyor where the cranes pick-up HUs which are to be putaway:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 2.png" alt="SAP EWM MFS putaway strategy 2" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 3.png" alt="SAP EWM MFS putaway strategy 3" loading="lazy">
+            </div>
+            <h2>Where do we find the standard MFS Putaway Strategy?</h2>
+            <p>The EWM standard MFS putaway strategy is encapsulated in class <code>/SCWM/CL_CORE_PUTSTRA</code> which is not used for non-automated storage types.</p>
+            <p>Customer classes can inherit from this class to influence the MFS putaway strategy. BAdIs <code>/SCWM/EX_MFS_ACT_CASE_RBD</code>, <code>/SCWM/EX_CORE_PTS_EMPTY_BIN</code> and <code>/SCWM/EX_CORE_PTS_MD_ADDBIN</code> can be used to implement a custom logic and make use of the class mentioned before. The idea of course is to re-use as much standard as possible only re-define certain methods to get to the desired behavior. </p>
+            <p>We look at the empty bin determination as an example here -<br>In automated storage types EWM standard will handle the empty bin determination almost entirely separated from the empty bin determination of non-automated storage types.</p>
+            <p>As mentioned before, the standard logic is sitting in class <code>/SCWM/CL_CORE_PUTSTRA</code>. This class will be called via the fallback class <code>/SCWM/CL_EX_CORE_PTS_EMPTY_BIN</code> of Badi <code>/SCWM/EX_CORE_PTS_EMPTY_BIN</code>:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 4.png" alt="SAP EWM MFS putaway strategy 4" loading="lazy">
+            </div>
+            <h2>Content/logic of the standard strategy</h2>
+            <p>During runtime we are looping through the storage types given in the storage type search sequence while trying to find a putaway bin. Only if the given storage type is of role 'MFS', the fallback class becomes relevant and the standard putaway logic (which is e.g. used for non-automated storage types) will not be executed:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 5.png" alt="SAP EWM MFS putaway strategy 5" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 6.png" alt="SAP EWM MFS putaway strategy 6" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 7.png" alt="SAP EWM MFS putaway strategy 7" loading="lazy">
+            </div>
+            <p>This also means for all non-MFS relevant storage types (storage type role) this fallback class will never do anything and for all MFS-relevant storage types the putaway bin has to be determined within this fallback class or within a custom implementation of this Badi. Other options in standard are not possible as it will be skipped based on the variable shown above.</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 8.png" alt="SAP EWM MFS putaway strategy 8" loading="lazy">
+            </div>
+            <p>Now let us have a look into the functionalities that this example implementation (respectively the class mentioned above) offer in addition to the standard non-MFS putaway strategies.</p>
+            <p>For the purpose of this blog we will ignore method <code>init_4_destbin_at_wt_crea</code>. It only serves to set some attributes of the class object based on the source data of given WT. Those attributes are relevant for processing later but not important in order to understand the core logic of the given method/class here.<br>A deeper look into method <code>det_empty_bin_at_wt_crea</code> reveals the core of the standard strategy for the empty bin determination in a MFS environment:<br>The method is importing the preferred storage type, section and bin type based on standard customizing. The objective is to export a list of bins which can be used as a destination for the WT.</p>
+            <p>1.<br>The first important step is the determination of possible destination aisles:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 9.png" alt="SAP EWM MFS putaway strategy 9" loading="lazy">
+            </div>
+            <p>In a MFS environment the putaway tasks are usually created at the i-point or an intermediate <u>communication point</u> on the way between the I-point and the final putaway bins. For each of those communication points we can define via customizing which aisles for which destination storage types are accessible. Method <code>get_aisles</code> reads this data:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 10.png" alt="SAP EWM MFS putaway strategy 10" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 11.png" alt="SAP EWM MFS putaway strategy 11" loading="lazy">
+            </div>
+            <p>Another option is to determine the final destination bin once the HU is handed over to the resource (this could also happen in exceptional cases e.g. in case of task re-creation while the HU is already on a crane but the initial destination bin is not available), the method reads the accessible aisles for the given resource:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 12.png" alt="SAP EWM MFS putaway strategy 12" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 13.png" alt="SAP EWM MFS putaway strategy 13" loading="lazy">
+            </div>
+            <p>If the HU is neither on a communication point, nor on a resource, we determine the aisles which are accessible for the source storage bin (~ HU is sitting on a bin which is not a MFS communication point &gt; for example in case we execute a rearrangement within an aisle) . For this purpose, EWM standard reads table <code>/scwm/mfsrsrcais</code> again (while ignoring the resource field):</p>
+            <p>Having a set of possible destination aisles, we now try to filter them based on specific criteria:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 14.png" alt="SAP EWM MFS putaway strategy 14" loading="lazy">
+            </div>
+            <p>SAP delivers a nice overview of the steps here right at the beginning of the method:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 15.png" alt="SAP EWM MFS putaway strategy 15" loading="lazy">
+            </div>
+            <p>We will not look into detail for all steps but I would like to mention some of the important ones:<br>Main purpose of (1) and (2) is to fill the internal table carrying the possible aisles with the status of the corresponding resource. The objective is to identify those aisles where the resources (e.g. the crane in a HBW) have an exception (~ not up and running &gt; e.g. in failure mode or currently out of service) or the communication channel to the responsible PLC is not running:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 16.png" alt="SAP EWM MFS putaway strategy 16" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 17.png" alt="SAP EWM MFS putaway strategy 17" loading="lazy">
+            </div>
+            <p>The main purpose of point (3) and (4) is to identify the pick-up point for each aisle (~ the communication point where the resource (e.g. crane) picks up the HU which is to be putaway) and determine the max capacity of this CP as well as a potential exception (e.g. aisle is set to ‘outfeed only’ mode, which is saved as an exception on the pick-up communication point). The results are also written into our internal aisle table:</p>
+            <p>Point (5) deletes aisles without any resource assignment and point (6) finally flags aisles to be excluded based on the results of steps (1)-(4):</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 18.png" alt="SAP EWM MFS putaway strategy 18" loading="lazy">
+            </div>
+            <p>Point (8)</p>
+            <ol>
+                <li>determines the number of HUs travelling towards / sitting on the pick-up point</li>
+                <li>calculates the free capacity based on the max capacity and the result of the previous bullet point</li>
+                <li>flags the aisle in order to exclude it from the selection in case the max capa is exceeded</li>
+            </ol>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 19.png" alt="SAP EWM MFS putaway strategy 19" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 20.png" alt="SAP EWM MFS putaway strategy 20" loading="lazy">
+            </div>
+            <p>Finally the method <code>filter_aisles</code> returns an internal table with all relevant aisles, carrying the data determined above and potentially being flagged for exclusion:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 21.png" alt="SAP EWM MFS putaway strategy 21" loading="lazy">
+            </div>
+            <p>As part of the next step we fill variable <code>lv_psv</code>, which is holding the <em>putaway strategy variant</em>:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 22.png" alt="SAP EWM MFS putaway strategy 22" loading="lazy">
+            </div>
+            <p>The possible variants based on the standard coding are</p>
+            <ol>
+                <li>prepicked HU (first HU item has a reference to an ODO)</li>
+                <li>single product HU (HU does only have one material/batch combination)</li>
+                <li>none of the two = <em>undefined</em></li>
+            </ol>
+            <p>Those variants can be used to call different approaches for empty bin determination within the next step. We will not go into detail here as the standard has not implemented significant differences here.  </p>
+            <p>As part of the last step we do now try to find a destination bin. Important here as an input:</p>
+            <ul>
+                <li><code>lt_aisle_level</code>: the table of possible aisles that we filled at the beginning of the main method</li>
+                <li><code>lt_penalty_srt</code>: this table is being imported into the Badi. As mentioned before, we are looping over a sequence of combinations for destinations storage types, sections and bin types (defined in standard customizing)</li>
+            </ul>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 23.png" alt="SAP EWM MFS putaway strategy 23" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 24.png" alt="SAP EWM MFS putaway strategy 24" loading="lazy">
+            </div>
+            <p>Here the standard first deletes non-relevant aisles based on the exclusion-flag filled before. Then the loop through the remaining aisles starts:</p>
+            <p>Within this loop EWM is doing some checks on the storage type customizing, enriches the penalty table mentioned above (do not want to go into detail here) and finally reaches method <code>select_empty_bins</code>:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 25.png" alt="SAP EWM MFS putaway strategy 25" loading="lazy">
+            </div>
+            <p>Apart from the main select on table <code>/SCWM/LAGPN</code>, the MFS-specific logic which is worth it to mention is</p>
+            <ul>
+                <li>the consideration of the required bin depth of the HU type (multidepth storage)</li>
+            </ul>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 26.png" alt="SAP EWM MFS putaway strategy 26" loading="lazy">
+            </div>
+            <ul>
+                <li>the consideration of the rough bin determination (check against table <code>MFSHUMOVE</code> &gt; we ignore the bin in case another HU is already on the way towards it)</li>
+            </ul>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 27.png" alt="SAP EWM MFS putaway strategy 27" loading="lazy">
+            </div>
+            <p>Finally, we handover a list of possible empty destination bins to the caller:</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 28.png" alt="SAP EWM MFS putaway strategy 28" loading="lazy">
+            </div>
+            <p>At the end we sort the table for cross-line stock putaway (this way it is possible to achieve an equal utilization of bin capacity usage across the aisles):</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 29.png" alt="SAP EWM MFS putaway strategy 29" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 30.png" alt="SAP EWM MFS putaway strategy 30" loading="lazy">
+            </div>
+            <p>The final step is kind of funny:<br>1. if we found a bin we do not run the non-MFS strategy (makes sense because we already found something)<br>2. if we did not find a bin we also do not run the non-MFS strategy (also makes sense because we want to putaway into a MFS storage type)</p>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\mfs-putaway/Picture107.png" alt="" loading="lazy">
+            </div>
+            <p><strong>That's it!</strong></p>
+            <p><em>In case you are faced with challenges in or around EWM MFS, feel free to get in touch with the <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management">EWM team @ Swisslog</a>. </em></p>
+            <p><em>I hope this blog post provides value to you and you could learn something. Please feel free to s</em><em>ubscribe to my <strong><a href="https://wmexperts.online/blog-newsletter/" target="_blank" rel="noopener">blog updates </a></strong>or my <strong><a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1">youtube channel </a></strong>in case you want to be notified about new posts!</em></p>
+            <h2>Get my monthly blog-updates!</h2>
+            <h2>Subscribe to my Youtube channel!</h2>
+            <a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank">Subscribe</a>
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>

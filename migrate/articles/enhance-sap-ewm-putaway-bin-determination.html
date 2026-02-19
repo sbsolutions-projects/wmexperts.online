@@ -1,0 +1,664 @@
+<h1>Enhance SAP EWM</h1>
+<h2>Putaway bin determination (Putaway strategy)</h2>
+<p><strong>Note</strong>: The purpose of this series of blogs/videos is to show you how to enhance different areas/functionalities in the SAP EWM putaway bin. Thus, it will tackle technical details and complex coherences which might not be suitable for EWM beginners.</p>
+<p>The purpose of this blog is to give you<br>1. everything you need in order to understand every single detail of the EWM standard putaway logic<br>2. the tools to adjust it based on your needs<br>Let us jump into the details right away!</p>
+<p>First of all it is important to know that the heart of the EWM standard putaway strategy is sitting in function group /SCWM/PUT_BIN_DET (master program /SCWM/SAPLPUT_BIN_DET):</p><p>Here you can everything which is needed to understand EWM putaway in detail. You will find plenty of includes carrying different subroutines as well the main include containing the function modules:</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_01-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTAsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzAxLTEucG5nIn0%3D">
+							<img width="768" height="420" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_01-1-768x420.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_01-1-768x420.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_01-1-300x164.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_01-1-640x350.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_01-1.png 975w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_02-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTEsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzAyLTEucG5nIn0%3D">
+							<img width="768" height="581" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_02-1-768x581.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_02-1-768x581.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_02-1-300x227.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_02-1-640x484.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_02-1.png 975w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+		<p>Looking at the subroutines for instance, you find many interesting spots which can help you understand the different strategies and checks which are applied during bin determination:</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_03-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTIsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzAzLTEucG5nIn0%3D">
+							<img width="698" height="670" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_03-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_03-1.png 698w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_03-1-300x288.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_03-1-640x614.png 640w" sizes="(max-width: 698px) 100vw, 698px" />								</a>
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_04-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTMsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzA0LTEucG5nIn0%3D">
+							<img width="533" height="816" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_04-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_04-1.png 533w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_04-1-196x300.png 196w" sizes="(max-width: 533px) 100vw, 533px" />								</a>
+		<p>In the include for the function modules you will also find lots of useful spots e.g. the FM for storage type determination or the one which executes the checks for dangerous goods:</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_05-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTQsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzA1LTEucG5nIn0%3D">
+							<img width="949" height="695" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_05-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_05-1.png 949w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_05-1-300x220.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_05-1-768x562.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_05-1-640x469.png 640w" sizes="(max-width: 949px) 100vw, 949px" />								</a>
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_06-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTUsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzA2LTEucG5nIn0%3D">
+							<img width="768" height="407" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_06-1-768x407.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_06-1-768x407.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_06-1-300x159.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_06-1-640x339.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_06-1.png 975w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+		<p>In terms of enhancements we will concentrate now on the Badis provided by SAP and ignore additional options (implicit/explicit enhancements etc.). Enhancement spot /SCWM/ES_CORE_PTS contains most of the Badis which can be used to adjust the putaway logic based on your needs</p><p>Based on two of the most commonly used Badis I would like to show you how we can include our custom logic here.<br />- Example 1: Exclude specific bins based on quantity in warehouse task<br />- Example 2: Change the putaway rule based on base UOM from product master data</p><p><strong>Example 1</strong><br />Here we can use Badi /SCWM/EX_CORE_PTS_FILT_SORT to filter &amp; sort potential destination bins:</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_07-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTYsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzA3LTEucG5nIn0%3D">
+							<img width="768" height="322" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_07-1-768x322.png" alt="SAP EWM Putaway bin determination_07" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_07-1-768x322.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_07-1-300x126.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_07-1-640x268.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_07-1.png 975w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+		<p>Apply the where-us-list of the interface method in order to understand where the Badi is accessible:</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_08-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTcsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzA4LTEucG5nIn0%3D">
+							<img width="768" height="721" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_08-1-768x721.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_08-1-768x721.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_08-1-300x282.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_08-1-640x601.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_08-1.png 796w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_09-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTgsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzA5LTEucG5nIn0%3D">
+							<img width="768" height="227" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_09-1-768x227.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_09-1-768x227.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_09-1-300x89.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_09-1-640x189.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_09-1-800x237.png 800w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_09-1.png 802w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+		<p>Different spots in call stack during runtime:</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_11-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMjAsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzExLTEucG5nIn0%3D">
+							<img width="768" height="358" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_11-1-768x358.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_11-1-768x358.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_11-1-300x140.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_11-1-640x299.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_11-1.png 834w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_10-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMTksInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzEwLTEucG5nIn0%3D">
+							<img width="755" height="264" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_10-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_10-1.png 755w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_10-1-300x105.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_10-1-640x224.png 640w" sizes="(max-width: 755px) 100vw, 755px" />								</a>
+		<p>We will go into detail for the call in the last screenshot above. Subroutine BIN_DETERMINATION_3 which is called in the context of FM /SCWM/PUT_BIN_DET (program /SCWM/LPUT_BIN_DETF92 &gt; also the stack is interesting here):</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_12-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMjEsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzEyLTEucG5nIn0%3D">
+							<img width="975" height="432" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_12-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_12-1.png 975w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_12-1-300x133.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_12-1-768x340.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_12-1-640x284.png 640w" sizes="(max-width: 975px) 100vw, 975px" />								</a>
+		<p>Product master data is imported with <em>is_mat_global</em> / <em>it_mat_UOM</em> and WT data (containing the quantity) is imported in <em>is_ltap</em>. Based on this we can now easily include our logic to ignore specific bins based on the quantity in any given UOM (the logic is just random – thus no details here). The internal table to be adjusted here is <em>ct_hlplagpl</em> (structure details in screenshot below) which is carrying all possible destination bins based on standard putaway strategy. Within the interface method we can either remove single rows (e.g. remove bins which should not be used in the given scenario) or change the sorting in the table (e.g. prioritize specific bins over others).</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_13-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMjIsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzEzLTEucG5nIn0%3D">
+							<img width="768" height="469" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_13-1-768x469.png" alt="SAP EWM Putaway bin determination_13" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_13-1-768x469.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_13-1-300x183.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_13-1-640x391.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_13-1.png 975w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+		<p>Below screenshot shows additional import parameters of the method which can be used as a base for your custom logic to decide how to filter/sort the bins:</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_14-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMjMsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzE0LTEucG5nIn0%3D">
+							<img width="768" height="359" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_14-1-768x359.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_14-1-768x359.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_14-1-300x140.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_14-1-640x299.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_14-1.png 975w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+		<p><strong>Example 2</strong><br />Here we can use Badi /SCWM/EX_CORE_PTS_TYPSQ to manipulate storage type search sequence as well as putaway rule which had been determined by standard logic before.</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_15-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMjQsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzE1LTEucG5nIn0%3D">
+							<img width="768" height="643" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_15-1-768x643.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_15-1-768x643.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_15-1-300x251.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_15-1-640x536.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_15-1.png 968w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+		<p><strong>Summary</strong><br />Product master data is imported with is_mat_global. Putaway rule by variable iv_put_rule. This is everything we need in order to set the rule based on the base UOM (again – this is just an example and might not make sense for most of the operations).</p>		
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_16-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMjUsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzE2LTEucG5nIn0%3D">
+							<img width="768" height="240" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_16-1-768x240.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_16-1-768x240.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_16-1-300x94.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_16-1-640x200.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_16-1.png 975w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+																<a href="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_17-1.png" data-elementor-open-lightbox="yes" data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6MTcyMjYsInVybCI6Imh0dHBzOlwvXC93bWV4cGVydHMub25saW5lXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIwXC8wNlwvU0FQLUVXTS1QdXRhd2F5LWJpbi1kZXRlcm1pbmF0aW9uXzE3LTEucG5nIn0%3D">
+							<img width="768" height="451" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_17-1-768x451.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_17-1-768x451.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_17-1-300x176.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_17-1-640x375.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-Putaway-bin-determination_17-1.png 975w" sizes="(max-width: 768px) 100vw, 768px" />								</a>
+		<p>I think the approach is clear now and I think you got the most important takeaways.<br />Summary<br />- Heart of EWM putaway logic: Function group /SCWM/PUT_BIN_DET<br />- Sweet spot to enhance based on custom requirements: Enhancement spot /SCWM/ES_CORE_PTS</p><p>Happy coding/customizing!</p>		
+		<p><em>I hope this blog post provides value to you and you could learn something. Please feel free to s</em><em>ubscribe to my <strong><a href="https://wmexperts.online/blog-newsletter/" target="_blank" rel="noopener">blog updates </a></strong>or my <strong><a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1">youtube channel </a></strong>in case you want to be notified about new posts!</em></p>		
+					<h2>Get my monthly blog-updates!</h2>				
+					<h2>Subscribe to my Youtube channel!</h2>				
+					<a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank">
+									Subscribe
+					</a><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, [Topic Keywords]">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Article Title | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
+    <meta property="article:published_time" content="2024-01-01">
+    <meta property="article:modified_time" content="2024-01-01">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic].",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>Article Title | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Category Name</div>
+        <h1>Your Great SAP EWM Insight</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p>Example paragraph text.</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/placeholder.png" alt="Descriptive alt text for the image" width="800" height="450" loading="lazy">
+            </div>
+            <pre>/SCWM/TECHNICAL_DETAILS</pre>
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth article about SAP EWM MFS Simulation and Emulation. Learn technical and functional details about standard emulation capabilities.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, MFS, Material Flow System, Simulation, Emulation, /SCWM/MFS_SIM_RECEIVE">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Discover SAP EWM MFS | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM MFS Simulation and Emulation. Learn technical and functional details about standard emulation capabilities.">
+    <meta property="article:published_time" content="2024-01-01">
+    <meta property="article:modified_time" content="2024-01-01">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM MFS Simulation and Emulation. Learn technical and functional details about standard emulation capabilities.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/mfs.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>Discover SAP EWM MFS | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Discover SAP EWM MFS</div>
+        <h1>Simulation / Emulation</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube-nocookie.com/embed/GYl5kFZwAU4" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p>This blog is part of the series ‘<em>SAP EWM meets Automation – Discover EWM MFS’</em>. As with all posts of this series, the content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management">website</a> in case you want to learn more about the services offered by Swisslog or to browse open positions within their EWM team!</p>
+            <p>With this blog post I look into the EWM standard simulation/emulation which you can use within your MFS projects in case you do not have the possibility to test/work with the real hardware/subsystems (yet).</p>
+            <p>Before we look into the agenda, let us tackle the question “<em>What is the difference between a simulation and an emulation and what do we have in standard EWM MFS?</em>”.</p>
+            <p><strong>Simulation vs. Emulation</strong></p>
+            <p>I give you my interpretation right at the beginning –</p>
+            <p>I do think what we have in EWM standard can be described with the term ‘Emulation’. This is at least my understanding based on the definitions that I found while researching this topic/question. Here is a collection of descriptions &amp; definitions that helped me coming to my conclusion.</p>
+            <p><em>It's a difference in focus. Emulators focus on recreating the behavior of a system, with no regard for how the system functions internally. Simulators focus on modeling the components of a system. You use an emulator when you care mostly about what a system does, and a simulator when you care about how it does it.</em></p>
+            <p><em>Emulation comes from </em>æmulus<em>, "striving, rivaling," and is related to "imitate" and "image," which suggests a surface-lever resemblance. "Simulation" comes from </em>similis<em> "like", as does the word "similar," which perhaps suggests a deeper congruence.</em></p>
+            <p><em>By that I mean that you use an emulator when you can't use the real thing, and you use a simulator when you can't use the real thing </em>and you want to find something out about it<em>.</em></p>
+            <p><em>An emulator is an alternative to the real system but a simulator is used to optimize, understand and estimate the real system.</em></p>
+            <p>Source<em>: <a href="https://stackoverflow.com/questions/1584617/simulator-or-emulator-what-is-the-difference">https://stackoverflow.com/questions/1584617/simulator-or-emulator-what-is-the-difference</a></em></p>
+            <p><em>The flow of loads within the simulation are controlled by algorithms developed to closely mirror how the system would be controlled by a real WCS or WMS.</em></p>
+            <p><em>An emulation model is generated and is used to test and commission the WCS controls software. Interfaces within the emulation model allow the WCS to connect as it would connect to the real Automated Material Handling System.</em></p>
+            <p>Source<em>: </em><a href="https://www.logistex.com/post/why-simulating-emulating-warehouse-automation-makes-sense"><em>https://www.logistex.com/post/why-simulating-emulating-warehouse-automation-makes-sense</em></a></p>
+            <p>Conclusion –</p>
+            <p>As mentioned above, I do think that we have an <em>emulation</em> in EWM standard although the name &amp; description of the function module that EWM offers (details later) indicates that it provides a <em>simulation</em>. Anyways – for me it is an emulation and hence, for the rest of this article I will stick to this term.</p>
+            <p>Having answered this initial question, let us look the <strong>agenda</strong> for the remaining part of the blog-post:</p>
+            <ul>
+                <li>Simulation vs. Emulation
+                    <ul>
+                        <li>What are the differences and what do we have as part of standard EWM? &gt; Already covered at this point. See above for the answer!</li>
+                    </ul>
+                </li>
+                <li>Purpose / Use-Cases
+                    <ul>
+                        <li>What can the emulation do and what can it <u>not</u> do for us?</li>
+                    </ul>
+                </li>
+                <li>SAP Standard MFS emulation
+                    <ul>
+                        <li>How do we use the emulation in the context of EWM MFS?</li>
+                    </ul>
+                </li>
+                <li>Configuration
+                    <ul>
+                        <li>Hands-on! What do we need to configure in order to use the emulation?</li>
+                    </ul>
+                </li>
+                <li>Code-Review
+                    <ul>
+                        <li>How is the standard emulation implemented technically?</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Purpose / Use-cases</strong></p>
+            <p>The emulation in EWM is needed during the development &amp; testing phase, when</p>
+            <ul>
+                <li>the real hardware is not installed yet (so there is no real connection with the PLC), or</li>
+                <li>the real hardware is installed but it is simply too much effort to use it for testing (~ as tests with the hardware are time-consuming (~costly) you usually start testing with real hardware only once you are sure that a given configuration/development is working fine with the emulation).</li>
+            </ul>
+            <p>So what are the things that you can test with the standard emulation and what can it not be used for?</p>
+            <p>I start with a list of things where it can really be useful:</p>
+            <p><u>Routing: LOSC / Case Conveyor Routing</u></p>
+            <ul>
+                <li>As the emulation will automatically process telegrams (and potentially confirm intermediate tasks) for you, you can easily test complex routings based on the LOSC or the Case Conveyor Routing without having to jump in manually. That means you can validate your customizing of multiple routes even for complex networks without spending much time</li>
+            </ul>
+            <p><u>Validation of format &amp; content of outgoing telegrams</u></p>
+            <ul>
+                <li>As a result of using the emulation you will get telegrams looking like they will look like when you are later communicating with the real subsystems. Thus, you can validate whether your code creates telegrams in a format and with a content which is in line with what you agreed upon with your subsystem/team vendor as part of the interface specification</li>
+            </ul>
+            <p><u>Processing of incoming telegrams with different content</u></p>
+            <ul>
+                <li>You can mass create the incoming telegrams with different data for multiple different scenarios. This way you can for instance easily emulate all kind of errors that might be sent from the subsystem to EWM and validate the EWM coding which is supposed to process those errors</li>
+            </ul>
+            <p>Having discussed the areas where the emulation is useful, let us now focus on the areas where it is not useful or at least does not really help you to validate your setups.</p>
+            <p><u>Communication layer </u></p>
+            <ul>
+                <li>As long as you are using the pure ABAP-based EWM emulation (details later in this blog post), you are not communicating with an external system at all. So no matter whether you are planning to use a RFC-based or TCP/IP based or whatever-based communication layer, you are not testing it at all. Thus, this physical connection and its protocols &amp; handshake mechanisms need to be tested separately with additional tools or even better the real subsystem as soon as it is available</li>
+            </ul>
+            <p><u>Processing on subsystem side </u></p>
+            <ul>
+                <li>Be aware that although the PLC looks &amp; feels like a piece of hardware it has thousands of configurations and lines of code, even when controlling low-complex material flows. Whatever is sent to or received from EWM is processed by the logic sitting in the memory of the CPU. This whole configuration/coding on the subsystem is obviously ignored as long as we stay within EWM. Thus, you should not overrate what an emulation can do for you within your MFS projects! There is still a lot to be tested with the real subsystems!!</li>
+            </ul>
+            <p><strong>Emulation in the context of material flow systems</strong></p>
+            <p>Let us now become a bit more functional/technical and first analyze the approach of emulating a subsystem in the context of a material flow system (no matter whether it is EWM controlling the MFS or any other WMS or MFC). You already know the graphic below in case you followed my blog so far. This is looking at the real world. The PLC is processing signals and communicates with EWM based on telegrams (green arrows). In the other direction, EWM is sending telegrams towards the PLC in order to make it activate/deactivate signals &amp; sensors (orange arrows):</p>
+            <div class="screenshot-container">
+                <img width="939" height="492" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 1.png" alt="SAP EWM MFS Simulation Emulation 1" loading="lazy">
+            </div>
+            <p>SAP standard now gives us an option that we can use in order to send &amp; receive telegrams without a PLC and even without a non-SAP software to emulate the PLC. We do only need our standard EWM system – nothing else.</p>
+            <p>Function module <code>/SCWM/MFS_SIM_RECEIVE</code> is used for this purpose. Before we look into the details of this FM, let us do some more preparation work in order to understand the <u>role</u> of this FM.</p>
+            <p><u>Steps to communicate with a real subsystem</u></p>
+            <ul>
+                <li>EWM creates a telegram via FM <code>/SCWM/MFS_SEND</code> and sends it to the PLC via ABAP-Push-Channels or via an RFC-Converter (e.g. a task to move a HU from A to B)</li>
+                <li>PLC processes the telegram and does whatever it is supposed to do (e.g. move the HU physically)</li>
+                <li>Sends a response to EWM (e.g. confirmation that it moved the HU from A to B)</li>
+            </ul>
+            <p>EWM processes the telegram via FM <code>/SCWM/MFS_RECEIVE2</code> (e.g. confirms the open EWM task which belongs to the given HU)</p>
+            <div class="screenshot-container">
+                <img width="936" height="535" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 2.png" alt="SAP EWM MFS Simulation Emulation 2" loading="lazy">
+            </div>
+            <p><u>Steps with the EWM emulation</u></p>
+            <ul>
+                <li>EWM creates a telegram via FM <code>/SCWM/MFS_SEND</code> and sends it to the emulation function module <code>/SCWM/MFS_SIM_RECEIVE</code> (e.g. a task to move a HU from A to B)</li>
+                <li>The emulation FM processes the telegram and sends a pre-defined response telegram (e.g. whenever EWM asks to move a HU from A to B, the emulation FM will respond with a telegram which confirms this task &gt; we will look into details here later)</li>
+            </ul>
+            <p>EWM processes the telegram with FM <code>/SCWM/MFS_RECEIVE2</code> in the same way as if it would be talking to a real subsystem (e.g. confirm the open EWM task which belongs to the given HU)</p>
+            <div class="screenshot-container">
+                <img width="936" height="545" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 3.png" alt="SAP EWM MFS Simulation Emulation 3" loading="lazy">
+            </div>
+            <p>The concept as such should be clear now. But what needs to be done in order to involve the emulation function module and how does the FM actually knows what it needs to return?</p>
+            <p>Let us first look at the required configuration as this is rather simple.</p>
+            <p><strong>Configuration</strong></p>
+            <p>The only thing you need to do is to maintain the emulation function module as the sending FM in the PLC application data via transaction <code>/SCWM/MFS_PLC</code>:</p>
+            <div class="screenshot-container">
+                <img width="760" height="333" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 4.png" alt="SAP EWM MFS Simulation Emulation 4" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img width="936" height="463" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 5.png" alt="SAP EWM MFS Simulation Emulation 5" loading="lazy">
+            </div>
+            <p>That’s it! With this setup EWM will send its telegrams to the emulation FM instead of an external subsystem. So how is this FM now able to send us the response that we need in order to achieve the objectives that we defined at the beginning of this blog post? (test the routing, validate the format/content of outgoing telegrams, validate the telegram processing FMs etc.).</p>
+            <p>Let us look into detail – time for a code-review!</p>
+            <p><strong><u>Code-Review</u></strong></p>
+            <p>Function module <code>/SCWM/MFS_SIM_RECEIVE</code></p>
+            <div class="screenshot-container">
+                <img width="912" height="248" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 6.png" alt="SAP EWM MFS Simulation Emulation 6" loading="lazy">
+            </div>
+            <p>First of all it is important to understand the importing variables of the FM. Remember, the FM is replacing the subsystem as a communication partner. So where MFS usually hands over a telegram to the subsystem (e.g. via calling a middleware/RFC-converter or the PLC directly via ABAP-Push-Channel), we do now handover this telegram to the simulation FM:</p>
+            <div class="screenshot-container">
+                <img width="936" height="244" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 7.png" alt="SAP EWM MFS Simulation Emulation 7" loading="lazy">
+            </div>
+            <p>As a preparation for processing this telegram, the FM reads additional PLC and channel data based on the imported variables and moves the imported telegram data into the generic telegram structure <code>/SCWM/S_MFS_TELETOTAL</code> (this structure has all fields of all telegrams and simplifies processing in EWM MFS from technical perspective):</p>
+            <div class="screenshot-container">
+                <img width="868" height="694" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 8.png" alt="SAP EWM MFS Simulation Emulation 8" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img width="862" height="593" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 9.png" alt="SAP EWM MFS Simulation Emulation 9" loading="lazy">
+            </div>
+            <p>As part of the next step, EWM checks whether the telegram requires an acknowledgement to be sent to the sender (which is EWM here). Whether or not this is to be done depends on the protocol/handshake settings of the communication channel:</p>
+            <div class="screenshot-container">
+                <img width="920" height="499" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 10.png" alt="SAP EWM MFS Simulation Emulation 10" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img width="936" height="554" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 11.png" alt="SAP EWM MFS Simulation Emulation 11" loading="lazy">
+            </div>
+            <p>If the acknowledgement is created successfully, the emulation FM calls the standard FM to receive telegrams in EWM (<code>/SCWM/MFS_RECEIVE2</code>) in order to process it (so you can see already that you can use the emulation FM also in order to test the handshake settings of your communication channel).</p>
+            <p>Now the core of this emulation FM begins. Based on the telegram received, it now creates a response telegram and hands it back to the telegram receiving logic of EWM MFS.</p>
+            <p>When you look at the case-statement here, you will easily understand the whole logic of the standard emulation (which I also tried to explain at the beginning of this section).</p>
+            <p>The statement just goes through all of the possible outgoing telegram categories and based on the category of the <u>outgoing telegram</u> it determines the category of the one which it now creates as a <u>response</u>:</p>
+            <div class="screenshot-container">
+                <img width="936" height="621" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 12.png" alt="SAP EWM MFS Simulation Emulation 12" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img width="825" height="159" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 13.png" alt="SAP EWM MFS Simulation Emulation 13" loading="lazy">
+            </div>
+            <p>Example for the most obvious one:</p>
+            <ul>
+                <li>Outgoing telegram type is a warehouse task</li>
+            </ul>
+            <p>Incoming telegram to be created should be a warehouse task confirmation</p>
+            <p>Pretty simple. EWM standard covers</p>
+            <ul>
+                <li>Synchronization trigger &gt; Synchronization start &amp; Synchronization end</li>
+                <li>Synchronization start &gt; Synchronization end</li>
+                <li>Status request &gt; Status message</li>
+                <li>Warehouse task &gt; Task confirmation</li>
+            </ul>
+            <p>Warehouse task cancellation &gt; Cancellation confirmation</p>
+            <div class="screenshot-container">
+                <img width="936" height="638" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 14.png" alt="SAP EWM MFS Simulation Emulation 14" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img width="769" height="825" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 15.png" alt="SAP EWM MFS Simulation Emulation 15" loading="lazy">
+            </div>
+            <p>Having determined the category for the response, the next step is to build the response telegram. This is done by either FM <code>/SCWM/MFS_BUILD_TELEGRAM</code> (for channel synchronization) or FM <code>/SCWM/TMFSTELTO_READ_SINGLE</code> (for all other scenarios mentioned above):</p>
+            <div class="screenshot-container">
+                <img width="860" height="694" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 16.png" alt="SAP EWM MFS Simulation Emulation 16" loading="lazy">
+            </div>
+            <p>If you’ve expected complex logic here I have to disappoint you. Both are mainly used in order to determine the telegram type for the response telegram based on the category determined above. The other content of the telegram structure is not really changed and simply copied from the outgoing telegram.</p>
+            <p>As we have telegram content and type now, the only steps left are:</p>
+            <ul>
+                <li>Select channel data from table <code>/SCWM/MFSCH</code> and update/determine the sequence number for the incoming telegram to be created</li>
+                <li>Set sender &amp; receiver for the incoming telegram to be created (basically switch based on the outgoing telegram that initiated the process)</li>
+                <li>Move telegram data from the generic telegram structure <code>/SCWM/S_MFS_TELETOTAL</code> into the telegram type specific structure</li>
+                <li>Add filler characters if needed (based on the communication channel customizing)</li>
+            </ul>
+            <p>…and finally call FM <code>/SCWM/MFS_SIM_SEND</code> which is doing nothing else than starting a new task, wait for 3 seconds and then call FM <code>/SCWM/MFS_RECEIVE2</code>:</p>
+            <div class="screenshot-container">
+                <img width="936" height="644" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 17 1.png" alt="SAP EWM MFS Simulation Emulation 17 1" loading="lazy">
+            </div>
+            <p>Those of you who are following my blog already know that this FM is the one which is responsible to process all incoming telegrams in EWM MFS (check <a href="https://wmexperts.online/mfs-i-point/" target="_blank" rel="noopener">this blog post</a> in case you want to learn more about how EWM processes incoming telegrams).</p>
+            <p>So you see that the emulation is calling the exact same coding for incoming telegram processing that would be called in case a real subsystem would have sent this telegram to EWM!</p>
+            <div class="screenshot-container">
+                <img width="1024" height="313" src="..\..\assets\images\mfs\emulation/SAP EWM MFS Simulation Emulation 18.png" alt="SAP EWM MFS Simulation Emulation 18" loading="lazy">
+            </div>
+            <p>…and that’s it from technical perspective in terms of EWM Standard Emulation!</p>
+            <p><strong>Summary</strong></p>
+            <ul>
+                <li>What SAP calls ‘Simulation’ is rather an ‘Emulation’ based in my interpretation of the definition of both terms</li>
+                <li>The emulation is useful to test telegram creation, MFS routing and processing of incoming telegrams from EWM perspective. It is not useful to test connection, protocol &amp; communication with a real subsystem</li>
+                <li>There is not much to do in case you want to use it – only adjust the PLC application data</li>
+                <li>Technically the FM <code>/SCWM/MFS_SIM_RECEIVE</code> is doing nothing else than taking the outgoing telegram and converting it into an incoming telegram while changing the telegram category &amp; type</li>
+                <li>The incoming telegram created by the emulation FM is processed via FM <code>/SCWM/MFS_RECEIVE2</code> in the same way as telegrams coming from a real subsystem</li>
+            </ul>
+            <p>Final words -</p>
+            <p>Last but not least I would like to mention that you will most probably not be able to emulate your MFS project entirely with the standard emulation. Projects tend to be more complex and all subsystem vendors have their own telegram types along with specific requirements for an emulation. Having said that, the standard FM provides a good starting point and option to use it as a copy-template for your Z-Emulation!</p>
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>

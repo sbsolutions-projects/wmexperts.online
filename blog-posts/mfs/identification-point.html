@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth article about SAP EWM MFS Identification Points. Learn technical and functional details about telegram processing and hardware.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, MFS, Material Flow System, Identification Point, I-Point, Telegram Processing">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Discover SAP EWM MFS | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM MFS Identification Points. Learn technical and functional details about telegram processing and hardware.">
+    <meta property="article:published_time" content="2024-01-01">
+    <meta property="article:modified_time" content="2024-01-01">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM MFS Identification Points. Learn technical and functional details about telegram processing and hardware.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>Discover SAP EWM MFS | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Discover SAP EWM MFS</div>
+        <h1>The Identification-Point</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube-nocookie.com/embed/pM4RBp-KqRk" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p>This blog is part of the series ‘<em>SAP EWM meets Automation – Discover EWM MFS</em>’ and also tackles the hardware but mainly the software side of this thing that we call ‘I-Point’ (Identification-Point) in the area of EWM MFS.<br>Note that I will not explain every MFS object again here. In case you are not familiar with EWM MFS already, I would recomment reading the <a href="https://wmexperts.online/mfs-ewm-plc-integration/" target="_blank" rel="noopener">EWM-PLC integration blog post</a> at first.</p>
+            
+            <p>As with all posts of this series, the content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a style="color: #00ccff;" href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank" rel="noopener">website</a> in case you want to learn more about the services offered by @ Swisslog or to browse open positions within their EWM team!</p>
+            
+            <h2>Agenda</h2>
+            <ul>
+                <li>Overview process flow at the I-Point</li>
+                <li>The hardware of the I-Point</li>
+                <li>The EWM part of the story</li>
+            </ul>
+
+            <p>As an introduction, let us have a quick look at a high-level overview about the process/context we are talking about within this blog post. To have a practical context again, we assume that we are looking at a pallet which is moving on a conveyor, passing an I-Point. Physically, it could look like this:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_01.png" alt="SAP EWM MFS identification point_01" width="361" height="525" loading="lazy">
+            </div>
+
+            <p>The following things will happen now:</p>
+            <ul>
+                <li>The HU/pallet arrives at the I-Point and is detected by the sensors</li>
+                <li>The sensors trigger the activation of other sensors, scales, scanners etc.</li>
+                <li>The subsystem (PLC) collects all relevant data (e.g. results of the weighing and scanning events) and processes it based on the logic sitting in its memory. As a result we have a string of data which is transmitted to EWM as a telegram</li>
+                <li>EWM receives &amp; processes the telegram and in turn sends another telegram in order to initiate the follow-up process (e.g. creates a task to move the pallet to its next destination and sends the telegram for this task to the PLC)</li>
+                <li>The PLC receives the telegram, processes it and e.g. decides to start the motor unit for the conveyor moving the pallet away from the I-point:</li>
+            </ul>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_02.png" alt="SAP EWM MFS identification point_02" width="936" height="491" loading="lazy">
+            </div>
+
+            <p>Note that this process will be slightly different in a fast moving case conveyor environment but for the sake of understanding the I-Point concept in general, we will ignore this for now.</p>
+            
+            <p>Having a rough understanding of the process we are talking about, let us now have a quick look at the hardware of a typical I-Point. Being used for identification, an essential part of an I-Point is a device which reads data from the object/HU passing by. This could be a barcode scanner reading a label or a RFID scanner reading a tag or any other kind of identification method. In addition to this we have plenty of optional checks/devices installed at an I-Point. Examples are sensors for profile checks (e.g. length, width, height), scales for weighing or tunnel/roller checks to validate the quality of a pallet.</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_03.png" alt="SAP EWM MFS identification point_03" width="491" height="667" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_04.png" alt="SAP EWM MFS identification point_04" width="519" height="537" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_05.png" alt="SAP EWM MFS identification point_05" width="476" height="591" loading="lazy">
+            </div>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+
+            <p>On the other side – and a bit more interesting for us – we have the software. Here we are mainly talking about the creation and processing of telegrams by the PLC/WMS (here SAP EWM):</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/6SAP EWM MFS identification point_05.png" alt="6SAP EWM MFS identification point_05" width="936" height="455" loading="lazy">
+            </div>
+
+            <p>Starting with the creation of the telegram by the PLC, we can separate the high-level steps on EWM side into the following ones:</p>
+            <ul>
+                <li>Receive a telegram in the inbound buffer</li>
+                <li>Find a MFS action function module to process the data</li>
+                <li>Execute this FM</li>
+                <li>Close the FM with the creation of a follow-up action / task</li>
+            </ul>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_06.png" alt="SAP EWM MFS identification point_06" width="936" height="172" loading="lazy">
+            </div>
+
+            <p><strong>Step 1</strong> can be subdivided into the following steps:</p>
+            <ul>
+                <li>The data is received via ABAP Push Channel or a TCP/IP-RFC converter like PlantConnectivity, from where FM <code>/SCWM/MFS_RECEIVE2</code> is being called</li>
+                <li>The FM writes the data into inbound buffer table <code>/SCWM/MFSTELEQ</code></li>
+                <li>FM <code>/SCWM/MFS_PROCESS_TELE_Q</code> picks up the data from here and processes it &gt; The processing of the telegram starts in our flow-chart at Step 2</li>
+            </ul>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_07.png" alt="SAP EWM MFS identification point_07" width="936" height="285" loading="lazy">
+            </div>
+
+            <p>We will now look into this <strong>Step 2</strong> in detail:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_08.png" alt="SAP EWM MFS identification point_08" width="936" height="164" loading="lazy">
+            </div>
+
+            <p>At the beginning, EWM reads the telegram data from the buffer table via FM <code>/SCWM/MFS_PROCESS_TELE_Q</code> calling <code>/SCWM/MFS_TELE_Q_READ_UPTO</code>:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_09.png" alt="SAP EWM MFS identification point_09" width="785" height="360" loading="lazy">
+            </div>
+
+            <p>EWM is then searching for a function module which should be used to process the given telegram. Function group <code>/SCWM/MFS_ACT</code> is holding all standard function modules for telegram processing:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_10.png" alt="SAP EWM MFS identification point_10" width="767" height="560" loading="lazy">
+            </div>
+
+            <p>But how does EWM now decide which one to use?</p>
+            <p>The answer to this question is sitting in FM <code>/SCWM/MFS_DET_ACTIONFM</code> which reads the action determination customizing:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_11.png" alt="SAP EWM MFS identification point_11" width="765" height="363" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_12.png" alt="SAP EWM MFS identification point_12" width="764" height="355" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_13.png" alt="SAP EWM MFS identification point_13" width="744" height="543" loading="lazy">
+            </div>
+
+            <p>The customizing is pretty simple here. You define actions and assign function modules for processing.</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_14.png" alt="SAP EWM MFS identification point_14" width="622" height="523" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_15.png" alt="SAP EWM MFS identification point_15" width="680" height="315" loading="lazy">
+            </div>
+
+            <p>In the 2nd step you maintain the determination of those actions based on warehouse number, communication point type (taken from the communication point customizing), resource type (in case a resource like a crane is involved in the process) and telegram type:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_16.png" alt="SAP EWM MFS identification point_16" width="936" height="218" loading="lazy">
+            </div>
+
+            <p>In the screenshot above you see the enhanced version of the I-point telegram processing which is used by the Swisslog team. EWM standard instead calls FM <code>/SCWM/MFSACT_SP</code> here:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_17.png" alt="SAP EWM MFS identification point_17" width="717" height="523" loading="lazy">
+            </div>
+
+            <p>This is true at least for slow moving <u>pallet environments</u>. We will keep focusing on this for now and come back to case environments later again.</p>
+            <p><u>Note</u>: Have a look at this <a href="https://wmexperts.online/mfs-ewm-plc-integration/" target="_blank" rel="noopener">blog post</a> in case you are struggling to understand terms like ‘communication point’ and want to get familiar with the MFS basics at first!</p>
+            <p>Having determined the function module for telegram processing, we can now start to actually process the telegram:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_18.png" alt="SAP EWM MFS identification point_18" width="936" height="166" loading="lazy">
+            </div>
+
+            <p>That means, within the following paragraphs I will answer the question about what actually happens within FM <code>/SCWM/MFSACT_SP</code> (not every detail but the most important steps). And again – yes there is a different FM for case conveyors but they do not differ that much and we keep focusing on the pallets here in order to gain a basic understanding!</p>
+
+            <h2>Step 3.1: Validate the HU</h2>
+            <p>EWM tries to figure out whether the HU does actually exist. If not, a dummy HU is created (dummy packaging material assigned to a dummy number range) and the HU is later sent towards clearing:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_19.png" alt="SAP EWM MFS identification point_19" width="677" height="482" loading="lazy">
+            </div>
+
+            <h2>Step 3.2: Adjust the location</h2>
+            <p>In this step EWM posts the HU to the storage bin which is assigned to the i-point / communication point (table <code>/SCWM/MFSOBJMAP</code>). This is done via FM <code>/SCWM/MFS_HU_ADJ_LOC</code> which validates lots of different scenarios like shown in the 2nd screenshot below (based on the customizing of the i-point, the source/destination of the HU and potential waiting/active WTs) and calls BAdi <code>/SCWM/EX_MFS_HU_AT_CP</code> where you can also implement a custom logic for the acceptance/decline of a location adjustment (e.g. include a check for doublets):</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_20.png" alt="SAP EWM MFS identification point_20" width="750" height="511" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_21.png" alt="SAP EWM MFS identification point_21" width="876" height="590" loading="lazy">
+            </div>
+
+            <h2>Step 3.3: Call BAdi <code>/SCWM/EX_MFS_ACT_SP</code></h2>
+            <p>This BAdi can be used to change HU data (e.g. adjust the HU type based on the height measured by the I-point sensors), execute additional checks (e.g. compare subsystem with EWM data) and/or provide a destination bin (as part of the last step below EWM will create a follow-up WT and this BAdi can be used to set the destination of this WT):</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_22.png" alt="SAP EWM MFS identification point_22" width="679" height="387" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_23.png" alt="SAP EWM MFS identification point_23" width="730" height="350" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_24.png" alt="SAP EWM MFS identification point_24" width="697" height="485" loading="lazy">
+            </div>
+
+            <h2>Step 3.4: Update HU data</h2>
+            <p>Based on the data that we received from the subsystem or determined within the previous steps, EWM now updates the HU header data via FM <code>/SCWM/HUHDR_ATTR_CHANGE</code>:</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_25.png" alt="SAP EWM MFS identification point_25" width="936" height="335" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_26.png" alt="SAP EWM MFS identification point_26" width="936" height="160" loading="lazy">
+            </div>
+
+            <h2>Final step (Step 4)</h2>
+            <p>Although the creation of the follow-up action (WT creation) technically also happens within FM <code>/SCWM/MFSACT_SP</code>, I decided to show this as a separate step in our flow-chart. Makes sense from my point of view logically and also makes it easier to keep an overview.</p>
+            <p>No matter whether we are going to reject the HU towards clearing or whether we want to push it towards a final putaway bin, we need to create/activate a HU warehouse task. This is done at the end of our action FM by calling FM <code>/SCWM/TO_CREATE_MOVE_HU</code>.<br>As mentioned above, the destination might have been determined by a Z-logic in BAdi <code>/SCWM/EX_MFS_ACT_SP</code> already and filled into structure <code>ls_create_hu</code>. The warehouse process type to create the task is taken from the communication point customizing (so in case you do not determine a destination in the BAdi mentioned above, EWM will simply read the STSS and putaway rules based on the combination of this WPT and the standard customizing):</p>
+
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_27.png" alt="SAP EWM MFS identification point_27" width="691" height="549" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_28.png" alt="SAP EWM MFS identification point_28" width="936" height="414" loading="lazy">
+            </div>
+
+            <h2>Summary of the things happening within the action function module <code>/SCWM/MFSACT_SP</code></h2>
+            <ul>
+                <li>Validate HU (check whether HU number is filled and exists in EWM)</li>
+                <li>Call FM <code>/SCWM/MFS_HU_ADJ_LOC</code> (+ Badi) to post the HU to the CP of the I-point (or reject it)</li>
+                <li>Call Badi <code>/SCWM/EX_MFS_ACT_SP</code> in order to set the destination or change the HU type</li>
+                <li>Update HU weight, dimensions and/or other header data via FM <code>/SCWM/HUHDR_ATTR_CHANGE</code></li>
+                <li>Create a WT in order to move the HU away from the I-point (<code>/SCWM/TO_CREATE_MOVE_HU</code>)</li>
+            </ul>
+
+            <h2>Appendix</h2>
+            <p>As promised above, some final words about the differences in handling/processing between pallet (~ slow moving) and case (~ fast moving) environments. Note that I am only touching the surface with these comments. There is complex coding involved with lots of differences compared to the pallet environment, which are not in scope of this article.<br>In general though, the role of the I-point is similar to the one in a pallet environment (EWM provides FM <code>/SCWM/MFSACT_CASE_SP</code> for processing and a couple of other BAdis). In addition to this we have –</p>
+            <ul>
+                <li>‚Rough‘ decisions in order to enable fast routings without interruption (so a slightly different way of Layout-oriented routing)</li>
+                <li>Rough bin determination (with temporary records in <code>/SCWM/MFSHUMOVE</code> and planned routings based on AAs)</li>
+                <li>‚Planned routing‘ telegrams (PLC knows upfront &gt; ATF (‘After The Fact’) posting in EWM based on the decision of the PLC)</li>
+            </ul>
+            <p>…as I said – enough keywords to create separate posts about this topic but everything not essential in order to understand the setups, concepts and processes at &amp; around Identification-Points!</p>
+
+            <h2>Closure</h2>
+            <p>For more technical details about the process of <u>receiving telegrams in EWM MFS</u>, make sure you read this wonderful <a href="https://blogs.sap.com/2020/11/23/sap-ewm-mfs-receiving-and-processing-telegrams/" target="_blank" rel="noopener">blog post</a> written by Tobias &amp; Jörg!</p>
+            <p>That is all for this month’s post! I hope you are familiar with the concept of the I-point now.</p>
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>
