@@ -1,59 +1,17 @@
-<h1>Reveal SAP EWM</h1>
-<h2>Work center determination in the context of Kit-to-stock (KTS)</h2>
-<p><strong>Note</strong>: The purpose of this series of blogs/videos is to discover &amp; reveal the secrets of SAP EWM work center. Thus, I will mainly be talking about functionalities which are not mentioned and explained in any of the SAP books available on the market.</p>
-<p>In this blog/video I will be talking about SAP Work center determination in the context of Kit-to-Stock (KTS). Note that I will not explain the KTS process as such. Might do this in a separate blog/video of the series Understand SAP EWM. For now, you can refer to the <a href="https://help.sap.com/doc/saphelp_sfin100/1.10/en-US/5f/61b6531de6b64ce10000000a174cb4/content.htm?no_cache=true">SAP online help</a>. </p>
-<h3>Where is the coding?</h3>
-<p>Technically the determination is done in class /SCWM/CL_VAS_MODEL method DETERMINE_WORKCENTER:</p>		
-															<img width="975" height="677" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_01-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_01-1.png 975w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_01-1-300x208.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_01-1-768x533.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_01-1-640x444.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<h3>When will it be used?</h3><p><br />From document-flow perspective the coding is relevant for example upon the activation of the inbound delivery for the finished goods in EWM. PPF action /SCWM/PRD_IN_VAS_CREATE_KTS should be scheduled &amp; executed which is responsible for the creation of a VAS order.</p><p>The method DETERMINE_WORKCENTER is called from method CREATE_ACTIVITIES and updates the activity structure:</p>		
-															<img width="965" height="691" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_02-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_02-1.png 965w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_02-1-300x214.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_02-1-768x550.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_02-1-640x458.png 640w" sizes="(max-width: 965px) 100vw, 965px" />															
-		<p>In the first step, the EWM standard selects select destination storage type, section and bin from the given VAS step of the storage process (customizing process-oriented storage control):</p>		
-															<img width="975" height="242" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_03-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_03-1.png 975w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_03-1-300x74.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_03-1-768x191.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_03-1-640x159.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-															<img width="975" height="627" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_04-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_04-1.png 975w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_04-1-300x193.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_04-1-768x494.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_04-1-640x412.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_04-1-460x295.png 460w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p>Once done, the coding tries try to find a work center with the combination of the given storage type and bin in table /SCWM/TWORKST via function module /SCWM/TWORKST_READ_BY_BIN:</p>		
-															<img width="925" height="901" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_05-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_05-1.png 925w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_05-1-300x292.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_05-1-768x748.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_05-1-640x623.png 640w" sizes="(max-width: 925px) 100vw, 925px" />															
-															<img width="946" height="494" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_06-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_06-1.png 946w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_06-1-300x157.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_06-1-768x401.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_06-1-640x334.png 640w" sizes="(max-width: 946px) 100vw, 946px" />															
-		<p>Note: The work center bin assignment (respectively the bin in table /SCWM/TWORKST) can be maintained via transaction /SCWM/TWORKST:</p>		
-															<img width="721" height="694" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_07-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_07-1.png 721w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_07-1-300x289.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_07-1-640x616.png 640w" sizes="(max-width: 721px) 100vw, 721px" />															
-															<img width="844" height="304" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_08-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_08-1.png 844w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_08-1-300x108.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_08-1-768x277.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_08-1-640x231.png 640w" sizes="(max-width: 844px) 100vw, 844px" />															
-		<p>If the WC determination via the storage bin is not successful (~ bin from POSC step is not maintained in any of the work centers), we take the storage section of this bin<br />• Try to find a work center from table /SCWM/TWORKST with the same section as inbound section. If this is still not successful,<br />• We try to find a work center from customizing table /SCWM/TWORKST with the same section as outbound section<br />Check the following screenshots for the detailed flow:</p>		
-															<img width="934" height="878" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_09-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_09-1.png 934w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_09-1-300x282.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_09-1-768x722.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_09-1-640x602.png 640w" sizes="(max-width: 934px) 100vw, 934px" />															
-		<p>If this is still not successful (~ we might be in a situation where the external step of the POSC does only have destination type and section, but no destination bin), EWM tries to find a work center based on the combination of destination type &amp; section from the external POSC step:</p>		
-															<img width="916" height="848" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10-1.png 916w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10-1-300x278.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10-1-768x711.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10-1-640x592.png 640w" sizes="(max-width: 916px) 100vw, 916px" />															
-		<p>1st try with the section from the step as inbound section, then outbound section (not applicable in this context as not imported to the FM at all) and last but not least, with the storage type only:</p>		
-															<img width="975" height="889" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10_2-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10_2-1.png 975w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10_2-1-300x274.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10_2-1-768x700.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_10_2-1-640x584.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p>Note: Inbound and outbound sections for work centers can be maintained via customizing:</p>		
-															<img width="646" height="601" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_11-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_11-1.png 646w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_11-1-300x279.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_11-1-640x595.png 640w" sizes="(max-width: 646px) 100vw, 646px" />															
-															<img width="625" height="531" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_12-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_12-1.png 625w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_12-1-300x255.png 300w" sizes="(max-width: 625px) 100vw, 625px" />															
-		<p>If we also do not find a work center based on the ‘section approach’, EWM raises an exception and throws an error message.<br />Interesting fact: If we find multiple work centers based on the logic explained above (that could happen in case bin from the POSC step does not point to a specific one and we find multiple WCs with the same section), the first one is the winner (EWM just takes the first one from the internal table):</p>		
-															<img width="938" height="508" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_13-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_13-1.png 938w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_13-1-300x162.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_13-1-768x416.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_13-1-640x347.png 640w" sizes="(max-width: 938px) 100vw, 938px" />															
-		<p>If we could finally find a work center, we update the activity structure at the end of the method and handover to method CREATE_ACTIVITIES again</p>		
-															<img width="975" height="650" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_14-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_14-1.png 975w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_14-1-300x200.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_14-1-768x512.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_14-1-640x427.png 640w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_14-1-480x320.png 480w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p style="text-align: center;">Note: In case this approach to determine the work center (1.Step: Bin, 2.Step: Section) does not fulfill your project requirements, you can implement Badi /SCWM/EX_VAS_CREATE_ACTIVITIES in order to adjust/overwrite the activity table (this table which is also carrying the work center). The Badi is called at the end of method CREATE_ACTIVITIES:</p>		
-															<img width="950" height="523" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_15-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_15-1.png 950w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_15-1-300x165.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_15-1-768x423.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_15-1-640x352.png 640w" sizes="(max-width: 950px) 100vw, 950px" />															
-															<img width="855" height="336" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_16-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_16-1.png 855w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_16-1-300x118.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_16-1-768x302.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_16-1-640x252.png 640w" sizes="(max-width: 855px) 100vw, 855px" />															
-															<img width="975" height="634" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_17-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_17-1.png 975w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_17-1-300x195.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_17-1-768x499.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_17-1-640x416.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-															<img width="975" height="229" src="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_18-1.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_18-1.png 975w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_18-1-300x70.png 300w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_18-1-768x180.png 768w, https://wmexperts.online/wp-content/uploads/2020/06/SAP-EWM-KTS-work-center-determination_18-1-640x150.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p style="text-align: left;"><strong>Summary</strong><br />• The external step in POSC customizing needs to have the work center storage type / bin (or at least the storage section) as destination<br />• If the WC should be determined based on the bin, the same bin needs to be assigned to the work center in /SCWM/TWORKST<br />• If this logic is not sufficient, implement Badi /SCWM/EX_VAS_CREATE_ACTIVITIES</p>		
-		<p><em>I hope this blog post provides value to you and you could learn something. Please feel free to s</em><em>ubscribe to my <strong><a href="https://wmexperts.online/blog-newsletter/" target="_blank" rel="noopener">blog updates </a></strong>or my <strong><a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1">youtube channel </a></strong>in case you want to be notified about new posts!</em></p>		
-					<h2>Get my monthly blog-updates!</h2>				
-					<h2>Subscribe to my Youtube channel!</h2>				
-					<a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank">
-									Subscribe
-					</a><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
-    <meta name="keywords" content="SAP EWM, Warehouse Management, [Topic Keywords]">
+    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about Enhance SAP EWM: Latest Starting Date (LSD) Calculation.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, Latest Starting Date, LSD, BAdI, Enhancement">
     <meta name="author" content="Hendrik">
     <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Article Title | WMexperts">
-    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
+    <meta property="og:title" content="Enhance SAP EWM: Latest Starting Date (LSD) Calculation | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about Enhance SAP EWM: Latest Starting Date (LSD) Calculation.">
     <meta property="article:published_time" content="2024-01-01">
     <meta property="article:modified_time" content="2024-01-01">
 
@@ -63,8 +21,8 @@
       {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "Article Title",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic].",
+        "headline": "Enhance SAP EWM: Latest Starting Date (LSD) Calculation",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Enhance SAP EWM: Latest Starting Date (LSD) Calculation.",
         "image": "https://wmexperts.online/assets/images/placeholder.png",
         "datePublished": "2024-01-01",
         "dateModified": "2024-01-01",
@@ -99,7 +57,7 @@
     ]
     </script>
 
-    <title>Article Title | WMexperts</title>
+    <title>Enhance SAP EWM: Latest Starting Date (LSD) Calculation | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -475,19 +433,168 @@
     </header>
 
     <article>
-        <div class="breadcrumb">Category Name</div>
-        <h1>Your Great SAP EWM Insight</h1>
+        <div class="breadcrumb">Enhance SAP EWM</div>
+        <h1>Latest Starting Date (LSD) Calculation</h1>
 
         <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/jmQjKQFHbeE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div class="content">
-            <p>Example paragraph text.</p>
+            <h2>Latest Starting Date (LSD) Calculation</h2>
+            <p>I closed my <a href="https://wmexperts.online/latest-starting-date/" target="_blank" rel="noopener">blog about the standard calculation of the LSD</a> with the option to change the result manually. I guess you all know that this can easily done via the warehouse monitor. FM <em><code>/SCWM/RSRC_WO_LSD_CHANGE_MON</code></em> takes care to write the update in all relevant tables.</p>		
+            
             <div class="screenshot-container">
-                <img src="../../assets/images/placeholder.png" alt="Descriptive alt text for the image" width="800" height="450" loading="lazy">
+                <img width="1024" height="373" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 01.png" alt="SAP EWM Enhance LSD calculation 01" loading="lazy" />
             </div>
-            <pre>/SCWM/TECHNICAL_DETAILS</pre>
+            
+            <div class="screenshot-container">
+                <img width="732" height="308" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 02.png" alt="SAP EWM Enhance LSD calculation 02" loading="lazy" />
+            </div>
+            
+            <p>This is a feature you or the warehouse supervisor might want to use in exceptional cases to prioritize one WO over the other (e.g. you get a last-minute high-priority order which should be processed earlier as usual).</p>
+            <p>This should not be the topic of this blog post though. In this tutorial you will learn about a bunch of different options that SAP EWM offers to manipulate the standard way of calculating the LSD with custom coding.<br />As with all my other suggestions about how to change the standard code I will only consider options given via clean enhancements spots to ensure that whatever coding you implement will survive future release updates from SAP.</p>
+            <p>To provide structure to this post, we'll once again refer to the formula highlighted in my previous discussion on this topic. Please note that this post builds on the concepts covered earlier, so I recommend reviewing the <a href="https://wmexperts.online/latest-starting-date/" target="_blank" rel="noopener">previous post</a> if you haven't already, as I won't be re-explaining the basics.</p>
+            <p>We learned before that EWM is using this formula to calculate the LSD:</p>
+            <p><em>LSD = WO due date - (planned execution duration + planned movements duration)</em></p>
+            <p>That also means that to change the calculation of the LSD, we can implement a logic that either changes the standard result directly, or that changes the approach for calculating the different components of the formula. Thus, I structured this article in the following way:</p>
+            <ul>
+                <li>Options to enhance the <em>WO due date</em> calculation</li>
+                <li>Options to enhance the (<em>planned execution duration</em> calculation</li>
+                <li>Options to enhance the <em>planned movements duration</em>) calculation</li>
+                <li>Options to enhance the result of the standard LSD calculation directly</li>
+            </ul>
+            <p><u>Notes</u></p>
+            <ul>
+                <li>I am sure that I did not identify 100% if the possibilities but I am optimistic that I found the most important ones for each of the 4 categories listed above!</li>
+                <li>As with my previous article about the LSD calculation, I decided to take everything related to the Labor Management out of scope. The article would simply become too long and I assume most of you are not using LM anyways. At some point I might go for a separate post about LM in this context specifically.</li>
+            </ul>
+            
+            <p><strong><u>Options to change the </u></strong><u><b>WO due date</b></u></p>
+            <p>Of course you can change the planned departure date in the Mapin Badi which will have an impact on the LSD calculation if you are working without waves. But I think nobody will change the delivery dates &amp; times of a warehouse request only to get a different LSD in the corresponding WOs. Thus, no obvious option for me to change the due date in case you are not working with waves.</p>
+            <p>If you are working with waves you can make use of Badi <i><code>/SCWM/EX_WAVE_SAVE</code></i> to change the wave header data while saving. Relevant for the LSD calculation are completion dates of the separate steps (<a href="https://wmexperts.online/latest-starting-date/" target="_blank" rel="noopener">see my blog post about the LSD calculation</a> for further details). Usually (not always) those timestamps are inherited from the wave template. By overwriting them, you can influence the LSD in one way or the other (e.g. moving the pick completion date from the wave header further into the future will also lead to a later LSD in the corresponding WOs).</p>		
+            
+            <div class="screenshot-container">
+                <img width="1024" height="483" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 03.png" alt="SAP EWM Enhance LSD calculation 03" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="363" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 04.png" alt="SAP EWM Enhance LSD calculation 04" loading="lazy" />
+            </div>
+            
+            <p><strong><u>Options to change the </u></strong><u><b>planned execution duration</b></u><strong><u> calculation</u></strong></p>
+            <p>Badi <em><code>/SCWM/ES_CORE_WT_RT</code></em> gives you the option to overwrite the execution duration which had been calculated and summarized by the standard logic for the source and destination bin. When you increase the execution duration with a custom logic you will end up with an earlier LSD (remember the formula above).</p>
+            
+<pre><code>*       Within this BAdi method the user has the possiblity to overwrite
+*       the reach time based on various parameters.
+*       The resulting reach time will be converted to the time unit
+*       of the warehouse.</code></pre>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="686" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 05.png" alt="SAP EWM Enhance LSD calculation 05" loading="lazy" />
+            </div>
+            
+            <p><strong><u>Options to change the </u></strong><u><b>planned movements duration</b></u><strong><u> calculation</u></strong></p>
+            <p>The movement duration can only be manipulated while using option 2 for the travel distance calculation (the 'new' way for the calculation which has to be activated on warehouse number level &gt; <a href="https://wmexperts.online/latest-starting-date/" target="_blank" rel="noopener">check my blog post </a><a href="_wp_link_placeholder">about the LSD calculation</a> if you are not familiar with the two different options here).</p>		
+            
+            <div class="screenshot-container">
+                <img width="905" height="208" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 06.png" alt="SAP EWM Enhance LSD calculation 06" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1004" height="889" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 07.png" alt="SAP EWM Enhance LSD calculation 07" loading="lazy" />
+            </div>
+            
+            <p>Badi <em><code>/SCWM/EX_TDC_START</code></em> can be used to implement your own distance calculation algorithm. The Badi is called from method <em><code>/SCWM/CL_TDC-CALC_DISTANCE</code></em> (in fact the standard calculation of the distance is sitting in an example implementation of this Badi - you can copy the fallback class and use the adjusted copy in your Badi implementation). Increasing the distance will increase the movement duration which will result in an earlier LSD (remember the formula above):</p>		
+            
+            <div class="screenshot-container">
+                <img width="1024" height="588" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 08.png" alt="SAP EWM Enhance LSD calculation 08" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="652" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 09.png" alt="SAP EWM Enhance LSD calculation 09" loading="lazy" />
+            </div>
+            
+            <p>Once the distance has been calculated, Badi <em><code>/SCWM/EX_TDC_BRF_CALC_TIME</code></em> can be used to calculate the travel time. Again, the standard logic is sitting in the example implementation. Again, you can copy the fallback class and use the adjusted copy in your Badi implementation. Increasing the travel time will result in an earlier LSD (remember the formula above):</p>		
+            
+            <div class="screenshot-container">
+                <img width="1024" height="561" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 11.png" alt="SAP EWM Enhance LSD calculation 11" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="869" height="561" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 10.png" alt="SAP EWM Enhance LSD calculation 10" loading="lazy" />
+            </div>
+            
+            <p>The Badi is called from method <em><code>/SCWM/CL_TDC-/SCWM/IF_LM_TDC~GET_TIME_FOR_LSD</code></em></p>		
+            
+            <p><strong>Options to change the result of the standard LSD calculation directly</strong></p>
+            <p>The most important Badi here is <i><code>/SCWM/EX_RSRC_PROC_WO</code></i>, which can be used to simply overwrite the result of the standard LSD calculation. Of course this Badi is only called in case FM <i><code>/SCWM/RSRC_WHO_CREATE</code></i> is executed, which is only the case if the WO is assigned to a resource management relevant queue.</p>		
+            
+            <div class="screenshot-container">
+                <img width="1024" height="356" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 12.png" alt="SAP EWM Enhance LSD calculation 12" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="602" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 13.png" alt="SAP EWM Enhance LSD calculation 13" loading="lazy" />
+            </div>
+            
+            <p>This Badi is called to update the standard calculation before it is being saved to the DB the first time. In addition to this, you have an option to update the LSD at an even later point in time. Badi <i><code>/SCWM/EX_CORE_CO_POST</code></i> gives you a possibility to update the LSD of WO X, with the confirmation a WT from WO Y. An example implementation is given with class <i><code>/SCWM/CL_EI_CORE_POST_CONS_WHO</code></i> which can for instance be used to synchronize the completion of WOs which are processed in different activity areas. I wrote a detailed <a href="https://wmexperts.online/sync-warehouse-order-completion/" target="_blank" rel="noopener">blog post</a> about this feature a while ago (you can also find <a href="https://youtu.be/Q9IaK3xB9hY?si=SVWsaepP5YkJFFfu" target="_blank" rel="noopener">it on Youtube</a>).</p>		
+            
+            <div class="screenshot-container">
+                <img width="1024" height="456" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 14.png" alt="SAP EWM Enhance LSD calculation 14" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="370" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 15.png" alt="SAP EWM Enhance LSD calculation 15" loading="lazy" />
+            </div>
+            
+            <p>Last but not least - and worth it to mention here - SAP provides an API to change the warehouse order header data from any kind of custom logic, sitting with EWM or in some kind of custom/non-SAP software.</p>
+            <p>Class <em><code>/SCWM/CL_API_WHSE_ORDER</code></em>, method <em><code>/SCWM/IF_API_WHSE_ORDER~UPDATE</code></em>:</p>		
+            
+            <div class="screenshot-container">
+                <img width="1024" height="258" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 16.png" alt="SAP EWM Enhance LSD calculation 16" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 17.png" alt="SAP EWM Enhance LSD calculation 17" loading="lazy" />
+            </div>
+            
+            <p>To conclude this post, as promised in my blog about LSD calculation, we will take a small step away from classical deliveries as warehouse requests towards production material requests.</p>
+            <p>Most of the options listed above are not applicable for PMRs. However, Badi <em><code>/SCWM/EX_MFG_STAGE_WT_SO</code></em> provides the option to set the pick completion date during staging WT creation. This date will later be used to calculate the due date and the LSD, particularly if you are working with a single-order staging approach. If you are working with cross-order staging, you can use Badi <em><code>/SCWM/EX_MFG_STAGE_WT_CO</code></em>.</p>
+            <p>Both Badis are called via the interface method <em><code>ENRICH_DATA</code></em> from class <em><code>/SCWM/CL_MFG_STP_STAGE</code></em>, using the methods <em><code>PREPARE_WT_SINGLE</code></em> and <em><code>PREPARE_WT_CROSS</code></em>, respectively:</p>		
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 18.png" alt="SAP EWM Enhance LSD calculation 18" loading="lazy" />
+            </div>
+            
+            <p>The method offers a changeable structure where you can adjust the pick completion date:</p>		
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 19.png" alt="SAP EWM Enhance LSD calculation 19" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="711" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 20.png" alt="SAP EWM Enhance LSD calculation 20" loading="lazy" />
+            </div>
+            
+            <p>SAP provides an example implementation of the single-order staging Badi (class <em><code>/SCWM/CL_EI_MFG_STAGE_WT_SO</code></em>), which includes logic to set the LSD based on the requirements date. This date is determined in the ERP system for the production order components and is mapped to the EWM date type <code>SCMPREQ</code> of the PMR item:</p>		
+            
+            <div class="screenshot-container">
+                <img width="1024" height="422" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 22.png" alt="SAP EWM Enhance LSD calculation 22" loading="lazy" />
+            </div>
+            
+            <div class="screenshot-container">
+                <img width="1024" height="354" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 23.png" alt="SAP EWM Enhance LSD calculation 23" loading="lazy" />
+            </div>
+            
+            <p>Please note that this class is not invoked as a fallback. Therefore, EWM will not set the LSD for PMR WOs unless you implement this Badi. You can either use the example class provided or copy it and incorporate your own logic. Based on my tests, this approach has been working quite well:</p>		
+            
+            <div class="screenshot-container">
+                <img width="1024" height="414" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 21.png" alt="SAP EWM Enhance LSD calculation 21" loading="lazy" />
+            </div>
+            
+            <p>Not that the approach for the determination of the LSD based on the requirements date will not work that easily in case you are working with a cross-order staging approach. You can indeed use the Badi that I mentioned before and implement a similar logic but you will have to implement an additional Badi to end up with the same result. Cross-order staging WTs do not have a reference to a specific PMR item, which would be required though in case you want to read the requirements date based on this reference. One option is to <em><code>/SCWM/EX_MFG_STAGE_INFO</code></em> before to link the PMR item data to the staging item/task. Shoutout at this point to <a href="https://www.linkedin.com/in/ale%C5%A1-knor-8637a54/" target="_blank" rel="noopener">Ales Knor</a> from advisio.tech who drew my attention to this!</p>
+            <p>That wraps up my review on enhancing the LSD calculation. I've outlined various options for you to jump in at different stages, and I'm confident that one of these approaches will meet your project's specific requirements for calculating LSD!</p>		
         </div>
 
         <!-- STAY UPDATED SECTION -->

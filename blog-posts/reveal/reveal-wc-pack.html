@@ -1,38 +1,17 @@
-<h1>Reveal SAP EWM</h1><h2>Synchronization of Warehouse Order completion </h2><p><strong>Note</strong>: This blog shows an EWM standard logic which is rarely mentioned in any of the EWM books and documentations but tackles a process / scenario which is relevant for almost every SAP EWM warehouse / operation that I’ve seen. Let’s jump into the technicals!</p><p><strong>Description of the problem</strong><br /><u>Process</u><br />o You pick SAP EWM warehouse orders for the same warehouse request / consolidation group within different activity areas of the warehouse (e.g. one warehouse order in manually operated racking area, another warehouse order in an automated high-bay area with pick points)<br />o Once the picking process is completed you want to consolidate everything into one shipping HU at a pack station (e.g. a big carton box or a pallet)</p>		
-															<img width="936" height="537" src="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_00.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_00.png 936w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_00-300x172.png 300w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_00-768x441.png 768w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_00-640x367.png 640w" sizes="(max-width: 936px) 100vw, 936px" />															
-		<p><u>Constraints</u><br />1. The pack stations have a limited number of buffer bins in the inbound area of the pack station. You cannot stage an unlimited number of pick HUs which means that you cannot proceed picking any more once all buffer bins at the packing station are occupied)<br />2. The pack stations have a limited number of pack bin in the main area of the pack station (you can only pack a limited number ship-HUs in parallel at a time)<br />3. As you want to consolidate all items for one CG into one shared ship-HU, you cannot complete packing (~ move the ship-HU for the given consolidation group to the outbound area of the pack station) before picking is completed</p><p>Based on the process and its constraints, the <u>objectives</u> are obviously to<br />- Always ensure that there are empty buffer bins which can be used by the pickers as destinations for the pick HUs<br />- Minimize the time that a pick-HU is waiting at the packing buffer (~ inbound area of the pack station) in order to be packed (the packing buffer is our bottleneck &gt; storage space is very costly here)<br />- Always ensure that there is not idle time for the packer (there should always be pick-HUs which can be packed ~ pick HUs that belong to a warehouse request / consolidation group which is completely picked)</p><p>So in summary we want to make sure that the pickers as well as the packers are able to constantly execute their tasks (no waiting times for completely picked HUs at the one hand and no waiting times for buffer bins to become empty on the other hand) and ensure that we are not running into a deadlock (‘deadlock’ here means that the packer cannot start packing because all pick-HUs which are waiting in the buffer belong to warehouse requests / consolidation groups which are only partially picked <u>and</u> the pickers cannot pick any more because there are no empty bins left at the packing buffer / inbound area.</p><p><u>How to solve this problem/challenge?</u><br />We will reach all the objectives mentioned above once we are able to <u>synchronize the completion</u> of different warehouse orders for the same consolidation group which are being processed in different activity areas.<br />Having said that we already see that this is a <u>dynamic</u> process. In heterogenous environments – like most of the warehouses we are operating – it is not possible to sync processes upfront which take place in different areas over a period which is longer than a couple of hours. We can do a rough planning upfront (EWM has a couple of options via standard customizing which I do not want to describe in detail) but at the end you will never know exactly which WT/WO in which area starts/completes at which point in time.<br />Badi /SCWM/EX_CORE_CO_POST<br />This Badi is being called upon confirmation of a WT and SAP delivers an example implementation (class /SCWM/CL_EI_CORE_POST_CONS_WHO) to cover the consolidation/synchronization scenario described above:</p>		
-															<img width="975" height="608" src="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_01.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_01.png 975w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_01-300x187.png 300w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_01-768x479.png 768w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_01-640x399.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-															<img width="975" height="216" src="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_02.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_02.png 975w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_02-300x66.png 300w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_02-768x170.png 768w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_02-640x142.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p>In the first step (1) the example implementation checks whether the SAP EWM warehouse order which is being confirmed is relevant for the consolidation logic:</p>		
-															<img width="975" height="733" src="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_03.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_03.png 975w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_03-300x226.png 300w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_03-768x577.png 768w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_03-640x481.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p>Following checks on the WT/WO are executed in the method <em>check_relevance</em>:<br />- Does the WT has a delivery reference?<br />- Is it assigned to a RF queue?<br />- Is the activity of the WPT of type PICK?<br />- Does the WO have a LSD and a planned duration?</p><p>Only if all checks are true, we proceed and set the local system date and time into the variable <em>lv_lsd_new</em>. If the system date/time is more than 1h earlier than the LSD of the current WO (which means the WO for which the WT is being confirmed right now has a LSD in the future), we call the method <em>adjust_lsd_4_who</em> and handover the new LSD (~ current timestamp) as well as the duration (planned execution time) and the planned completion time (end time stamp) of the current WO:</p>		
-															<img width="903" height="288" src="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_04.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_04.png 903w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_04-300x96.png 300w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_04-768x245.png 768w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_04-640x204.png 640w" sizes="(max-width: 903px) 100vw, 903px" />															
-		<p><u>Note</u>: As mentioned above, we won’t explain in detail how you can make use of the standard customizing to calculate the planned duration/completion times.</p><p>Important note for the LSD update via method <em>adjust_lsd_4_who</em> (queue it due to RF performance!!):</p>		
-															<img width="975" height="834" src="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_05.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_05.png 975w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_05-300x257.png 300w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_05-768x657.png 768w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_05-640x547.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p>Within the method for the LSD adjustment we execute the following steps:<br />1. Select all other WOs for all deliveries which have a reference in any of the other WTs of the current WO<br />2. Calculate and write the updated/new LSDs into internal table <em>lt_who_data</em><br />3. Call standard FM /SCWM/WHO_UPDATE to write the new LSDs for the WOs into the DB</p>		
-															<img width="975" height="938" src="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_06.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_06.png 975w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_06-300x289.png 300w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_06-768x739.png 768w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_06-640x616.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p>One detailed look into point (2) reveals how the example implementation finally calculates the new LSD for the other WOs. Within a loop over those WOs the following logic is being applied:<br />1. If the duration of the other WO is bigger/longer than the duration of the current WO (the one for which the WT is being confirmed), the LSD is updated to the current system date/time (~ which basically means “<em>start right away with the other WO!</em>”)<br />2. If the duration of the other WO is smaller than the duration of the current WO, set the LSD to the planned completion of the current WO minus the planned duration of the other WO (~ which basically means “<em>do not have to start right away but ensure that both WOs are completed at same time</em>”):</p>		
-															<img width="975" height="662" src="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_07.png" alt="" srcset="https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_07.png 975w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_07-300x204.png 300w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_07-768x521.png 768w, https://wmexperts.online/wp-content/uploads/2022/01/Synchronization-of-Warehouse-Order-completion_07-640x435.png 640w" sizes="(max-width: 975px) 100vw, 975px" />															
-		<p><strong><u>Summary</u></strong><br />I showed you an example logic about how SAP thinks the scenario that I described could be solved (that is at least my interpretation). I do not want to give any statement here about the meaningfulness of the logic above. It will probably not cover your requirements out of the box but this is why it is called ‘example implementation’. For sure, it is food for thoughts and for sure it is a good basement and starting point for your custom solution. You will probably be able to re-use at least 50% of the given logic in case you want to cover a similar process. Simply copy the class and redefine/adjust wherever you have slightly different requirements.<br />Having said that, I hope I could help anybody out there. This is a topic which is not mentioned in many of the books that I’ve read but synchronizing picking activities from different areas is surely something which is relevant also in some of your projects!</p>		
-		<p><em>I hope this blog post provides value to you and you could learn something. Please feel free to s</em><em>ubscribe to my <strong><a href="https://wmexperts.online/blog-newsletter/" target="_blank" rel="noopener">blog updates </a></strong>or my <strong><a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1">youtube channel </a></strong>in case you want to be notified about new posts!</em></p>		
-					<h2>Get my monthly blog-updates!</h2>				
-					<h2>Subscribe to my Youtube channel!</h2>				
-					<a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank">
-									Subscribe
-					</a><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
-    <meta name="keywords" content="SAP EWM, Warehouse Management, [Topic Keywords]">
+    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a packing process.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, Work center determination, packing process, POSC">
     <meta name="author" content="Hendrik">
     <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Article Title | WMexperts">
-    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
+    <meta property="og:title" content="Work center determination for a packing process | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a packing process.">
     <meta property="article:published_time" content="2024-01-01">
     <meta property="article:modified_time" content="2024-01-01">
 
@@ -42,8 +21,8 @@
       {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "Article Title",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic].",
+        "headline": "Work center determination for a packing process",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a packing process.",
         "image": "https://wmexperts.online/assets/images/placeholder.png",
         "datePublished": "2024-01-01",
         "dateModified": "2024-01-01",
@@ -78,7 +57,7 @@
     ]
     </script>
 
-    <title>Article Title | WMexperts</title>
+    <title>Work center determination for a packing process | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -152,7 +131,7 @@
 
         .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
         .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
-        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content ul, .content ol { padding-left: 1.5rem; margin-bottom: 2rem; }
         .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
 
         /* --- TECHNICAL & IMAGE BLOCKS --- */
@@ -454,19 +433,124 @@
     </header>
 
     <article>
-        <div class="breadcrumb">Category Name</div>
-        <h1>Your Great SAP EWM Insight</h1>
+        <div class="breadcrumb">Reveal SAP EWM</div>
+        <h1>Work center determination for a packing process</h1>
 
         <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/IQaWR85Jr4k" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div class="content">
-            <p>Example paragraph text.</p>
+            <p>This blog reveals the logic for destination bin / work center determination for a packing step as part of an outbound storage process. You might want to think “<i>Yeah – I know – there is this determination table which we can use here</i>”. This is correct, but there is more to it. As usual, I do promise to give you some technical details and toppings that you will not find in any of the SAP books or system help text!</p>
+            <p>As mentioned above, the scope of this blog is limited to packing steps which are executed in the context of outbound processes. This is mainly because a rules-based determination via the <code>POSC</code> is not possible during the inbound process, which makes it a bit boring ;-).</p>
+            <p>Sidenote: In order to execute system-supported packing during an outbound process you need to make use of the <code>POSC</code> meaning you have to use a storage process with a packing step:</p>
+            
             <div class="screenshot-container">
-                <img src="../../assets/images/placeholder.png" alt="Descriptive alt text for the image" width="800" height="450" loading="lazy">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_01.png" alt="SAP EWM work center determination for packing_01" loading="lazy">
             </div>
-            <pre>/SCWM/TECHNICAL_DETAILS</pre>
+            
+            <p>Of course you can create HUs also during picking without a packing step but we are focusing here on packing steps which are executed separately from the picking process at dedicated packing work centers.</p>
+            
+            <h2>Agenda</h2>
+            <ul>
+                <li>Options for packing bin / work center determination</li>
+                <li>Rules-based vs. non-rules-based determination</li>
+                <li>Deep-dive into the different options</li>
+                <li>Consideration of the putaway strategy</li>
+                <li>Options for enhancements</li>
+            </ul>
+            
+            <h2>Options for packing bin / work center determination</h2>
+            <p>In general, we do have three options for the destination bin determination here. We can determine the packing bin / work center</p>
+            <ol>
+                <li>based on type/section/bin in the given storage process step</li>
+                <li>based on the corresponding warehouse order creation rule (WOCR)</li>
+                <li>based on the determination table</li>
+            </ol>
+            
+            <h2>Rules-based vs. non-rules-based determination</h2>
+            <p>We can separate those three options into rules-based and non-rules-based ones. Option (2) and (3) are rules-based and only relevant in case the corresponding flag is active for the packing step of the given storage process:</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_02.png" alt="SAP EWM work center determination for packing_02" loading="lazy">
+            </div>
+            
+            <h2>Deep-dive into the different options</h2>
+            <p>Option (1) is the easy one, which is relevant in case the rules-based flag is not active for the given process step. In this case EWM will just read the ‘fixed’ type/section/bin that you provide in the process step customizing:</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_03_2.png" alt="SAP EWM work center determination for packing_03_2" loading="lazy">
+            </div>
+            
+            <p>That is all you need to know for the non-rules-based logic. Let us now have a look at the logic for rules-based work center determination!</p>
+            <p>In general (there are some exceptions), the ‘Rules-based’ flags will determine the destination which is needed to complete the previous step of the storage process (so e.g. a record with step <code>OB02</code> will set the destination for step <code>OB01</code>):</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_04.png" alt="SAP EWM work center determination for packing_04" loading="lazy">
+            </div>
+            
+            <p>Function module <code>/SCWM/STORAGE_CONTROL_P_GET</code> is the most important player here. It calls the destination bin determination for the different kind of internal steps. For packing steps EWM determines the destination for the previous step (usually a picking step) via FM <code>/SCWM/DET_PACKING_STATION</code>.</p>
+            <p>This FM first checks whether you gave a fixed destination via the warehouse order creation rule (this is option (2), mentioned above):</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_05.png" alt="SAP EWM work center determination for packing_05" loading="lazy">
+            </div>
+            
+            <p>Fun fact – you notice the comment with the ‘bundling rule’ in the screenshot above. Never heard that before as a synonym for a warehouse order creation rule but at least for a business user it is probably a more meaningful/helpful term.</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_06.png" alt="SAP EWM work center determination for packing_06" loading="lazy">
+            </div>
+            
+            <p>If it finds something, we are already done here. If it does not find something (~ fields are empty in the WOCR), it reads the work center determination table <code>/SCWM/TPACKSTDT</code> via FM <code>/SCWM/TPACKSTDT_READ_SINGLE</code>. Note that you can maintain records in this table via the easy access menu or directly call transaction <code>/SCWM/PACKSTDT</code>:</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_08.png" alt="SAP EWM work center determination for packing_08" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_07.png" alt="SAP EWM work center determination for packing_07" loading="lazy">
+            </div>
+            
+            <p>The FM first tries to read a record with the full key (route + activity area + consolidation group) before it applies the access sequence which you can define in customizing:</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_09.png" alt="SAP EWM work center determination for packing_09" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_10.png" alt="SAP EWM work center determination for packing_10" loading="lazy">
+            </div>
+            
+            <p>…and that’s it already. It is not foreseen to skip this step based on the rules-based flag. That means in case the rules-based flag is active and EWM neither finds a destination based on the 2 options described above (neither via the WOCR, nor in the work center determination table), you will receive an error message during warehouse task creation:</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_11.png" alt="SAP EWM work center determination for packing_11" loading="lazy">
+            </div>
+            
+            <p>That also means that EWM will not consider the destination data from the process step in case the rules-based flag is active but the destination data is maintained (e.g. like in the screenshot below). Actually EWM will not even allow to save such a setup:</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_14.png" alt="SAP EWM work center determination for packing_14" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_13.png" alt="SAP EWM work center determination for packing_13" loading="lazy">
+            </div>
+            
+            <h2>Sidenote - Consideration of the putaway strategy</h2>
+            <p>Note that for any of the three options described here it is possible to provide only the destination storage type but leave the storage section and/or bin empty. In this case, EWM will determine the actual bin via FM <code>/SCWM/PUT_BIN_DSTGRP</code>. However, this will only return anything, in case you are using putaway rule ‘3’ (consolidation group) for your work center storage type:</p>
+            
+            <div class="screenshot-container">
+                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_12.png" alt="SAP EWM work center determination for packing_12" loading="lazy">
+            </div>
+            
+            <h2>Options for enhancements</h2>
+            <p>As usual, I close my blog by giving you some ideas and options that you can use to implement a custom logic.<br />In case what I described above is not sufficient to cover your requirements, you can add your own packing station determination rule here via BAdI <code>/SCWM/EX_WRKC_PACKDET</code> (Called at the end of FM <code>/SCWM/DET_PACKING_STATION</code>).<br />A second option is sitting at the end of the FM <code>/SCWM/STORAGE_CONTROL_P_GET</code>, where EWM calls BAdI <code>/SCWM/EX_CORE_PSC_PROCESS</code> which can be used to implement your very own rules-based determination of the destination data for any of the given <code>POSC</code> steps.</p>
+            
+            <h2>Closure</h2>
+            <p>As a resume I think we can agree that the work center or packing bin determination is very flexible but at the and not complex at all. I hope that I could explain and visualize everything in a way that it helps you within your current or any future projects!</p>
+
         </div>
 
         <!-- STAY UPDATED SECTION -->

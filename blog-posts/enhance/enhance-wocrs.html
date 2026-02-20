@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth article about SAP EWM Warehouse Order Creation Rules (WOCRs). Learn how to enhance functional areas using BAdIs and technical identifiers.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, WOCR, Warehouse Order Creation Rules, BAdI, /SCWM/ES_WHO">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Enhance SAP EWM: Warehouse Order Creation Rules (WOCRs) | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM Warehouse Order Creation Rules (WOCRs). Learn how to enhance functional areas using BAdIs and technical identifiers.">
+    <meta property="article:published_time" content="2024-01-01">
+    <meta property="article:modified_time" content="2024-01-01">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Enhance SAP EWM: Warehouse Order Creation Rules (WOCRs)",
+        "description": "In-depth article about SAP EWM Warehouse Order Creation Rules (WOCRs). Learn how to enhance functional areas using BAdIs and technical identifiers.",
+        "image": "https://wmexperts.online/assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_01-1.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/enhance-sap-ewm-wocrs.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>Enhance SAP EWM: Warehouse Order Creation Rules (WOCRs) | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Enhance SAP EWM</div>
+        <h1>Warehouse Order Creation Rules (WORCs)</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/bg6K9y4T0js" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p><em>The purpose of this series of blogs/videos is to give an overview about how to enhance specific functional areas of SAP EWM warehouse order creation rules. This series is useful for developers jumping (or being pushed ) from other modules into EWM or for more experienced consultants in order to gain a deeper understanding of specific topics. </em></p>
+            <p>In this blog/video I will be talking about warehouse order creation rules (WOCRs). Note that I will not explain the basic, thus expecting that you do at least know in which context WOCRs are used and what they can do for us. Will explain those basics in a separate blog/video of the series Understand SAP EWM. For now, you can refer to the <a href="https://help.sap.com/saphelp_ewm94/helpdata/en/22/cecb53ad377114e10000000a174cb4/frameset.htm#:~:text=Definition,which%20WO%20creation%20should%20process.">SAP Online Help</a> if you are a beginner in this area.</p>
+            <h2>Rough overview</h2>
+            <p>Even though we will not go into detail, let us have a look at this picture to get a rough overview:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_01-1.png" alt="Enhance SAP EWM WOCRs_01-1" loading="lazy">
+            </div>
+            <p>1. Warehouse order creation rules are being applied upon wave release respectively during other options (e.g. manual WT creation against an ODO) where we trigger the 2. - warehouse task creation</p>
+            <p>3. Once created, the tasks are grouped by queue and activity area (source vs. destination AA based on the WOCR AA of the WPT). Thus, warehouse task with a different queue or a different activity area can never end up in the same warehouse order</p>
+            <p>4. First real WOCR-related step is the determination of the WOCR itself (either pre-defined via the warehouse process type or based on the source/destination AA and the activity itself)</p>
+            <p>5. Once we found a warehouse order completion rule we start with applying filters on item level(e.g. filter out WTs based on warehouse process type, wave template type or maximum weight/volume)</p>
+            <p>6. Then we sort the WTs (6) before we apply filter on subtotal/CG (7) levels (e.g. only consolidation groups with less than X WTs)</p>
+            <p>8. Next thing we do is to check limits on level of the warehouse order which is to be created. This could be total weight/volume or maximum number of WTs/HUs</p>
+            <p>9. WTs which passed the filters and limits are sorted again and then tackled by the packing profile (where it is possible but not mandatory to create planned pick-HUs and assign the WTs to those HUs)</p>
+            <p>10. Last thing we do is to sort the WTs one more time (now within the WOs which have been created)</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_02-1.png" alt="Enhance SAP EWM WOCRs_02-1" loading="lazy">
+            </div>
+            <p>Let’s hike across the Badis in the WOCR-World! It will give us 15 spots to take a rest!</p>
+            <p>Enhancement spot <code>/SCWM/ES_WHO</code> collects all those Badis which are being called in the context of function module <code>/SCWM/WHO_CREATE</code>.</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_03.png" alt="Enhance SAP EWM WOCRs_03" loading="lazy">
+            </div>
+            <p>Let us have a look on them one-by-one. For this purpose, I set breakpoints at every single BAdi and included the current stack in the screenshot. This way you get a good picture about where/when the Badis are called and whether they could be an option for your specific need to enhance the standard logic.</p>
+            <h2>1. /SCWM/EX_WHO_DSTGRP - Overwrite Consolidation Group</h2>
+            <p>The first Badi on our journey is Badi <code>/SCWM/EX_WHO_DSTGRP</code> which can be used to overwrite the consolidation group of the warehouse tasks. Changes here will have an impact e.g. on the limits for subtotals or e.g. on the max number of consolidation groups assigned to one pick-HU.</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_04-1.png" alt="Enhance SAP EWM WOCRs_04-1" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_05.png" alt="Enhance SAP EWM WOCRs_05" loading="lazy">
+            </div>
+            <p>Field <code>dstgrp</code> in changing structure <code>lt_to</code> is the one you want to look at:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_06-1.png" alt="Enhance SAP EWM WOCRs_06-1" loading="lazy">
+            </div>
+            <h2>2. /SCWM/EX_WHO_CREATE - Full Warehouse Order Creation Using BAdI</h2>
+            <p>The next Badi where we stop is <code>/SCWM/EX_WHO_CREATE</code> where you can implement a 100% custom WO creation (the screenshots below show the parameters importing the WOs as well as potential pick-HUs). In case this Badi is being applied, everything else (standard logic as well as all other Badis here) will be skipped. I could imagine having sophisticated WOCR logic from a 3rd party somewhere in the cloud in the future (so this Badi could offer an API which could be consumed by an external solution):</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_07.png" alt="Enhance SAP EWM WOCRs_07" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_08-1.png" alt="Enhance SAP EWM WOCRs_08-1" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_09.png" alt="Enhance SAP EWM WOCRs_09" loading="lazy">
+            </div>
+            <h2>3. /SCWM/EX_WHO_FLT_IL - Use Additional Filters at Item Level</h2>
+            <p>The next one on our trip is Badi <code>/SCWM/EX_WHO_FLT_IL</code>, where we can apply additional filters at item level. We are importing table <code>it_to</code> (based on <code>ordim_o</code> structure (type <code>/scwm/tt_ordim_o_int</code>)) from where we can select the WTs which we want to filter out and write those WTs into changing table <code>ct_to_failed</code>. This table will be appended to internal table <code>et_failed</code>, which does already carry the WTs which had been filtered out before based on standard filter logic:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_10.png" alt="Enhance SAP EWM WOCRs_10" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_11.png" alt="Enhance SAP EWM WOCRs_11" loading="lazy">
+            </div>
+            <h2>4. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</h2>
+            <p>Now we arrive at the first spot where we call Badi <code>/SCWM/EX_WHO_SORT</code>. The first sorting of WTs happens here before applying the subtotal filters. Here we have the option to influence the collection of WTs which are later grouped into one WO. You will see that we call this Badi a multiple times later again where it can be used to influence the sorting before packing and later within one WO. The custom sequence should be returned via changing table <code>ct_to</code>:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_12.png" alt="Enhance SAP EWM WOCRs_12" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_13.png" alt="Enhance SAP EWM WOCRs_13" loading="lazy">
+            </div>
+            <h2>5. /SCWM/EX_WHO_FLT_SL - Use Additional Filters at Subtotal Level</h2>
+            <p>The next we can do is apply additional Filters on Subtotal Level (level of consolidation group) by using Badi <code>/SCWM/EX_WHO_FLT_SL</code>. Here we could restrict based on any kind of characteristic cumulated over all WTs of a given consolidation group. Simply kick a consolidation group by setting the variable <code>cv_failed</code> to true.</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_14.png" alt="Enhance SAP EWM WOCRs_14" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_15.png" alt="Enhance SAP EWM WOCRs_15" loading="lazy">
+            </div>
+            <h2>6. /SCWM/EX_WHO_LIM_OVERRULE - Overwrite Limit Values</h2>
+            <p>The next one that we find during runtime is Badi <code>/SCWM/EX_WHO_LIM_OVERRULE</code> which can be used to change the limit values (adjust structure <code>ls_wcrlimit</code>). Note that we are doing nothing else than changing the limit values here before those limits are then being applied via standard coding:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_16.png" alt="Enhance SAP EWM WOCRs_16" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_17.png" alt="Enhance SAP EWM WOCRs_17" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_18.png" alt="Enhance SAP EWM WOCRs_18" loading="lazy">
+            </div>
+            <h2>7. /SCWM/EX_WHO_PMAT_DET - Determine Possible Packaging Materials for Det. the HU</h2>
+            <p>In EWM standard we can find packaging specifications via condition records in order to get packaging materials which are to be used for the planned pick-HUs. Pick-HUs can be created in the context of warehouse order creation rules via the packing profile. The Badi <code>/SCWM/EX_WHO_PMAT_DET</code> can be used to find packaging specifications based on custom logic instead of using the standard approach via condition records determining packaging specifications:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_19.png" alt="Enhance SAP EWM WOCRs_19" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_20.png" alt="Enhance SAP EWM WOCRs_20" loading="lazy">
+            </div>
+            <h2>8. /SCWM/EX_WHO_PMAT_CHECK - Check and Sort Found Packaging Materials</h2>
+            <p>The next stop on our Badi-Hike is include <code>/SCWM/LWHO_MAINF28</code>, where we call Badi <code>/SCWM/EX_WHO_PMAT_CHECK</code>. This Badi can be used to adjust the selection of packaging materials found by the standard before. So if we are not using Badi <code>/SCWM/EX_WHO_PMAT_DET</code> (see previous stop) but rather let the standard select packaging materials based on condition records, we can still manipulate the result here (even manipulate the master data of the materials which have been found via structure <code>ct_pmat</code>):</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_21.png" alt="Enhance SAP EWM WOCRs_21" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_22.png" alt="Enhance SAP EWM WOCRs_22" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_23.png" alt="Enhance SAP EWM WOCRs_23" loading="lazy">
+            </div>
+            <h2>9. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</h2>
+            <p>In case the pack mode is set to ‘A’ or ‘B’ in our packing profile, we will now be faced with Badi <code>/SCWM/EX_WHO_SORT</code> again. This time we can manipulate the sorting of WTs ahead of packing (so we can manipulate the assignment of WTs to the planned pick HUs). Note that this Badi will only be called in case a sort rule is maintained in the packing profile:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_23_1.png" alt="Enhance SAP EWM WOCRs_23_1" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_23_2.png" alt="Enhance SAP EWM WOCRs_23_2" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_23_3.png" alt="Enhance SAP EWM WOCRs_23_3" loading="lazy">
+            </div>
+            <h2>10./SCWM/EX_WHO_PACK_CHECK - Check Whether WT Is to Be Packed into HU</h2>
+            <p>In case the pack mode is set to ‘A’ or ‘B’ in our packing profile, we will now be faced with Badi <code>/SCWM/EX_WHO_PACK_CHECK</code>. The logic is pretty simple. We are looping over all WTs which are still left and have the option to suppress the assignment of the given WT to the given pre-planned pick-HU. In order to do so we must set the variable <code>cv_exit</code> to true within the implementation of the Badi.</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_24.png" alt="Enhance SAP EWM WOCRs_24" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_25.png" alt="Enhance SAP EWM WOCRs_25" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_26.png" alt="Enhance SAP EWM WOCRs_26" loading="lazy">
+            </div>
+            <h2>11. /SCWM/EX_WHO_PACK_DIM - Check for Length, Width, Height</h2>
+            <p>Also Badi <code>/SCWM/EX_WHO_PACK_DIM</code> is only called in case the packing profile is set to ‘A’ or ‘B’ and in case the ‘dimension check’ is active in the packing profile of the WOCR. The first time when this Badi is called it is only called for HU warehouse tasks (Side note: Probably there are not many scenarios where you create HU WTs with a WOCR having a packing profile with active pick-HU creation). A couple of lines later it is called one more time for product warehouse tasks:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_27.png" alt="Enhance SAP EWM WOCRs_27" loading="lazy">
+            </div>
+            <p>Note that this Badi is only being called in case the standard checks of product UOM against max values for packaging material length/with/height do not fail (so in case standard checks fail we are already terminating the logic before we even reach this Badi).<br />If you want to reject here, simply set the changing variable <code>cv_ok</code> to initial in order to let the dimension check fail for the given WT:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_28.png" alt="Enhance SAP EWM WOCRs_28" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_29.png" alt="Enhance SAP EWM WOCRs_29" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_30.png" alt="Enhance SAP EWM WOCRs_30" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_31.png" alt="Enhance SAP EWM WOCRs_31" loading="lazy">
+            </div>
+            <h2>12. /SCWM/EX_WHO_PACK_DSTGRP - Overwrite Consolidation Group</h2>
+            <p>Next stop - one more Badi which is only being called in case the packing profile is set to ‘A’ or ‘B’. Another precondition for the call it is that we have defined a maximum number of consolidation groups per HU in the WOCR customizing and our current basked of WTs has more than one consolidation group (we are looping over internal table <code>lt_sto</code> and only reach the Badi in case we find a new consolidation group during the loop).</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_32.png" alt="Enhance SAP EWM WOCRs_32" loading="lazy">
+            </div>
+            <p>With this Badi we can decide whether WTs of a specific consolidation group should be assigned to one pick-HU or not (while setting the variable <code>lv_skip</code> to true we are leaving the current loop pass and proceed with the next WT):</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_33.png" alt="Enhance SAP EWM WOCRs_33" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_34.png" alt="Enhance SAP EWM WOCRs_34" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_35.png" alt="Enhance SAP EWM WOCRs_35" loading="lazy">
+            </div>
+            <h2>13. /SCWM/EX_WHO_PACKING - HU Determination for Warehouse Order creation</h2>
+            <p>In case the pack mode is set to ‘C’ instead we will pass Badi <code>/SCWM/EX_WHO_PACKING</code>, where we can implement our own pick-HU creation logic based on the packaging materials which had been determined before via standard or custom logic. Note that this Badi is only being called in case the pack mode is set to ‘C’ in packing profile of the WOCR:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_36.png" alt="Enhance SAP EWM WOCRs_36" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_37.png" alt="Enhance SAP EWM WOCRs_37" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_38.png" alt="Enhance SAP EWM WOCRs_38" loading="lazy">
+            </div>
+            <h2>14. /SCWM/EX_WHO_HDR_PROCTY - Overwrite Warehouse Process Type on Warehouse Order creation Level</h2>
+            <p>Now we are almost done. The next one on our trip is Badi <code>/SCWM/EX_WHO_HDR_PROCTY</code> where we can overwrite the Warehouse Process Type on WO Level:</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_39.png" alt="Enhance SAP EWM WOCRs_39" loading="lazy">
+            </div>
+            <h2>15. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</h2>
+            <p>We have almost reached our destination. Badi <code>/SCWM/EX_WHO_SORT</code> is the last Badi within our extensive WOCR hike here. Warehouse Orders have basically been fully created within the previous steps and even pick-HUs might already be there. With this Badi – which we actually call the 3rd time now – we have the option to manipulate the sorting of WTs within the single WOs. This could be useful e.g. to optimize the travel path for the picker or make sure to have heavy items at the bottom of the pick-HU.</p>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_40.png" alt="Enhance SAP EWM WOCRs_40" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_41.png" alt="Enhance SAP EWM WOCRs_41" loading="lazy">
+            </div>
+            <div class="screenshot-container">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_42.png" alt="Enhance SAP EWM WOCRs_42" loading="lazy">
+            </div>
+            <p>We made 15 stops on our journey. You saw that almost everything in the context of warehouse order creation rule can be enhanced. However, with every enhancement that you implement, consider that you are building a complex machine which still has to be maintained and understood in the future. Most probably not by yourself...</p>
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>
