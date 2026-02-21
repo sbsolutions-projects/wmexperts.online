@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order Creation Rules (WOCRs).">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, WOCR, Warehouse Order Creation Rules, Activity Area, Queue">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Warehouse Order Creation Rules (WOCRs) | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order Creation Rules (WOCRs).">
+    <meta property="article:published_time" content="2020-08-01">
+    <meta property="article:modified_time" content="2024-01-01">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Warehouse Order Creation Rules (WOCRs)",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order Creation Rules (WOCRs).",
+        "image": "https://wmexperts.online/assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_01.png",
+        "datePublished": "2020-08-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Understand SAP EWM",
+          "item": "https://wmexperts.online/blog-posts/understand/und-wocrs.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>Warehouse Order Creation Rules (WOCRs) | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover { transform: rotate(90deg); }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover, .lightbox-next:hover { opacity: 0.7; }
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+        body.lightbox-open { overflow: hidden; }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover { background: #004276; }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover { background: #cc0000; }
+
+        @media (max-width: 768px) {
+            .stay-updated { grid-template-columns: 1fr; gap: 1.5rem; }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover { background: #004276; }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Understand SAP EWM</div>
+        <h1>Warehouse Order Creation Rules (WOCRs)</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube-nocookie.com/embed/ZgulfZPYyuo" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p><strong>Note</strong>: This post belongs to the blog-series ‘Understand SAP EWM’. The purpose of these series of blog-posts/videos is to explain the concepts of the core features of SAP EWM in a simple way. I want to focus on the basic understanding rather than the smallest details. For those of you who are a bit more experienced I will soon publish a blog/video about how to enhance the standard warehouse order creation rules.</p>
+            
+            <p>We start here by understanding that the <code>WOCRs</code> get warehouse tasks as an input and give warehouse orders as an output. <code>WOCRs</code> are being applied upon wave release respectively during other options (e.g. manual <code>WT</code> creation against an <code>ODO</code>) where we trigger the warehouse task creation.</p>
+            
+            <p>Imagine it being a funnel in a filling system:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_01.png" alt="SAP EWM WOCR Funnel Logic Overview" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_02.png" alt="SAP EWM WOCR Input and Output" loading="lazy">
+            </div>
+            
+            <p>This happens separately for each combination of <code>Activity Area</code> and <code>Queue</code>. In other words - once created, the tasks are grouped by <code>Queue</code> and <code>Activity Area</code> (the decision whether it is source or destination <code>AA</code> is based on the <code>WOCR AA</code> of the <code>WPT</code>). So a warehouse tasks with a different <code>Queue</code> or a different <code>Activity Area</code> can never end up in the same warehouse order:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_03.png" alt="SAP EWM Grouping by Activity Area and Queue" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_04.png" alt="SAP EWM Task Separation Logic" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_05.png" alt="SAP EWM Activity Area Separation" loading="lazy">
+            </div>
+            
+            <p>The first real <code>WOCR</code>-related step is the determination of the <code>WOCR</code> itself. This can be either pre-defined via the warehouse process type (<code>WPT</code>) or based on the source/destination <code>AA</code> and the <code>Activity</code> itself):</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_06.png" alt="SAP EWM WOCR Determination Logic" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_07.png" alt="SAP EWM Customizing for WOCR Determination" loading="lazy">
+            </div>
+            
+            <p>We will come to the determination as such later again. Let us here assume that we’ve found a <code>WOCR</code> which we want to apply now.</p>
+            
+            <p>So what happened in this preparation phase (the (1) in the graphic below) so far?<br />- We created the tasks (<code>WTs</code>)<br />- We grouped by <code>AA</code> and <code>Queue</code><br />- We picked a <code>WOCR</code> for processing</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_08.png" alt="SAP EWM Preparation Phase" loading="lazy">
+            </div>
+            
+            <p>The last step of the preparation (logically) is the inbound sorting from my point of view. During runtime this is actually happening after the item filter but the sequence between sorting and filtering doesn’t matter and I want to make it easy to undestand here:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_09.png" alt="SAP EWM Inbound Sorting Logic" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_10.png" alt="SAP EWM Sorting Sequence" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_11.png" alt="SAP EWM Sorting Rules Customizing" loading="lazy">
+            </div>
+            
+            <p>What happens next can roughly be separated into another two areas (the 1st one we already covered):<br />2. Core<br />3. Closure</p>
+            
+            <p>Let us proceed with the core logic:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_12.png" alt="SAP EWM Core WOCR Logic" loading="lazy">
+            </div>
+            
+            <p>In the core area we we first apply filters on item level (e.g. filter out single tasks based on warehouse process type <code>WPT</code>, wave template type or maximum weight/volume) before we apply filter on subtotal/<code>CG</code> levels (e.g. filter out complete consolidation groups (all tasks with the same group) with less than X <code>WTs</code>):</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_14.png" alt="SAP EWM Item Level Filtering" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_13.png" alt="SAP EWM Filter Customizing" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_16.png" alt="SAP EWM Subtotal Filtering" loading="lazy">
+            </div>
+            
+            <p>Subtotal filter:</p>
+            
+            <p>Next thing we do is to check limits on level of the warehouse order (<code>WO</code>) which is to be created. This could for example be the total weight/volume or the maximum number of <code>WTs</code> or Pick-HUs:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_17.png" alt="SAP EWM Warehouse Order Limits" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_18.png" alt="SAP EWM Limit Customizing" loading="lazy">
+            </div>
+            
+            <p><code>WTs</code> which passed the filters and limits are sorted again and then tackled by the packing profile (where it is possible but not mandatory to create planned pick-HUs and assign the <code>WTs</code> to those HUs):</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_19.png" alt="SAP EWM Packing Profile Logic" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_20.png" alt="SAP EWM Packing Profile Customizing" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_21.png" alt="SAP EWM Pick-HU Assignment" loading="lazy">
+            </div>
+            
+            <p>Now we come to what I call the ‘closure’. We sort the <code>WTs</code> again (3rd option now) but this time we are already within the <code>WOs</code> which have been created before:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_22.png" alt="SAP EWM Closure Phase" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_23.png" alt="SAP EWM Final Sorting" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_24.png" alt="SAP EWM Final Sorting Customizing" loading="lazy">
+            </div>
+            
+            <p>That’s it!</p>
+            
+            <p>The warehouse orders (<code>WOs</code>) are finally created. Not that complex at all isn’t it?<br />Still the remaining question is what happens with those <code>WTs</code> which got sorted out? The answer is that we can have more than one of those ‘<code>WOCR</code>-Machines’. So once a <code>WT</code> got sortet out it will automatically be processed by the next <code>WOCR</code> with the same steps explained above for the first one:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_25.png" alt="SAP EWM Multiple WOCR Processing" loading="lazy">
+            </div>
+            
+            <p>The sequence in which multiple <code>WOCRs</code> are being applied for a given warehouse tasks is defined in customizing - again based on <code>AA</code> and <code>Activity</code>:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_26.png" alt="SAP EWM WOCR Sequence Determination" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_27.png" alt="SAP EWM Customizing for WOCR Sequence" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_28.png" alt="SAP EWM WOCR Search Sequence" loading="lazy">
+            </div>
+            
+            <p>To sum it up -</p>
+            
+            <p>you’ll find a rough overview below showing the sequence of steps along with the customizing node:</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_29.png" alt="SAP EWM WOCR Summary and Customizing Nodes" loading="lazy">
+            </div>
+            
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowLeft') showPrevImage();
+                else if (e.key === 'ArrowRight') showNextImage();
+            });
+
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>

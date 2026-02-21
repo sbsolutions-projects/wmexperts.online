@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about the different levels of Serial Number Management.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, Serial Number Management, Serial Number Profile, Document Level, Warehouse Level, Movement Level">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Understand SAP EWM: Serial Number Management Levels | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about the different levels of Serial Number Management.">
+    <meta property="article:published_time" content="2024-01-01">
+    <meta property="article:modified_time" content="2024-01-01">
+
+    <!-- Structured Data -->
+    <script data-migrator-placeholder="0">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Understand SAP EWM: The different levels of Serial Number Management",
+      "description": "In-depth article about SAP EWM. Learn technical and functional details about Serial Number Management levels.",
+      "image": "https://wmexperts.online/assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 1.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "Hendrik"
+      }
+    }
+    </script>
+
+    <title>Understand SAP EWM: Serial Number Management Levels | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style data-migrator-placeholder="0">
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 2.5rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+
+        .screenshot-container { margin: 2.5rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #lightbox.active { display: flex; }
+
+        .lightbox-content { position: relative; max-width: 90%; max-height: 90%; }
+
+        #lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; }
+
+        .lightbox-close, .lightbox-prev, .lightbox-next {
+            position: absolute;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            user-select: none;
+            font-weight: bold;
+            z-index: 10000;
+        }
+
+        .lightbox-close {
+            top: 20px;
+            right: 30px;
+        }
+
+        .lightbox-prev {
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-next {
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1rem;
+            z-index: 10000;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Understand SAP EWM</div>
+        <h1>The different levels of Serial Number Management</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube-nocookie.com/embed/1BFYwRBojCk" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p><strong>Note</strong>: This post belongs to the blog-series '<em>Understand <code>SAP EWM</code> the different levels of Serial Number Management</em>'. The purpose of these series of blog-posts is to explain the concepts of the core features of <code>SAP EWM</code> in a simple way. We want to focus on the basic understanding rather than the smallest details.</p>
+            
+            <p>To make it understandable we are jumping into the real world before we look at the system.</p>
+            
+            <p>Imagine you are the government of a random country and you want to track the individuals which enter or leave your country.</p>
+            
+            <p>Depending on the level of security and visibility you could think about three different approaches how to do this.</p>
+            
+            <p>With the first and easiest approach you concentrate on specific borders only. So only for specific neighbouring countries you want to know which individuals are coming from and/or leaving towards this country. You know now who passes this border in a given direction but you do not know yet who resides in your country.</p>
+            
+            <p>To enable the latter you need to implement the second approach. Here you check all movements into and out of your country at any given border. No exceptions - this is the only way to be able to know who is in at any given point in time.</p>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 1.jpg" alt="Understand SAP EWM Serial number Management (1)" loading="lazy">
+            </div>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 2.jpg" alt="Understand SAP EWM Serial number Management (2)" loading="lazy">
+            </div>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 3.jpg" alt="Understand SAP EWM Serial number Management (3)" loading="lazy">
+            </div>
+
+            <p>Most restrictive and less libertarian countries might even go one step further. They want to know the whereabout of each individual at any given point in time. So after crossing the border everybody will receive a tracking device to enable monitoring or every single movement. Not a nice vision by the way..</p>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 4.jpg" alt="Understand SAP EWM Serial number Management (4)" loading="lazy">
+            </div>
+
+            <p>Anyhow - we think still a good summary to understand the three options that we have in <code>SAP EWM</code>. Although you will probably be able to draw the system-related conclusions on your own, we give you a quick overview about the corresponding system settings for each approach. These settings are captured on the <code>serial number profile</code> which is in turn assigned to the <code>product master data</code>. This also means you can make the decision about the degree of tracking on product level.</p>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 6.jpg" alt="Understand SAP EWM Serial number Management (6)" loading="lazy">
+            </div>
+
+            <h2>Tracking on document level</h2>
+            <p>This approach is used to capture serials for specific delivery types - returns or kitting orders might be a common example.</p>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 8.jpg" alt="Understand SAP EWM Serial number Management (8)" loading="lazy">
+            </div>
+
+            <h2>Tracking on warehouse level</h2>
+            <p>Tracking on warehouse level means that you capture serials during all receiving or issuing processes. This enables you to know at any point in time which serials you have in the warehouse.</p>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 9.jpg" alt="Understand SAP EWM Serial number Management (9)" loading="lazy">
+            </div>
+
+            <h2>Tracking on movement level</h2>
+            <p>The last option is to capture the serial numbers (implicitly or explicitly) during every movement of the given object/quant. With this setting you can tell the exact bin for every serial number at any point in time.</p>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 10.jpg" alt="Understand SAP EWM Serial number Management (10)" loading="lazy">
+            </div>
+
+            <p>Of course you also have the option not to track serial numbers at all - should be obvious but worth mentioning - some countries have not understood yet ;-)</p>
+            
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="https://www.linkedin.com/in/hendrik/" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <script data-migrator-placeholder="1">
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            const images = document.querySelectorAll('.screenshot-container img');
+            let currentImageIndex = 0;
+
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+            }
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); showPrevImage(); });
+            lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); showNextImage(); });
+            lightbox.addEventListener('click', closeLightbox);
+        })();
+    </script>
+
+</body>
+</html>

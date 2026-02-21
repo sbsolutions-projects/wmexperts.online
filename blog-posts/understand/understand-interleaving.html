@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-depth article about SAP EWM Task Interleaving. Learn how SAP EWM optimizes warehouse movements using an Oktoberfest analogy.">
+    <meta name="keywords" content="SAP EWM, Task Interleaving, Warehouse Management, RF Scanning, Putaway, Stock Removal">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Understand SAP EWM Task Interleaving | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM Task Interleaving. Learn how SAP EWM optimizes warehouse movements using an Oktoberfest analogy.">
+    <meta property="article:published_time" content="2024-01-01">
+    <meta property="article:modified_time" content="2024-01-01">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic].",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+      }
+    ]
+    </script>
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Understand SAP EWM Task Interleaving",
+        "description": "In-depth article about SAP EWM Task Interleaving. Learn how SAP EWM optimizes warehouse movements using an Oktoberfest analogy.",
+        "image": "https://wmexperts.online/assets/images/understand/interleaving/SAP EWM Task interleaving 5.jpg",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Understand SAP EWM",
+          "item": "https://wmexperts.online/blog-posts/category/understand-ewm.html"
+        }]
+      }
+    ]
+    </script>
+
+    <title>Understand SAP EWM Task Interleaving | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        /* Lightbox Controls */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Prevent body scroll when lightbox is open */
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover {
+            background: var(--sap-blue-light);
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .stay-updated {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover {
+            background: #004276;
+        }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="logo">WM<span>experts</span></a>
+        <nav><a href="../../index.html">← Back to Blog</a></nav>
+    </header>
+
+    <article>
+        <div class="breadcrumb">Understand SAP EWM</div>
+        <h1>Task Interleaving</h1>
+
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/1QnK3QPZPUM" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="content">
+            <p><strong>Note</strong>: This post belongs to the blog-series ‘<em>Understand SAP EWM task interleaving’</em>. The purpose of these series of blog-posts is to explain the concepts of the core features of <code>SAP EWM</code> in a simple way. We want to focus on the basic understanding rather than the smallest details.</p>
+            
+            <p>Germany is famous for its Oktoberfest.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/Foto 1.jpg" alt="Oktoberfest Scenery" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/Foto 2 1.jpg" alt="Oktoberfest Tents" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>Oktoberfest is a big festival where people are basically sitting in big party tents the whole day, trying to eat &amp; drink as much as they can (like it or not - it is what it is).</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 5.jpg" alt="SAP EWM Task interleaving analogy 5" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 6.jpg" alt="SAP EWM Task interleaving analogy 6" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>Traditional german music - which is being performed within these tents - makes the people feel like having to drink even more.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/Foto 3.jpg" alt="German Music" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/Foto 4.jpg" alt="Oktoberfest Atmosphere" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>In order to deliver all these drinks and all the food to the tables within the tents you need a team of strong waiters &amp; waitresses.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/Foto 6.jpg" alt="Waiters at Oktoberfest" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/Foto 7.jpg" alt="Waitress carrying mugs" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>And in order to make most of their time you need an efficient organization. If you ever had the chance to observe the scenery within these party tents you might have noticed that the waiters are usually not taking any step with empty hands. A typical scenario might look like this.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 7.jpg" alt="SAP EWM Task interleaving analogy 7" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>The waiter carries full mugs from the bar to table X. Having placed the full mugs he takes the empty ones - if available - and brings them back to the bar.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 8.jpg" alt="SAP EWM Task interleaving analogy 8" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 9.jpg" alt="SAP EWM Task interleaving analogy 9" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>Again, he picks up full mugs and carries them to table Y.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 10.jpg" alt="SAP EWM Task interleaving analogy 10" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>Table Y has no empty mugs - the guests have just arrived - but our waiter is passing table Z where lots of empty mugs are waiting to be picked up.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 11.jpg" alt="SAP EWM Task interleaving analogy 11" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 12.jpg" alt="SAP EWM Task interleaving analogy 12" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>Sidenote - The world record for carrying these traditional 1 liter mugs is held by a guy called Strümpfel. Last year he carried 29 of those mugs at a time for 40 meters.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/Foto 6.jpg" alt="Waiters carrying mugs" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>Anyway - we think you already got the idea but let us draw the line to <code>SAP EWM</code> together. Imagine a simple warehouse - pallet in - pallet out. The operators are driving forklifts while using <code>RF</code> scanners to confirm their tasks. Our party tables are now the bins in a high-bay storage and our bar is the staging area where the pallets are received and shipped. We do only have two core processes - putaway of full pallets to the rack and removal of full pallets from the rack. The staging area is shared for inbound and outbound staging.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 14.jpg" alt="SAP EWM Warehouse Analogy" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>We are using two queues only - one for putaway and one for removal. Both queues have a ‘queue type’ assigned - we will come to this soon. We are using resource types which are activated for the <code>EWM</code> task interleaving process.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 17.png" alt="SAP EWM Resource Type Configuration" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 18.png" alt="SAP EWM Task Interleaving Activation" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>The queues are assigned to resource groups. The resource groups and the resource types are assigned to the resources.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 19.png" alt="SAP EWM Resource Group Assignment" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 20.png" alt="SAP EWM Resource Maintenance" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>As mentioned already, the two queues are also assigned to different queue types and we have defined a sequence for these types, based on the resource group. So we do not only have to define a sequence for the queues within a given resource group (which we would need for ‘simple’ system-guided <code>RF</code> processing with multiple queues) but also have to define a sequence for the different types of queues.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 21.png" alt="SAP EWM Queue Type Definition" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 22.png" alt="SAP EWM Queue Assignment" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 23.png" alt="SAP EWM Queue Type Sequence" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 24.png" alt="SAP EWM Resource Group Sequence" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>This queue type sequence makes sure that the resources which are operating within the respective resource groups will always get the subsequent task from a queue with queue type B once they’ve completed a task in a queue of type A.</p>
+            
+            <p>In <code>EWM Standard</code>, the selection of the <code>WT</code> from the subsequent queue is based on the latest-start-date (so called <code>LSD</code>) and the travel distance. The <code>LSD</code> is calculated based on the times from the wave template and the expected processing time. The travel distance is calculated based on the coordinates of the bins or storage type edges. This sorting can be influenced by a <code>Badi</code> but we will neither go into detail how the Standard is calculating, nor do we look at the <code>Badi</code> option. We will keep focusing on the basic understanding.</p>
+            
+            <p>The queue for putaway is setup to be semi-system guided. Thus, the operator is guided to the receiving bin on the staging area and is free to scan any of the <code>HUs</code> which are sitting there (would be annoying to ask for a specific one as there might be hundreds on the same bin). Once the operator has selected an <code>HU</code>, the system will show the destination bin on the <code>RF</code> screen.</p>
+            
+            <p>The queue for stock removal is not setup as semi system-guided so the system will show a warehouse task for a specific bin &amp; source <code>HU</code>.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 25.png" alt="SAP EWM Queue Configuration Details" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>If you now compare all this system-related stuff with our example process from the Oktoberfest you will notice that there are not much differences. Oktoberfest waiters are also working in two queues. One to delivery full mugs to empty tables - similar like incoming pallets have to be putaway to empty bins - and one to move empty mugs to the bar (similar like outgoing pallets have to be removed from the bins and placed to the outbound staging area).</p>
+            
+            <p>The queue to deliver full mugs to the table - the counterpart to the putaway queue - is semi-system guided and the tasks are created with generic destination, based on the destination table types. That means that the waiters can grab any full mug from the bar and can decide to which table they are going to deliver it. Usually they will pick one where somebody is crying for more - if multiple guests are crying, usually the table with the best tipper.</p>
+            
+            <p>The queue to remove empty mugs - our counterpart to the pallet removal queue - is also semi-system guided. So here is a small point where we have a difference to our warehouse example. The waiter can take any empty mug from any of the tables - the warehouse operator is guided to remove a specific <code>HU</code>. Still we could argue that we have some kind of in-build guidance or at least a sorting in our mug-process, as the number of empty mugs provides a good visibility of the urgency to head for a specific table. So the table with the most of the empty mugs is at the top of the empty-mug-removal queue.</p>
+            
+            <p>The queue determination for the empty-mug queue is based on the the source tables. In those party-tents usually one waiter is responsible for a fixed set of tables - his ‘<code>activity area</code>’. But this is a topic we might look into with a separate post.</p>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 15.jpg" alt="SAP EWM Task interleaving summary 15" width="800" height="450" loading="lazy">
+            </div>
+            
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/interleaving/SAP EWM Task interleaving 16.jpg" alt="SAP EWM Task interleaving summary 16" width="800" height="450" loading="lazy">
+            </div>
+            
+            <p>So in summary and as you can see - is almost the same thing.</p>
+            <p>In Germany we call it Oktoberfest - in <code>EWM</code> we call it <em>Task Interleaving!</em></p>
+            
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>
