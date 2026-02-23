@@ -466,27 +466,27 @@
             <p>A PLC is a small industrial computer which consists of multiple modules. The main purpose – at least in our context – is to automize intralogistics processes. All or at least some of those modules are usually installed within such a cabinet:</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image213.jpg" alt="" width="326" height="434" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 4.jpg" alt="" width="326" height="434" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image214.jpg" alt="" width="460" height="345" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 5.jpg" alt="" width="460" height="345" loading="lazy">
             </div>
             
             <p>The most important modules are inputs/outputs as well as the CPU.<br />Input modules receive digital or analogue signals from multiple different sources (switches, sensors, scanners, light barriers etc.). Here an example of a case conveyor I-point with multiple different sensors &amp; scanners. We come back to those input options later in this article:</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image215.jpg" alt="" width="301" height="374" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 6.png" alt="" width="301" height="374" loading="lazy">
             </div>
             
             <p>The following pictures show examples of input/output modules were signals are received/send to/from the CPU:</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image216.jpg" alt="" width="390" height="263" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 7.png" alt="" width="390" height="263" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image217.jpg" alt="" width="199" height="266" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 8.jpg" alt="" width="199" height="266" loading="lazy">
             </div>
             
             <p>An input could for example be interpreted as being active once a specific electrical voltage is recognized. The incoming signals are converted to digital bits which are processed by the CPU.</p>
@@ -518,7 +518,7 @@
             <p>The CPU is the heart of the PLC and it contains a memory which holds the program/coding which is responsible to process the input. The following picture shows a CPU produced by the company Beckhoff:</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image223.jpg" alt="" width="566" height="373" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 14.png" alt="" width="566" height="373" loading="lazy">
             </div>
             
             <p>These programs are usually written in an application on a computer and then downloaded to the PLC. The TIA portal from Siemens is one example for such an application. It allows the engineer/developer to work with somewhat ‘simple’ logical operators but also complex coding, as shown in the screenshots below:</p>
@@ -552,53 +552,53 @@
             <p><u>We start with simple examples for a pure PLC logic</u><br />1. Scanners: Activate a barcode scanner once a position/sensor is high which detects a pallet/HU at a scanner position</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image229.jpg" alt="" width="486" height="355" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 20.png" alt="" width="486" height="355" loading="lazy">
             </div>
             
             <p>2. Conveyor engines: Start the conveyor once a pallet/HU is dropped on an infeed position</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image230.jpg" alt="" width="274" height="364" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 21.png" alt="" width="274" height="364" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image231.jpg" alt="" width="576" height="280" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 22.png" alt="" width="576" height="280" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image232.jpg" alt="" width="517" height="368" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 23.png" alt="" width="517" height="368" loading="lazy">
             </div>
             
             <p>3. Position tracking: Pallet/HU moves from one conveyor segment to another conveyor segment &gt; PLC receives input signals from the sensor(s) once the HU has left/arrived at a segment</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image233.jpg" alt="" width="301" height="387" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 24.png" alt="" width="301" height="387" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image234.jpg" alt="" width="310" height="380" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 25.png" alt="" width="310" height="380" loading="lazy">
             </div>
             
             <p><u>Now some more complex examples where the PLC communicates with the underlying hardware as well as with EWM</u><br />1. I-Point pallet tunnel: Evaluate the status of the sensors which are installed for the tunnel check &gt; send the result to EWM via telegram.</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image235.jpg" alt="" width="346" height="358" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 26.png" alt="" width="346" height="358" loading="lazy">
             </div>
             
             <p>2. I-Point dimension check: Evaluate the status of the sensors which are installed to check the dimensions of the object &gt; send the result to EWM via telegram</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image236.jpg" alt="" width="302" height="403" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 27.jpg" alt="" width="302" height="403" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image237.jpg" alt="" width="317" height="394" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 28.png" alt="" width="317" height="394" loading="lazy">
             </div>
             
             <p>3. Crane movements: Create a stock removal task for a crane to remove a pallet from a bin in the given rack &gt; start the motor to move the crane to the source position<br /></p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\role-plc/image238.jpg" alt="" width="379" height="361" loading="lazy">
+                <img src="..\..\assets\images\mfs\role-plc/PLC in EWM MFS 29.png" alt="" width="379" height="361" loading="lazy">
             </div>
             
             <p>To sum it up, in the <u>context of warehouse automation</u> the PLC is mainly responsible to </p>
@@ -607,10 +607,6 @@
             <p><strong>Outlook</strong></p>
             <p>As mentioned at the beginning of this article, what you read here should serve as an introduction/basis for more complex articles which I will release during the next months. With the next post I will show you how EWM actually interlocks with the PLC before I provide a step-by-step overview of the communication from EWM to the PLC and the other way around. </p>
             <p>And as as mentioned above, feel free to get in touch with the <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank" rel="noopener">EWM team @ Swisslog</a> in case you need support around MFS as part of your EWM projects! Browse through the open positions listed below, in case you are interested to join the team!</p>
-            <p><em>I hope this blog post provides value to you and you could learn something. Please feel free to s</em><em>ubscribe to my <strong><a href="https://wmexperts.online/blog-newsletter/" target="_blank" rel="noopener">blog updates </a></strong>or my <strong><a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank" rel="noopener">youtube channel </a></strong>in case you want to be notified about new posts!</em></p>
-            <h2>Get my monthly blog-updates!</h2>
-            <h2>Subscribe to my Youtube channel!</h2>
-            <a href="https://www.youtube.com/channel/UCRcn9mXPIJ58JVTeU0oKrFg?sub_confirmation=1" target="_blank">Subscribe</a>
         </div>
 
         <!-- STAY UPDATED SECTION -->

@@ -462,7 +462,7 @@
 
             <p>FM <code>/SCWM/TROUTL_DET</code> is the most important one in this context here. So let us have a look at it step-by-step!</p>
 
-            <h2>1. Read the LOSC customizing</h2>
+            <p><strong>1. Read the LOSC customizing</strong></p>
             <p>Right at the beginning we read the routing records from the customizing:</p>
 
             <div class="screenshot-container">
@@ -475,7 +475,7 @@
                 <img src="../../assets/images/mfs/deep-losc/SAP EWM MFS Layout-oriented storage control_03.png" alt="SAP EWM MFS Layout-oriented storage control_03" loading="lazy">
             </div>
 
-            <h2>2. Fire selects onto the customizing table in order to find a valid record</h2>
+            <p><strong>2. Fire selects onto the customizing table in order to find a valid record</strong></p>
             <p>We have a hard-coded access sequence here (unlike e.g. queue determination or STSS where we have an option to customize the access sequence). This is very important in order to understand which record is selected for routing (keeping a screenshot of this access table is a life hack for every EWM consultant ):</p>
 
             <div class="screenshot-container">
@@ -490,7 +490,7 @@
 
             <p>Note that EWM standard will always apply the matching record on sequence number #1. We will come back to the usage of the other records later, when we look at options for enhancements (Prio BAdi).</p>
 
-            <h2>3. Capacity check</h2>
+            <p><strong>3. Capacity check</strong></p>
             <p>Note: Have a look at this blog post in case you want to make yourself familiar with important MFS objects (like the communication point).</p>
 
             <div class="screenshot-container">
@@ -547,7 +547,7 @@
             – Manipulate the routing based on the HU type (examine the HU header data which is also imported to the BAdi)<br>
             – Equally distribute HUs across areas of the conveyor (while considering the destination of the last WT from the given communication point)</p>
 
-            <h2>5. Exception handling in case of capacity issues</h2>
+            <p><strong>5. Exception handling in case of capacity issues</strong></p>
             <p>It is possible that we determined one or multiple valid destinations but they did not pass the capacity check.</p>
             <p>In this case we call the Prio-BAdi a 2nd time for those routes where the capacity check failed. If the BAdi does not clear all of those options, we decide based on the exception code determined before whether<br>
             – we create a WT for the HU but simply not sent it to the PLC via telegram (this is the default approach > telegram will be sent once capacity is available)<br>
@@ -558,7 +558,7 @@
                 <img src="../../assets/images/mfs/deep-losc/SAP EWM MFS Layout-oriented storage control_17.png" alt="SAP EWM MFS Layout-oriented storage control_17" loading="lazy">
             </div>
 
-            <h2>6. Finalization</h2>
+            <p><strong>6. Finalization</strong></p>
             <p>Finally – if an intermediate step had been determined - the data for the task to be created is collected in the local variables (1).<br>
             In case we did not determine an intermediate step (not with and not without capacity), EWM checks whether the destination of the initial/imported WT is customized to be an End-point CP or clarification CP.<br>
             If this is the case, no intermediate step is required and the waiting WT can be activated (2):</p>
@@ -611,7 +611,7 @@
             – are not coming from non-MFS bin pointing towards an I-point/infeed<br>
             – are not at an End-point, pointing towards a non-MFS destination bin</p>
 
-            <h2>7. Change Everything!</h2>
+            <p><strong>7. Change Everything!</strong></p>
             <p>The last step after EWM standard has prepared everything to complete the step is the call of FM <code>/SCWM/BADI_STORAGE_CTRL_LAYOUT</code> which calls a potential implementation of BAdi <code>/SCWM/EX_CORE_LSC_LAYOUT</code>. As you can see at the interface, this BAdi imports lots of local data and allows you to change almost everything (~ implement a comprehensive custom routing):</p>
 
             <div class="screenshot-container">
@@ -622,7 +622,7 @@
             <p>Done!</p>
             <p>FM <code>/SCWM/TROUTL_DET</code> is completed and returned the routing decision!</p>
 
-            <h2>Appendix:</h2>
+            <p><strong>Appendix:</strong></p>
             <p>It is important to note that EWM sets an exception code to the HU header in case the determination of the next destination failed (~ a situation where no intermediate destination found and not allowed to activate the waiting task). This exception code stays in the field <code>MFSERROR</code> of table <code>/SCWM/HUHDR</code> and will be evaluated and used for the next routing steps, once the HU arrives at the next communication point (based on this the HU can now route itself step-by-step towards the clarification point).</p>
 
             <div class="screenshot-container">
@@ -635,7 +635,7 @@
                 <img src="../../assets/images/mfs/deep-losc/SAP EWM MFS Layout-oriented storage control_30 1.png" alt="SAP EWM MFS Layout-oriented storage control_30" loading="lazy">
             </div>
 
-            <h2>Summary of possibilities for enhancements –</h2>
+            <p><strong>Summary of possibilities for enhancements –</strong></p>
             <p>Enhancement spot <code>/SCWM/ES_CORE_LSC</code> holds the three different BAdis which I mentioned during our deep-dive above:</p>
 
             <div class="screenshot-container">

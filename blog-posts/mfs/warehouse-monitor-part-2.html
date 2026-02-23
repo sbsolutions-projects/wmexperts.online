@@ -455,13 +455,13 @@
             <p>However, I promise to dig deeper, provide lots of insights that are not given by SAP. Technical details as well as practical examples which will make it easier for you to understand everything.</p>
             <p>Having said that, for some of the details that I explain I do expect a base knowledge about the objects used in EWM MFS. If you are a beginner in this area, it is helpful for sure in case you study the following blog posts before you consume this one here:</p>
             <ul>
-                <li><a href="https://wmexperts.online/mfs-ewm-plc-integration/" target="_blank" rel="noopener">The EWM-PLC integration</a></li>
-                <li><a href="https://wmexperts.online/mfs-ewm-plc-communication/" target="_blank" rel="noopener">Communication from EWM to the PLC</a></li>
+                <li><a href="ewm-plc-integration.html" target="_blank" rel="noopener">The EWM-PLC integration</a></li>
+                <li><a href="ewm-plc.html" target="_blank" rel="noopener">Communication from EWM to the PLC</a></li>
             </ul>
             <p>Within this second part of my blog post about the MFS node in the warehouse monitor I will cover the nodes ‘Handling Unit Move’ until the ‘Telegram Buffer’. If you have missed the first part of this blog post you can find it here.</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01 3.png" alt="SAP EWM MFS Warehouse Monitor_01" width="936" height="877">
+                <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01.png" alt="SAP EWM MFS Warehouse Monitor_01" width="936" height="877">
             </div>
 
             <h2>Handling Unit Move</h2>
@@ -523,7 +523,7 @@
 
             <p><u>Set Exception</u>: FM <code>/SCWM/MFS_RSRC_SET_EXCC_MON</code> updates the exception on the resource via FM <code>/SCWM/MFS_RSRC_SET_STAT</code> which calls FM <code>/SCWM/MFS_EXCCODE_SET</code> for MFS exception handling. The latter triggers the standard exception code processing (incl. follow-up actions, workflow &amp; alert processing etc.). In case this function is used in order remove an existing exception code, EWM calls FM <code>/SCWM/MFS_WT_DET</code> right away in order to potentially find a WT in the queue for the given resource which can be processed (~ telegram can be created and sent to the PLC).</p>
             <p><u>Recalculate WTs</u>: Table <code>/SCWM/RSRC</code> always holds the actual number of open MFS tasks for a given resource in field <code>MFSACCTEL</code>. This information is used e.g. in order to decide whether telegrams for additional tasks can be sent to the resource or not. With this method, FM <code>/SCWM/MFS_RSRC_SET_COUNTER_MON</code> calls FM <code>/SCWM/RSRC_WT_RECALCULATE</code> in order to calculate the number of tasks which are being processed by the resource right now (tasks which are assigned to the resource but not confirmed yet + tasks for the PLC of the given queue which are pending in the outbound buffer (table <code>/SCWM/MFSDELAY</code>) but not acknowledged yet). The FM updates the field <code>/SCWM/RSRC-MFSACTTEL</code> based on the result.</p>
-            <p><u>Send Status Request</u>: This method allows the user to send a status request telegram to the PLC. It calls FM <code>/SCWM/MFS_RSRC_QRY_STAT_MON</code> which prepares everything in order to send a telegram via FM <code>/SCWM/MFS_SEND</code> (check this <a href="https://wmexperts.online/mfs-ewm-plc-communication/">blog post</a> in order to learn what happens within FM <code>/SCWM/MFS_SEND</code>). The result could look like shown in the screenshot below (CRQ is the status request from EWM to the PLC and CSR is the status telegram with the answer from the PLC to EWM &gt; note that the telegram type will differ depending on the subsystem vendor):</p>
+            <p><u>Send Status Request</u>: This method allows the user to send a status request telegram to the PLC. It calls FM <code>/SCWM/MFS_RSRC_QRY_STAT_MON</code> which prepares everything in order to send a telegram via FM <code>/SCWM/MFS_SEND</code> (check this <a href="ewm-plc.html">blog post</a> in order to learn what happens within FM <code>/SCWM/MFS_SEND</code>). The result could look like shown in the screenshot below (CRQ is the status request from EWM to the PLC and CSR is the status telegram with the answer from the PLC to EWM &gt; note that the telegram type will differ depending on the subsystem vendor):</p>
             
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_33.png" alt="SAP EWM MFS Warehouse Monitor_33" width="936" height="194">
@@ -547,7 +547,7 @@
                 <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_35.png" alt="SAP EWM MFS Warehouse Monitor_35" width="595" height="149">
             </div>
 
-            <p>Check <a href="https://wmexperts.online/mfs-ewm-plc-communication/" target="_blank" rel="noopener">this post</a> in case you want to learn more about telegram processing in EWM and the usage of the telegram buffer for incoming telegrams.</p>
+            <p>Check <a href="ewm-plc.html" target="_blank" rel="noopener">this post</a> in case you want to learn more about telegram processing in EWM and the usage of the telegram buffer for incoming telegrams.</p>
 
             <h2>Telegram Buffer – Outgoing Telegram</h2>
             <p>This node shows the content of the inbound telegram buffer (~ content of table <code>/SCWM/MFSDELAY</code>):</p>

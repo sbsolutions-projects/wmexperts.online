@@ -447,28 +447,28 @@
             <p>Here you can everything which is needed to understand EWM putaway in detail. You will find plenty of includes carrying different subroutines as well the main include containing the function modules:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_01 1.png" alt="SAP EWM Putaway bin determination 01" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_01.png" alt="SAP EWM Putaway bin determination 01" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_02 1.png" alt="SAP EWM Putaway bin determination 02" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_02.png" alt="SAP EWM Putaway bin determination 02" loading="lazy">
             </div>
 
             <p>Looking at the subroutines for instance, you find many interesting spots which can help you understand the different strategies and checks which are applied during bin determination:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_03 1.png" alt="SAP EWM Putaway bin determination 03" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_03.png" alt="SAP EWM Putaway bin determination 03" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_04 1.png" alt="SAP EWM Putaway bin determination 04" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_04.png" alt="SAP EWM Putaway bin determination 04" loading="lazy">
             </div>
 
             <p>In the include for the function modules you will also find lots of useful spots e.g. the FM for storage type determination or the one which executes the checks for dangerous goods:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_05 1.png" alt="SAP EWM Putaway bin determination 05" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_05.png" alt="SAP EWM Putaway bin determination 05" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_06 1.png" alt="SAP EWM Putaway bin determination 06" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_06.png" alt="SAP EWM Putaway bin determination 06" loading="lazy">
             </div>
 
             <p>In terms of enhancements we will concentrate now on the Badis provided by SAP and ignore additional options (implicit/explicit enhancements etc.). Enhancement spot <code>/SCWM/ES_CORE_PTS</code> contains most of the Badis which can be used to adjust the putaway logic based on your needs</p>
@@ -477,58 +477,58 @@
             <p><strong>Example 1</strong><br />Here we can use Badi <code>/SCWM/EX_CORE_PTS_FILT_SORT</code> to filter &amp; sort potential destination bins:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_07 1.png" alt="SAP EWM Putaway bin determination 07" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_07.png" alt="SAP EWM Putaway bin determination 07" loading="lazy">
             </div>
 
             <p>Apply the where-us-list of the interface method in order to understand where the Badi is accessible:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_08 1.png" alt="SAP EWM Putaway bin determination 08" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_08.png" alt="SAP EWM Putaway bin determination 08" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_09 1.png" alt="SAP EWM Putaway bin determination 09" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_09.png" alt="SAP EWM Putaway bin determination 09" loading="lazy">
             </div>
 
             <p>Different spots in call stack during runtime:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_11 1.png" alt="SAP EWM Putaway bin determination 11" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_11.png" alt="SAP EWM Putaway bin determination 11" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_10 1.png" alt="SAP EWM Putaway bin determination 10" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_10.png" alt="SAP EWM Putaway bin determination 10" loading="lazy">
             </div>
 
             <p>We will go into detail for the call in the last screenshot above. Subroutine <code>BIN_DETERMINATION_3</code> which is called in the context of FM <code>/SCWM/PUT_BIN_DET</code> (program <code>/SCWM/LPUT_BIN_DETF92</code> &gt; also the stack is interesting here):</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_12 1.png" alt="SAP EWM Putaway bin determination 12" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_12.png" alt="SAP EWM Putaway bin determination 12" loading="lazy">
             </div>
 
             <p>Product master data is imported with <code>is_mat_global</code> / <code>it_mat_UOM</code> and WT data (containing the quantity) is imported in <code>is_ltap</code>. Based on this we can now easily include our logic to ignore specific bins based on the quantity in any given UOM (the logic is just random – thus no details here). The internal table to be adjusted here is <code>ct_hlplagpl</code> (structure details in screenshot below) which is carrying all possible destination bins based on standard putaway strategy. Within the interface method we can either remove single rows (e.g. remove bins which should not be used in the given scenario) or change the sorting in the table (e.g. prioritize specific bins over others).</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_13 1.png" alt="SAP EWM Putaway bin determination 13" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_13.png" alt="SAP EWM Putaway bin determination 13" loading="lazy">
             </div>
 
             <p>Below screenshot shows additional import parameters of the method which can be used as a base for your custom logic to decide how to filter/sort the bins:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_14 1.png" alt="SAP EWM Putaway bin determination 14" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_14.png" alt="SAP EWM Putaway bin determination 14" loading="lazy">
             </div>
 
             <p><strong>Example 2</strong><br />Here we can use Badi <code>/SCWM/EX_CORE_PTS_TYPSQ</code> to manipulate storage type search sequence as well as putaway rule which had been determined by standard logic before.</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_15 1.png" alt="SAP EWM Putaway bin determination 15" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_15.png" alt="SAP EWM Putaway bin determination 15" loading="lazy">
             </div>
 
             <p><strong>Summary</strong><br />Product master data is imported with <code>is_mat_global</code>. Putaway rule by variable <code>iv_put_rule</code>. This is everything we need in order to set the rule based on the base UOM (again – this is just an example and might not make sense for most of the operations).</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_16 1.png" alt="SAP EWM Putaway bin determination 16" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_16.png" alt="SAP EWM Putaway bin determination 16" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_17 1.png" alt="SAP EWM Putaway bin determination 17" loading="lazy">
+                <img src="../../assets/images/enhance/putaway-bin/SAP EWM Putaway bin determination_17.png" alt="SAP EWM Putaway bin determination 17" loading="lazy">
             </div>
 
             <p>I think the approach is clear now and I think you got the most important takeaways.<br />Summary<br />- Heart of EWM putaway logic: Function group <code>/SCWM/PUT_BIN_DET</code><br />- Sweet spot to enhance based on custom requirements: Enhancement spot <code>/SCWM/ES_CORE_PTS</code></p>

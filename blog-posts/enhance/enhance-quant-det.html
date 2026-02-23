@@ -446,13 +446,13 @@
             <p><strong>What is possible via standard customizing?</strong><br>No #1 rule for every EWM consultant – always explore standard options ahead of touching the code. Even the smallest development will kick your ass with small surprises (latest the person who has to support your Z-ideas ).<br>This customizing node answers the question about which source bin/quant to select in order to create a warehouse task against a warehouse request item:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_01 1.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_01.png" alt="" loading="lazy">
             </div>
             
             <p>As mentioned above, EWM gives us a long list of stock attributes which can be used to sort possible source quants. Simply select the attributes that you want to consider, put them in a meaningful sequence and set the flag to sort descending if needed (if you do not set the flag, EWM will sort ascending by default). This customizing is stored in table <code>/SCWM/T334RR</code>.</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_02 1 1024x833.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_02.png" alt="" loading="lazy">
             </div>
             
             <p>Most common examples are a sorting based on <code>WDATU</code> in order to realize FIFO/LIFO or a sorting based on <code>VFDAT</code> in order to realizes FEFO/LEFO. Usually this is combined with a sorting based on <code>QUAN</code> in order to clean up partially filled bins or in order to minimize the number of picks per warehouse request item.<br>I do explain more complex examples as part of the <a href="https://youtu.be/I8-88KeFT8s" target="_blank" rel="noopener noreferrer">video</a> about this topic.</p>
@@ -460,45 +460,45 @@
             <p><strong>Where can I find the standard coding?</strong><br>In case you have a problem with the standard behavior that needs to be debugged or in case you are just curious about how the standard coding processes the customizing mentioned above, you need to look at include <code>/SCWM/LREM_BIN_DETF12</code>.<br>In subroutine <code>rem_rule_get</code> (1) EWM reads table <code>/SCWM/T334RR</code> which stores the customizing. Once done, subroutine <code>qmat_sort</code> applies the sorting to the internal table of possible source quants (<code>ct_qmat</code>):</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_03 1.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_03.png" alt="" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_04 1 1024x308.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_04.png" alt="" loading="lazy">
             </div>
             
             <p><strong>How can I enhance here in a ‘clean’ way?</strong><br>Badi <code>/SCWM/EX_CORE_RMS_DETERMINE</code> is not the only option to implement a custom stock removal rule but one of the most powerful and most used ones:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_05 1 1024x273.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_05.png" alt="" loading="lazy">
             </div>
             
             <p>The interface method imports lots of data which can be used as a base for a custom logic. E.g. stock data (&gt; <code>ct_qmat</code> imports stock details based on the <code>AQUA</code> table), product master data or customizing details about source storage type and warehouse process type:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_06 1 1024x298.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_06.png" alt="" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_07 1.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_07.png" alt="" loading="lazy">
             </div>
             
             <p>Inside of the Badi you use this data as an input in order to change the sorting and/or the content of the internal table <code>ct_qmat</code>. You write the changed data into table <code>et_qmat_cus</code> and export this table to the caller program. In addition to this you must set the flag <code>lv_set</code> in order have the standard consider your changes:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_09 1.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_09.png" alt="" loading="lazy">
             </div>
             
             <p><strong>Bonus (to get inspired)</strong><br>SAP delivers a handful of sample implementations. You can use those to explore the options that you have with this Badi and learn how to implement an enhancement here in a technically accurate way:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_10 1 1024x461.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_10.png" alt="" loading="lazy">
             </div>
             
             <p>As an example we take a look at class <code>/SCWM/CL_EI_CORE_RMS_DET_MFS</code> which implements a logic that evaluates the status of the MFS resources (e.g. cranes for an automated high-bay warehouse). If the resources are not available (e.g. ran into an error and not recovered yet) the bins/quants from the respective aisles are excluded from the list of possible source bins/quants:</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_11 1 1024x753.png" alt="" loading="lazy">
+                <img src="../../assets/images/enhance/quant-det/EWM enhance stock removal_11.png" alt="" loading="lazy">
             </div>
             
             <p><strong>Summary</strong><br>- EWM standard already provides a pretty powerful customizing which can be used to sort possible source quants based on one or multiple stock attributes. Evaluate all options around the standard customizing before you consider implementing the Badi!<br>- Badi <code>/SCWM/EX_CORE_RMS_DETERMINE</code> is the place to be in case you want to implement your own logic to select a source quant for picking/stock removal<br>- Before you implement your own logic, have a look at the standard example classes in order to learn and get inspired!</p>

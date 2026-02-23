@@ -455,13 +455,13 @@
             <p>However, I promise to dig deeper, provide lots of insights that are not given by SAP. Technical details as well as practical examples which will make it easier for you to understand everything.</p>
             <p>Having said that, for some of the details that I explain I do expect a base knowledge about the objects used in EWM MFS. If you are a beginner in this area, it is helpful for sure in case you study the following blog posts before you consume this one here:</p>
             <ul>
-                <li><a href="https://wmexperts.online/mfs-ewm-plc-integration/" target="_blank" rel="noopener">The EWM-PLC integration</a></li>
-                <li><a href="https://wmexperts.online/mfs-ewm-plc-communication/" target="_blank" rel="noopener">Communication from EWM to the PLC</a></li>
+                <li><a href="ewm-plc-integration.html" target="_blank" rel="noopener">The EWM-PLC integration</a></li>
+                <li><a href="ewm-plc.html" target="_blank" rel="noopener">Communication from EWM to the PLC</a></li>
             </ul>
             <p>Within the first part of my blog post about the MFS node in the warehouse monitor I will cover the nodes ‘Communication Channel’ until ‘Handling Unit’. The 2nd part will cover the nodes ‘Handling Unit Move’ until the ‘Telegram Buffer’.</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01 3.png" alt="SAP EWM MFS Warehouse Monitor_01" loading="lazy">
+                <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01.png" alt="SAP EWM MFS Warehouse Monitor_01" loading="lazy">
             </div>
             
             <p><strong>Communication Channel</strong></p>
@@ -490,7 +490,7 @@
             </ul>
             <p><u>Reset Send SeqNo</u>: This method will reset the send sequence number in table <code>/SCWM/MFSCCH</code> via <code>/SCWM/MFS_CCH_RESET_SQSND_MON</code> which calls FM <code>/SCWM/MFS_CCH_SEQNO_RESET</code> for the reset</p>
             <p><u>Reset Receive SeqNo</u>: This method will reset the receive sequence number in table <code>/SCWM/MFSCCH</code> via FM <code>/SCWM/MFS_CCH_RESET_SQRCV_MON</code> which also calls FM <code>/SCWM/MFS_CCH_SEQNO_RESET</code> for the reset</p>
-            <p>Check this post (<a href="https://wmexperts.online/mfs-ewm-plc-communication/" target="_blank" rel="noopener">The communication from EWM to the PLC</a>) in case you want to learn more about the usage and purpose of the channel sequence numbers.</p>
+            <p>Check this post (<a href="ewm-plc.html" target="_blank" rel="noopener">The communication from EWM to the PLC</a>) in case you want to learn more about the usage and purpose of the channel sequence numbers.</p>
             
             <p><strong>Communication Point</strong></p>
             
@@ -546,7 +546,7 @@
                 <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_12.png" alt="SAP EWM MFS Warehouse Monitor_12" loading="lazy">
             </div>
             
-            <p><u>Resend Telegram</u>: This function obviously is only possible for outgoing telegrams. You have the choice to trigger the resend with a new or with the existing sequence number. FM <code>/SCWM/MFS_RESEND_TELEGRAM_MON</code> is called and prepares the data string for the telegram before it calls FM <code>/SCWM/MFS_SEND</code> for the submission (check <a href="https://wmexperts.online/mfs-ewm-plc-communication/" target="_blank" rel="noopener">this blog post</a> in order to learn what happens within FM <code>/SCWM/MFS_SEND</code>).</p>
+            <p><u>Resend Telegram</u>: This function obviously is only possible for outgoing telegrams. You have the choice to trigger the resend with a new or with the existing sequence number. FM <code>/SCWM/MFS_RESEND_TELEGRAM_MON</code> is called and prepares the data string for the telegram before it calls FM <code>/SCWM/MFS_SEND</code> for the submission (check <a href="ewm-plc.html" target="_blank" rel="noopener">this blog post</a> in order to learn what happens within FM <code>/SCWM/MFS_SEND</code>).</p>
             <p><u>Simulate Telegram</u>: FM <code>/SCWM/MFS_TELE_SIMULATE_MON</code> gives the options to change some fields of the telegram via a pop-up screen and then send/receive the telegram again with the changed data</p>
             <p>The buttons can be used to display application log records based on the object (HU or WO) or the time frame (plus/minus  5 seconds, application log or TCP communication log).</p>
             
@@ -619,7 +619,7 @@
             <p>At this point I am closing the first part of my blog post about the MFS node in the warehouse monitor. The 2nd part will cover the nodes ‘Handling Unit Move’ until the ‘Telegram Buffer’.</p>
             
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01 3.png" alt="SAP EWM MFS Warehouse Monitor_01" loading="lazy">
+                <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01.png" alt="SAP EWM MFS Warehouse Monitor_01" loading="lazy">
             </div>
             
         </div>

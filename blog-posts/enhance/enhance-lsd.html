@@ -442,7 +442,7 @@
 
         <div class="content">
             <h2>Latest Starting Date (LSD) Calculation</h2>
-            <p>I closed my <a href="https://wmexperts.online/latest-starting-date/" target="_blank" rel="noopener">blog about the standard calculation of the LSD</a> with the option to change the result manually. I guess you all know that this can easily done via the warehouse monitor. FM <em><code>/SCWM/RSRC_WO_LSD_CHANGE_MON</code></em> takes care to write the update in all relevant tables.</p>		
+            <p>I closed my <a href="../reveal/reveal-lsd.html" target="_blank" rel="noopener">blog about the standard calculation of the LSD</a> with the option to change the result manually. I guess you all know that this can easily done via the warehouse monitor. FM <em><code>/SCWM/RSRC_WO_LSD_CHANGE_MON</code></em> takes care to write the update in all relevant tables.</p>		
             
             <div class="screenshot-container">
                 <img width="1024" height="373" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 01.png" alt="SAP EWM Enhance LSD calculation 01" loading="lazy" />
@@ -454,7 +454,7 @@
             
             <p>This is a feature you or the warehouse supervisor might want to use in exceptional cases to prioritize one WO over the other (e.g. you get a last-minute high-priority order which should be processed earlier as usual).</p>
             <p>This should not be the topic of this blog post though. In this tutorial you will learn about a bunch of different options that SAP EWM offers to manipulate the standard way of calculating the LSD with custom coding.<br />As with all my other suggestions about how to change the standard code I will only consider options given via clean enhancements spots to ensure that whatever coding you implement will survive future release updates from SAP.</p>
-            <p>To provide structure to this post, we'll once again refer to the formula highlighted in my previous discussion on this topic. Please note that this post builds on the concepts covered earlier, so I recommend reviewing the <a href="https://wmexperts.online/latest-starting-date/" target="_blank" rel="noopener">previous post</a> if you haven't already, as I won't be re-explaining the basics.</p>
+            <p>To provide structure to this post, we'll once again refer to the formula highlighted in my previous discussion on this topic. Please note that this post builds on the concepts covered earlier, so I recommend reviewing the <a href="../reveal/reveal-lsd.html" target="_blank" rel="noopener">previous post</a> if you haven't already, as I won't be re-explaining the basics.</p>
             <p>We learned before that EWM is using this formula to calculate the LSD:</p>
             <p><em>LSD = WO due date - (planned execution duration + planned movements duration)</em></p>
             <p>That also means that to change the calculation of the LSD, we can implement a logic that either changes the standard result directly, or that changes the approach for calculating the different components of the formula. Thus, I structured this article in the following way:</p>
@@ -472,7 +472,7 @@
             
             <p><strong><u>Options to change the </u></strong><u><b>WO due date</b></u></p>
             <p>Of course you can change the planned departure date in the Mapin Badi which will have an impact on the LSD calculation if you are working without waves. But I think nobody will change the delivery dates &amp; times of a warehouse request only to get a different LSD in the corresponding WOs. Thus, no obvious option for me to change the due date in case you are not working with waves.</p>
-            <p>If you are working with waves you can make use of Badi <i><code>/SCWM/EX_WAVE_SAVE</code></i> to change the wave header data while saving. Relevant for the LSD calculation are completion dates of the separate steps (<a href="https://wmexperts.online/latest-starting-date/" target="_blank" rel="noopener">see my blog post about the LSD calculation</a> for further details). Usually (not always) those timestamps are inherited from the wave template. By overwriting them, you can influence the LSD in one way or the other (e.g. moving the pick completion date from the wave header further into the future will also lead to a later LSD in the corresponding WOs).</p>		
+            <p>If you are working with waves you can make use of Badi <i><code>/SCWM/EX_WAVE_SAVE</code></i> to change the wave header data while saving. Relevant for the LSD calculation are completion dates of the separate steps (<a href="../reveal/reveal-lsd.html" target="_blank" rel="noopener">see my blog post about the LSD calculation</a> for further details). Usually (not always) those timestamps are inherited from the wave template. By overwriting them, you can influence the LSD in one way or the other (e.g. moving the pick completion date from the wave header further into the future will also lead to a later LSD in the corresponding WOs).</p>		
             
             <div class="screenshot-container">
                 <img width="1024" height="483" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 03.png" alt="SAP EWM Enhance LSD calculation 03" loading="lazy" />
@@ -495,7 +495,7 @@
             </div>
             
             <p><strong><u>Options to change the </u></strong><u><b>planned movements duration</b></u><strong><u> calculation</u></strong></p>
-            <p>The movement duration can only be manipulated while using option 2 for the travel distance calculation (the 'new' way for the calculation which has to be activated on warehouse number level &gt; <a href="https://wmexperts.online/latest-starting-date/" target="_blank" rel="noopener">check my blog post </a><a href="_wp_link_placeholder">about the LSD calculation</a> if you are not familiar with the two different options here).</p>		
+            <p>The movement duration can only be manipulated while using option 2 for the travel distance calculation (the 'new' way for the calculation which has to be activated on warehouse number level &gt; <a href="../reveal/reveal-lsd.html" target="_blank" rel="noopener">check my blog post </a><a href="_wp_link_placeholder">about the LSD calculation</a> if you are not familiar with the two different options here).</p>		
             
             <div class="screenshot-container">
                 <img width="905" height="208" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 06.png" alt="SAP EWM Enhance LSD calculation 06" loading="lazy" />
@@ -538,7 +538,7 @@
                 <img width="1024" height="602" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 13.png" alt="SAP EWM Enhance LSD calculation 13" loading="lazy" />
             </div>
             
-            <p>This Badi is called to update the standard calculation before it is being saved to the DB the first time. In addition to this, you have an option to update the LSD at an even later point in time. Badi <i><code>/SCWM/EX_CORE_CO_POST</code></i> gives you a possibility to update the LSD of WO X, with the confirmation a WT from WO Y. An example implementation is given with class <i><code>/SCWM/CL_EI_CORE_POST_CONS_WHO</code></i> which can for instance be used to synchronize the completion of WOs which are processed in different activity areas. I wrote a detailed <a href="https://wmexperts.online/sync-warehouse-order-completion/" target="_blank" rel="noopener">blog post</a> about this feature a while ago (you can also find <a href="https://youtu.be/Q9IaK3xB9hY?si=SVWsaepP5YkJFFfu" target="_blank" rel="noopener">it on Youtube</a>).</p>		
+            <p>This Badi is called to update the standard calculation before it is being saved to the DB the first time. In addition to this, you have an option to update the LSD at an even later point in time. Badi <i><code>/SCWM/EX_CORE_CO_POST</code></i> gives you a possibility to update the LSD of WO X, with the confirmation a WT from WO Y. An example implementation is given with class <i><code>/SCWM/CL_EI_CORE_POST_CONS_WHO</code></i> which can for instance be used to synchronize the completion of WOs which are processed in different activity areas. I wrote a detailed <a href="../reveal/reveal-sync-wo.html" target="_blank" rel="noopener">blog post</a> about this feature a while ago (you can also find it on <a href="https://youtu.be/Q9IaK3xB9hY?si=SVWsaepP5YkJFFfu" target="_blank" rel="noopener">Youtube</a>).</p>		
             
             <div class="screenshot-container">
                 <img width="1024" height="456" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 14.png" alt="SAP EWM Enhance LSD calculation 14" loading="lazy" />

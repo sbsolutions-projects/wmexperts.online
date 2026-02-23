@@ -446,7 +446,7 @@
             <h2>Rough overview</h2>
             <p>Even though we will not go into detail, let us have a look at this picture to get a rough overview:</p>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_01-1.png" alt="Enhance SAP EWM WOCRs_01-1" loading="lazy">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_01.png" alt="Enhance SAP EWM WOCRs_01" loading="lazy">
             </div>
             <p>1. Warehouse order creation rules are being applied upon wave release respectively during other options (e.g. manual WT creation against an ODO) where we trigger the 2. - warehouse task creation</p>
             <p>3. Once created, the tasks are grouped by queue and activity area (source vs. destination AA based on the WOCR AA of the WPT). Thus, warehouse task with a different queue or a different activity area can never end up in the same warehouse order</p>
@@ -457,7 +457,7 @@
             <p>9. WTs which passed the filters and limits are sorted again and then tackled by the packing profile (where it is possible but not mandatory to create planned pick-HUs and assign the WTs to those HUs)</p>
             <p>10. Last thing we do is to sort the WTs one more time (now within the WOs which have been created)</p>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_02-1.png" alt="Enhance SAP EWM WOCRs_02-1" loading="lazy">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_02.png" alt="Enhance SAP EWM WOCRs_02" loading="lazy">
             </div>
             <p>Let’s hike across the Badis in the WOCR-World! It will give us 15 spots to take a rest!</p>
             <p>Enhancement spot <code>/SCWM/ES_WHO</code> collects all those Badis which are being called in the context of function module <code>/SCWM/WHO_CREATE</code>.</p>
@@ -468,14 +468,14 @@
             <h2>1. /SCWM/EX_WHO_DSTGRP - Overwrite Consolidation Group</h2>
             <p>The first Badi on our journey is Badi <code>/SCWM/EX_WHO_DSTGRP</code> which can be used to overwrite the consolidation group of the warehouse tasks. Changes here will have an impact e.g. on the limits for subtotals or e.g. on the max number of consolidation groups assigned to one pick-HU.</p>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_04-1.png" alt="Enhance SAP EWM WOCRs_04-1" loading="lazy">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_04.png" alt="Enhance SAP EWM WOCRs_04" loading="lazy">
             </div>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_05.png" alt="Enhance SAP EWM WOCRs_05" loading="lazy">
             </div>
             <p>Field <code>dstgrp</code> in changing structure <code>lt_to</code> is the one you want to look at:</p>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_06-1.png" alt="Enhance SAP EWM WOCRs_06-1" loading="lazy">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_06.png" alt="Enhance SAP EWM WOCRs_06" loading="lazy">
             </div>
             <h2>2. /SCWM/EX_WHO_CREATE - Full Warehouse Order Creation Using BAdI</h2>
             <p>The next Badi where we stop is <code>/SCWM/EX_WHO_CREATE</code> where you can implement a 100% custom WO creation (the screenshots below show the parameters importing the WOs as well as potential pick-HUs). In case this Badi is being applied, everything else (standard logic as well as all other Badis here) will be skipped. I could imagine having sophisticated WOCR logic from a 3rd party somewhere in the cloud in the future (so this Badi could offer an API which could be consumed by an external solution):</p>
@@ -483,7 +483,7 @@
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_07.png" alt="Enhance SAP EWM WOCRs_07" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_08-1.png" alt="Enhance SAP EWM WOCRs_08-1" loading="lazy">
+                <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_08.png" alt="Enhance SAP EWM WOCRs_08" loading="lazy">
             </div>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_09.png" alt="Enhance SAP EWM WOCRs_09" loading="lazy">
