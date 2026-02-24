@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about [Topic].">
     <meta name="keywords" content="SAP EWM, Warehouse Management, [Topic Keywords]">
     <meta name="author" content="Hendrik">
-    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    <link rel="icon" type="image/png" href="../../assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -444,88 +444,88 @@
             <p><strong>Note</strong>: The purpose of this series of blogs/videos is to discover &amp; reveal the secrets of SAP EWM work center. Thus, I will mainly be talking about functionalities which are not mentioned and explained in any of the SAP books available on the market.</p>
             <p>In this blog/video I will be talking about SAP Work center determination in the context of Kit-to-Stock (KTS). Note that I will not explain the KTS process as such. Might do this in a separate blog/video of the series Understand SAP EWM. For now, you can refer to the <a href="https://help.sap.com/doc/saphelp_sfin100/1.10/en-US/5f/61b6531de6b64ce10000000a174cb4/content.htm?no_cache=true" target="_blank" rel="noopener noreferrer">SAP online help</a>. </p>
             
-            <h2>Where is the coding?</h2>
+            <h2><strong>Where is the coding?</strong></h2>
             <p>Technically the determination is done in class <code>/SCWM/CL_VAS_MODEL</code> method <code>DETERMINE_WORKCENTER</code>:</p>		
             <div class="screenshot-container">
-                <img width="975" height="677" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_01 1.png" alt="" loading="lazy" />
+                <img width="975" height="677" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_01.png" alt="" loading="lazy" />
             </div>
             
-            <h2>When will it be used?</h2>
+            <h2><strong>When will it be used?</strong></h2>
             <p><br />From document-flow perspective the coding is relevant for example upon the activation of the inbound delivery for the finished goods in EWM. PPF action <code>/SCWM/PRD_IN_VAS_CREATE_KTS</code> should be scheduled &amp; executed which is responsible for the creation of a VAS order.</p>
             <p>The method <code>DETERMINE_WORKCENTER</code> is called from method <code>CREATE_ACTIVITIES</code> and updates the activity structure:</p>		
             <div class="screenshot-container">
-                <img width="965" height="691" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_02 1.png" alt="" loading="lazy" />
+                <img width="965" height="691" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_02.png" alt="" loading="lazy" />
             </div>
             
             <p>In the first step, the EWM standard selects select destination storage type, section and bin from the given VAS step of the storage process (customizing process-oriented storage control):</p>		
             <div class="screenshot-container">
-                <img width="975" height="242" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_03 1.png" alt="" loading="lazy" />
+                <img width="975" height="242" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_03.png" alt="" loading="lazy" />
             </div>
             <div class="screenshot-container">
-                <img width="975" height="627" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_04 1.png" alt="" loading="lazy" />
+                <img width="975" height="627" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_04.png" alt="" loading="lazy" />
             </div>
             
             <p>Once done, the coding tries try to find a work center with the combination of the given storage type and bin in table <code>/SCWM/TWORKST</code> via function module <code>/SCWM/TWORKST_READ_BY_BIN</code>:</p>		
             <div class="screenshot-container">
-                <img width="925" height="901" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_05 1.png" alt="" loading="lazy" />
+                <img width="925" height="901" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_05.png" alt="" loading="lazy" />
             </div>
             <div class="screenshot-container">
-                <img width="946" height="494" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_06 1.png" alt="" loading="lazy" />
+                <img width="946" height="494" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_06.png" alt="" loading="lazy" />
             </div>
             
             <p>Note: The work center bin assignment (respectively the bin in table <code>/SCWM/TWORKST</code>) can be maintained via transaction <code>/SCWM/TWORKST</code>:</p>		
             <div class="screenshot-container">
-                <img width="721" height="694" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_07 1.png" alt="" loading="lazy" />
+                <img width="721" height="694" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_07.png" alt="" loading="lazy" />
             </div>
             <div class="screenshot-container">
-                <img width="844" height="304" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_08 1.png" alt="" loading="lazy" />
+                <img width="844" height="304" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_08.png" alt="" loading="lazy" />
             </div>
             
             <p>If the WC determination via the storage bin is not successful (~ bin from POSC step is not maintained in any of the work centers), we take the storage section of this bin<br />• Try to find a work center from table <code>/SCWM/TWORKST</code> with the same section as inbound section. If this is still not successful,<br />• We try to find a work center from customizing table <code>/SCWM/TWORKST</code> with the same section as outbound section<br />Check the following screenshots for the detailed flow:</p>		
             <div class="screenshot-container">
-                <img width="934" height="878" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_09 1.png" alt="" loading="lazy" />
+                <img width="934" height="878" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_09.png" alt="" loading="lazy" />
             </div>
             
             <p>If this is still not successful (~ we might be in a situation where the external step of the POSC does only have destination type and section, but no destination bin), EWM tries to find a work center based on the combination of destination type &amp; section from the external POSC step:</p>		
             <div class="screenshot-container">
-                <img width="916" height="848" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_10 1.png" alt="" loading="lazy" />
+                <img width="916" height="848" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_10.png" alt="" loading="lazy" />
             </div>
             
             <p>1st try with the section from the step as inbound section, then outbound section (not applicable in this context as not imported to the FM at all) and last but not least, with the storage type only:</p>		
             <div class="screenshot-container">
-                <img width="975" height="889" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_10_2 1.png" alt="" loading="lazy" />
+                <img width="975" height="889" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_10_2.png" alt="" loading="lazy" />
             </div>
             
             <p>Note: Inbound and outbound sections for work centers can be maintained via customizing:</p>		
             <div class="screenshot-container">
-                <img width="646" height="601" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_11 1.png" alt="" loading="lazy" />
+                <img width="646" height="601" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_11.png" alt="" loading="lazy" />
             </div>
             <div class="screenshot-container">
-                <img width="625" height="531" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_12 1.png" alt="" loading="lazy" />
+                <img width="625" height="531" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_12.png" alt="" loading="lazy" />
             </div>
             
             <p>If we also do not find a work center based on the ‘section approach’, EWM raises an exception and throws an error message.<br />Interesting fact: If we find multiple work centers based on the logic explained above (that could happen in case bin from the POSC step does not point to a specific one and we find multiple WCs with the same section), the first one is the winner (EWM just takes the first one from the internal table):</p>		
             <div class="screenshot-container">
-                <img width="938" height="508" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_13 1.png" alt="" loading="lazy" />
+                <img width="938" height="508" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_13.png" alt="" loading="lazy" />
             </div>
             
             <p>If we could finally find a work center, we update the activity structure at the end of the method and handover to method <code>CREATE_ACTIVITIES</code> again</p>		
             <div class="screenshot-container">
-                <img width="975" height="650" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_14 1.png" alt="" loading="lazy" />
+                <img width="975" height="650" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_14.png" alt="" loading="lazy" />
             </div>
             
             <p style="text-align: center;">Note: In case this approach to determine the work center (1.Step: Bin, 2.Step: Section) does not fulfill your project requirements, you can implement Badi <code>/SCWM/EX_VAS_CREATE_ACTIVITIES</code> in order to adjust/overwrite the activity table (this table which is also carrying the work center). The Badi is called at the end of method <code>CREATE_ACTIVITIES</code>:</p>		
             <div class="screenshot-container">
-                <img width="950" height="523" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_15 1.png" alt="" loading="lazy" />
+                <img width="950" height="523" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_15.png" alt="" loading="lazy" />
             </div>
             <div class="screenshot-container">
-                <img width="855" height="336" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_16 1.png" alt="" loading="lazy" />
+                <img width="855" height="336" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_16.png" alt="" loading="lazy" />
             </div>
             <div class="screenshot-container">
-                <img width="975" height="634" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_17 1.png" alt="" loading="lazy" />
+                <img width="975" height="634" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_17.png" alt="" loading="lazy" />
             </div>
             <div class="screenshot-container">
-                <img width="975" height="229" src="../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_18 1.png" alt="" loading="lazy" />
+                <img width="975" height="229" src="../../assets/images/reveal/wc-det-kts/SAP EWM KTS work center determination_18.png" alt="" loading="lazy" />
             </div>
             
             <p style="text-align: left;"><strong>Summary</strong><br />• The external step in POSC customizing needs to have the work center storage type / bin (or at least the storage section) as destination<br />• If the WC should be determined based on the bin, the same bin needs to be assigned to the work center in <code>/SCWM/TWORKST</code><br />• If this logic is not sufficient, implement Badi <code>/SCWM/EX_VAS_CREATE_ACTIVITIES</code></p>		
@@ -554,14 +554,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -690,3 +690,8 @@
 
 </body>
 </html>
+
+
+
+
+

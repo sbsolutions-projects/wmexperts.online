@@ -1,19 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+ <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn the purpose of wave management and resource management in SAP EWM. Understand warehouse requests, waves, and warehouse order creation.">
-    <meta name="keywords" content="SAP EWM, Warehouse Management, Wave Management, Resource Management, Warehouse Order, Warehouse Task">
+    <meta name="description" content="Learn about the purpose and functionalities of wave management & resource management in SAP EWM. Understand how warehouse requests are processed through waves and resource management.">
+    <meta name="keywords" content="SAP EWM, Warehouse Management, Wave Management, Resource Management, SAP EWM Training">
     <meta name="author" content="Hendrik">
     <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Understand SAP EWM: Wave & Resource Management | WMexperts">
-    <meta property="og:description" content="Learn the purpose of wave management and resource management in SAP EWM. Understand warehouse requests, waves, and warehouse order creation.">
-    <meta property="article:published_time" content="2024-01-01">
-    <meta property="article:modified_time" content="2024-01-01">
+    <meta property="og:title" content="The purpose of wave management & resource management in SAP EWM | WMexperts">
+    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about wave management and resource management.">
+    <meta property="article:published_time" content="2017-12-01">
+    <meta property="article:modified_time" content="2025-03-02">
+
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -56,8 +57,10 @@
       }
     ]
     </script>
+    <script type="application/ld+json">
+    </script>
 
-    <title>Understand SAP EWM: Wave & Resource Management | WMexperts</title>
+    <title>The purpose of wave management & resource management in SAP EWM | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -90,7 +93,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -424,95 +427,755 @@
 
         footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
     </style>
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --bg-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #4B5563;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: #fff;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
+        .logo span { color: var(--sap-blue); }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- ARTICLE STRUCTURE --- */
+        article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--sap-blue);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
+
+        /* --- RESPONSIVE VIDEO CONTAINER --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
+        .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+        .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+        /* --- TECHNICAL & IMAGE BLOCKS --- */
+        .screenshot-container { margin: 1.75rem 0; text-align: center; }
+        
+        .screenshot-container img {
+            max-width: 66.67%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot-container img:hover { transform: scale(1.01); }
+
+        pre {
+            background: #F3F4F6;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--sap-blue);
+            margin: 2rem 0;
+            color: var(--text-dark);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #EEF2F6;
+            color: var(--sap-blue);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            cursor: zoom-out;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.3s ease;
+        }
+
+        #lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10000;
+            transition: transform 0.2s ease;
+            font-weight: 300;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover { transform: rotate(90deg); }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 20px;
+            transition: opacity 0.2s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover { opacity: 0.7; }
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+        body.lightbox-open { overflow: hidden; }
+
+        /* --- STAY UPDATED SECTION --- */
+        .stay-updated {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stay-updated-card {
+            background: var(--bg-light);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stay-updated-card h3 {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stay-updated-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--sap-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+        }
+
+        .btn-subscribe {
+            padding: 10px 20px;
+            background: var(--sap-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-subscribe:hover { background: #004276; }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 12px 24px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .btn-youtube:hover { background: #cc0000; }
+
+        @media (max-width: 768px) {
+            .stay-updated { grid-template-columns: 1fr; gap: 1.5rem; }
+        }
+
+        /* --- FOOTER & CTA --- */
+        .freelancer-cta {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .btn-freelance {
+            display: inline-block;
+            background: var(--sap-blue);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-freelance:hover { background: #004276; }
+
+        footer { padding: 4rem 10%; text-align: center; font-size: 0.85rem; color: #9CA3AF; border-top: 1px solid var(--border); }
+    </style>
 </head>
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
         <div class="breadcrumb">Understand SAP EWM</div>
-        <h1>The Purpose of Wave Management & Resource Management</h1>
+        <h1>The purpose of wave management & resource management</h1>
 
-        <div class="video-wrapper">
+                <div class="video-wrapper">
             <iframe src="https://www.youtube-nocookie.com/embed/8M3BvBEsyZ4" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div class="content">
-            <p><strong>Note</strong>: This post belongs to the blog-series ‘<em>Understand SAP EWM </em>the purpose of wave management &amp; resource management in SAP EWM<em>’</em>. The purpose of these series of blog-posts is to explain the concept of the core features of SAP EWM in a simple way. It is intended to target EWM beginners and focuses on the basic understanding rather than the smallest details.</p>
-            
-            <p>Before we start doing anything in our warehouse we receive different kind of requests to move specific objects from A to B. These requests might come from inside or outside our company and can be based on deliveries, stock transfers or posting changes. So it might be a request to move a given product from our warehouse to our end-customer or simply to move a pallet from reserve storage to the pick-face.</p>
-            
-            <p>In SAP EWM we call these documents <code>warehouse requests</code> and for the matter of simplicity we will now concentrate on <code>outbound deliveries</code> as one representative group for these <code>warehouse requests</code>. So the delivery is our <code>warehouse request</code> and the items of our deliveries are our <code>warehouse request items</code>. First lesson learned - save the word: <strong>Warehouse request</strong>.</p>
-            
-            <p>To make it understandable - Imagine a big box of big balls with each big ball containing a number of small balls. The box is our request buffer, the big balls are our <code>warehouse requests</code> and the small balls are the <code>warehouse request items</code>:</p>
+            <strong>What are Warehouse Requests?</strong>
+            <p>In <code>SAP EWM</code>, a warehouse request is the fundamental unit that triggers warehouse activities. When goods arrive or need to be moved within a warehouse, a warehouse request is created. This request contains multiple warehouse request items, each representing a specific quantity of material to be processed.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_1.jpg" alt="Understanding SAP EWM wave management and resource management 1" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_1.jpg" alt="Warehouse Request Structure" width="800" height="450" loading="lazy">
             </div>
 
-            <p>From now onwards we ignore the big balls as we (and EWM also) are only interested in the small ones - our <code>warehouse request items</code>.</p>
+            <strong>Wave Management: Grouping Warehouse Requests</strong>
+            <p>A <strong>wave</strong> in <code>SAP EWM</code> is a collection of warehouse request items that are processed together. Instead of processing each warehouse request item individually, waves allow us to group related items and execute them as a batch. This improves efficiency and enables better resource utilization.</p>
+
+            <p>The wave concept is built on the foundation of warehouse requests. When you create a warehouse request with multiple items, you're essentially providing the raw material for wave creation. The system then determines which warehouse request items should be grouped together into a single wave based on specific criteria.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_2.jpg" alt="Understanding SAP EWM wave management and resource management 2" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_2.jpg" alt="Wave Grouping Concept" width="800" height="450" loading="lazy">
             </div>
 
-            <p>So what happens now in between the receipt of such requests and the actual execution on a <code>RF</code>, tablet, smartphone or any other device?</p>
+            <strong>Wave Templates and Wave Options</strong>
+            <p>Wave templates define the rules for grouping warehouse request items into waves. A wave template contains one or more <strong>wave template options</strong>, each representing a different schedule or configuration for processing.</p>
+
+            <p>Think of it like an assembly line:</p>
+            <ul>
+                <li>The <strong>wave template</strong> is the assembly line itself</li>
+                <li>The <strong>wave template option</strong> is a specific shift or configuration of that line</li>
+                <li>The actual <strong>wave</strong> is a batch of products being processed on that line during a specific time window</li>
+            </ul>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_3.png" alt="Understanding SAP EWM wave management and resource management 3" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_3.png" alt="Wave Templates Structure" width="800" height="450" loading="lazy">
             </div>
 
-            <p>Having theses <code>warehouse requests</code> in our EWM system we know now that we have to do something. Ok so far. As a first step we have to make a decision about when to do what. So basically out of everything that we have in our box we have to separate one part in order to define a load of work which is to be executed in a given time frame (start at a given point in time and complete at a given point in time).</p>
-            
-            <p>Try to think about a couple of smaller boxes into which we distribute the small balls based on their characteristics (recipient, type of products, physical area of the warehouse etc.). Each small box has a start and end time (and some more characteristics which we ignore for now):</p>
+            <strong>Wave Determination Process</strong>
+            <p><code>SAP EWM</code> uses the <strong>condition technique</strong> to automatically determine which wave template should be applied to each warehouse request item. The system evaluates conditions such as:</p>
+
+            <ul>
+                <li>Source activity area</li>
+                <li>Warehouse process type</li>
+                <li>Delivery route</li>
+                <li>Document type</li>
+                <li>Delivery priority</li>
+                <li>Destination activity area</li>
+            </ul>
+
+            <p>Based on these conditions, the system assigns the most appropriate wave template to each warehouse request item. Once the wave template is identified, the system then determines which wave template option within that template best matches the planned Good Issue (GI) date of the delivery.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_4.png" alt="Understanding SAP EWM wave management and resource management 4" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_4.png" alt="Wave Determination Logic" width="800" height="450" loading="lazy">
             </div>
 
-            <p>Each of these small boxes now defines a load of work for a given time frame. In EWM we call them <code>Waves</code>. Second lesson learned - save the word: <strong>Wave</strong>.</p>
-            
-            <p><code>Waves</code> can be created based on so called <code>wave templates</code> which hand down times (e.g. start/cut-off/end time) and a couple of other attributes to the <code>waves</code>. In SAP EWM we find these templates based on the condition technique which is enabling us to consider any fields from our <code>warehouse request</code> header/item in order to find a specific <code>wave template</code>.</p>
-            
-            <p>So far so good. Now we do have our <code>wave</code> and need to decide who in the warehouse is going to do what? Not everybody or every kind of equipment should/can do everything due to technical preferences/constraints. However, all resources should be utilized in the most efficient way.</p>
-            
-            <p>For the following explanations we do only need one of our <code>waves</code> (boxes) created above:</p>
+            <strong>Creating Warehouse Orders from Waves</strong>
+            <p>Once a wave is released, <code>SAP EWM</code> creates warehouse orders for each warehouse request item in the wave. A warehouse order contains all the necessary operations (pick, pack, stage, load) needed to fulfill that warehouse request item.</p>
+
+            <p>The sequence and timing of these warehouse orders are determined by:</p>
+            <ul>
+                <li>The wave template option's processing times</li>
+                <li>The resource availability (workers, equipment)</li>
+                <li>The warehouse layout and process flow</li>
+            </ul>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_5.png" alt="Understanding SAP EWM wave management and resource management 5" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_5.png" alt="Warehouse Order Creation" width="800" height="450" loading="lazy">
             </div>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            
-            <p>We split our <code>wave</code> now into smaller work packages which should later be assigned to resources, having the characteristics which are required to execute the tasks within the specific work package.</p>
-            
-            <p>In SAP EWM we call these executable work packages <code>warehouse orders</code> and they are created based on the <code>warehouse tasks</code> which in turn are created once our <code>wave</code> is being <strong>released</strong>. At this point in time we apply the so called <code>warehouse order creation rules</code> which represent the technical base to cut our total workload into the work packages.</p>
-            
-            <p>Third lesson learned - the <code>wave</code> release triggers the creation of the <code>warehouse tasks</code> based on the <code>warehouse request</code> items and the <code>warehouse order creation rules</code> build <code>warehouse orders</code> based on the <code>warehouse tasks</code>.</p>
-            
-            <p>In easy words to make it sticky:</p>
+            <strong>Resource Management in SAP EWM</strong>
+            <p><strong>Resource Management</strong> is the process of assigning appropriate resources to perform warehouse orders. Resources include:</p>
+
+            <ul>
+                <li><strong>Human Resources:</strong> Warehouse workers with specific skills and availability</li>
+                <li><strong>Equipment:</strong> Picking carts, forklifts, pallet jacks</li>
+                <li><strong>Zones/Areas:</strong> Specific warehouse locations where work must be performed</li>
+            </ul>
+
+            <p>The resource management system ensures that each warehouse order is assigned to the right person or equipment at the right time, based on:</p>
+            <ul>
+                <li>Resource availability and workload</li>
+                <li>Resource qualifications and certifications</li>
+                <li>Process requirements and dependencies</li>
+                <li>Work sequence and priorities</li>
+            </ul>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_6.png" alt="Understanding SAP EWM wave management and resource management 6" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_6.png" alt="Resource Assignment" width="800" height="450" loading="lazy">
             </div>
 
-            <p>Fine. We know what we have to do in a given time frame (remember the term <code>Wave</code>) and we know what we want to be executed by one resource at a time (remember the term <code>warehouse order</code>). In the next step we need to make sure that the most urgent work packages are to be executed before the less urgent ones and we need to make sure that work packages which require specific handling are assigned to resources which are able to execute specific handling. To achieve this we make use of the Resource Management features of SAP EWM.</p>
-            
-            <p>First we assign our <code>warehouse orders</code> to different groups. In EWM we call these groups <code>Queues</code>. We are usually working with many different <code>queues</code> (e.g. due to the fact that the <code>warehouse orders</code> require different handling or due to the fact that some have to be processed in one area of my warehouse and others in different area).</p>
+            <strong>Resource Queues</strong>
+            <p>Resource queues are temporary storage areas for warehouse orders waiting to be processed by a specific resource. When a warehouse order is ready for the next step in the process but the required resource is busy, the order moves into that resource's queue.</p>
+
+            <p>Resource queues help with:</p>
+            <ul>
+                <li>Managing work flow and preventing bottlenecks</li>
+                <li>Prioritizing orders (FIFO, by priority flag)</li>
+                <li>Tracking resource utilization</li>
+                <li>Identifying workload imbalances</li>
+            </ul>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_7.png" alt="Understanding SAP EWM wave management and resource management 7" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_7.png" alt="Resource Queues" width="800" height="450" loading="lazy">
             </div>
 
-            <p>Next we bring these <code>queues</code> in one or more sequences and assign one sequence of <code>queues</code> to one group of resources. The same <code>queues</code> might follow sequence A for resource group X and sequence B for resource group Y:</p>
+            <strong>Resource Types</strong>
+            <p>SAP EWM supports several resource types, each suited for different operational needs:</p>
+
+            <ul>
+                <li><strong>Worker Resources:</strong> Individual warehouse employees who perform physical tasks</li>
+                <li><strong>Resource Group:</strong> A collection of workers who can share workload</li>
+                <li><strong>Equipment Resources:</strong> Machinery and tools used in the warehouse</li>
+                <li><strong>Activity Area Resources:</strong> Fixed locations in the warehouse where specific activities occur</li>
+            </ul>
+
+            <p>Each resource type has specific characteristics and can be filtered using resource requirements defined at the warehouse order or process level.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_8.png" alt="Understanding SAP EWM wave management and resource management 8" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_8.png" alt="Resource Types" width="800" height="450" loading="lazy">
             </div>
 
-            <p>Now we finally know which resources will have access to which work packages and we know which group of work packages is going to be processed at first (to reduce the complexity here we will ignore how the <code>warehouse orders</code> are sorted within the <code>queues</code>). Still we might not know whether all resources belonging to the given resource group are able to process all <code>warehouse orders</code> from the given <code>queue</code>. To implement the required rules here we use so called <code>Resource Types</code> in SAP EWM.</p>
+            <strong>Resource Filtering</strong>
+            <p>Resource filtering is the mechanism that determines which resources can work on which warehouse orders. Filters are defined based on:</p>
+
+            <ul>
+                <li>Resource ID or resource group ID</li>
+                <li>Activity area or location</li>
+                <li>Equipment requirements</li>
+                <li>Skill or certification requirements</li>
+                <li>Time-based constraints</li>
+            </ul>
+
+            <p>When a warehouse order is ready for execution, the system applies these filters to identify all eligible resources. The resource management engine then assigns the order to the most appropriate available resource.</p>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/understand/wave-resource/Understanding SAP EWM wave management and resource management_9.png" alt="Resource Filtering Rules" width="800" height="450" loading="lazy">
+            </div>
+
+            <strong>Summary: The Complete Flow</strong>
+            <p>Here's how wave management and resource management work together in a complete warehouse operation:</p>
+
+            <ol>
+                <li><strong>Warehouse Request Creation:</strong> An inbound or outbound process triggers a warehouse request with multiple items</li>
+                <li><strong>Wave Determination:</strong> The system uses conditions to assign an appropriate wave template to each item</li>
+                <li><strong>Wave Formation:</strong> Warehouse request items are grouped into waves based on template options and planned timelines</li>
+                <li><strong>Wave Release:</strong> The wave is released (manually or automatically) to create warehouse orders</li>
+                <li><strong>Warehouse Order Creation:</strong> Each wave item becomes a warehouse order with specific operations</li>
+                <li><strong>Resource Assignment:</strong> The system filters available resources and assigns them to warehouse orders</li>
+                <li><strong>Queue Management:</strong> Instructions wait in resource queues until the assigned resource is available</li>
+                <li><strong>Execution:</strong> Resources perform the assigned warehouse order operations</li>
+                <li><strong>Completion:</strong> Once all operations are complete, the warehouse request is fulfilled</li>
+            </ol>
+
+            <p>By effectively managing waves and resources, SAP EWM enables warehouses to process goods efficiently while maintaining optimal resource utilization and meeting delivery commitments.</p>
+        </div>
+
+        <!-- STAY UPDATED SECTION -->
+        <div class="stay-updated">
+            <!-- Newsletter Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>📧 Newsletter</h3>
+                    <p>Get updates about new blog posts directly in your inbox.</p>
+                </div>
+                <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                    <input type="email" name="EMAIL" placeholder="Your email" required>
+                    <input type="text" name="FNAME" placeholder="First name (optional)">
+                    <input type="text" name="LNAME" placeholder="Last name (optional)">
+                    <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- YouTube Card -->
+            <div class="stay-updated-card">
+                <div>
+                    <h3>▶️ YouTube Channel</h3>
+                    <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+                </div>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
+            </div>
+        </div>
+
+        <div class="freelancer-cta">
+            <p><strong>Need EWM expertise within your project?</strong><br>
+            WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
+            <a href="https://wmexperts.online/freelancer-profile/" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
+        </div>
+    </article>
+
+    <!-- ENHANCED LIGHTBOX OVERLAY -->
+    <div id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
+        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+
+    <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
             
-            <p>Every SAP resource working in our warehouse (‘Resource’ either in terms of a human being or in terms of a device
+            // Get all images that should be zoomable
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            // Add click event to all images
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                // Show/hide navigation arrows based on number of images
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            // Event listeners
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            // Click on overlay background to close
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            });
+
+            // Prevent image content click from closing lightbox
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            
+            const images = document.querySelectorAll('.screenshot-container img, .content img');
+            let currentImageIndex = 0;
+
+            images.forEach((img, index) => {
+                img.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open');
+                updateCounter();
+                
+                if (images.length <= 1) {
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                } else {
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            lightboxClose.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            lightboxPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showPrevImage();
+            });
+
+            lightboxNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showNextImage();
+            });
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowLeft') showPrevImage();
+                else if (e.key === 'ArrowRight') showNextImage();
+            });
+
+            lightboxImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
+
+</body>
+</html>
+
+
+

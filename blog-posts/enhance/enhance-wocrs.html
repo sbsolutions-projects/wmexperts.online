@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -443,7 +443,7 @@
         <div class="content">
             <p><em>The purpose of this series of blogs/videos is to give an overview about how to enhance specific functional areas of SAP EWM warehouse order creation rules. This series is useful for developers jumping (or being pushed ) from other modules into EWM or for more experienced consultants in order to gain a deeper understanding of specific topics. </em></p>
             <p>In this blog/video I will be talking about warehouse order creation rules (WOCRs). Note that I will not explain the basic, thus expecting that you do at least know in which context WOCRs are used and what they can do for us. Will explain those basics in a separate blog/video of the series Understand SAP EWM. For now, you can refer to the <a href="https://help.sap.com/saphelp_ewm94/helpdata/en/22/cecb53ad377114e10000000a174cb4/frameset.htm#:~:text=Definition,which%20WO%20creation%20should%20process." target="_blank" rel="noopener noreferrer">SAP Online Help</a> if you are a beginner in this area.</p>
-            <h2>Rough overview</h2>
+            <h2><strong>Rough overview</strong></h2>
             <p>Even though we will not go into detail, let us have a look at this picture to get a rough overview:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_01.png" alt="Enhance SAP EWM WOCRs_01" loading="lazy">
@@ -465,7 +465,7 @@
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_03.png" alt="Enhance SAP EWM WOCRs_03" loading="lazy">
             </div>
             <p>Let us have a look on them one-by-one. For this purpose, I set breakpoints at every single BAdi and included the current stack in the screenshot. This way you get a good picture about where/when the Badis are called and whether they could be an option for your specific need to enhance the standard logic.</p>
-            <h2>1. /SCWM/EX_WHO_DSTGRP - Overwrite Consolidation Group</h2>
+            <h2><strong>1. /SCWM/EX_WHO_DSTGRP - Overwrite Consolidation Group</strong></h2>
             <p>The first Badi on our journey is Badi <code>/SCWM/EX_WHO_DSTGRP</code> which can be used to overwrite the consolidation group of the warehouse tasks. Changes here will have an impact e.g. on the limits for subtotals or e.g. on the max number of consolidation groups assigned to one pick-HU.</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_04.png" alt="Enhance SAP EWM WOCRs_04" loading="lazy">
@@ -477,7 +477,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_06.png" alt="Enhance SAP EWM WOCRs_06" loading="lazy">
             </div>
-            <h2>2. /SCWM/EX_WHO_CREATE - Full Warehouse Order Creation Using BAdI</h2>
+            <h2><strong>2. /SCWM/EX_WHO_CREATE - Full Warehouse Order Creation Using BAdI</strong></h2>
             <p>The next Badi where we stop is <code>/SCWM/EX_WHO_CREATE</code> where you can implement a 100% custom WO creation (the screenshots below show the parameters importing the WOs as well as potential pick-HUs). In case this Badi is being applied, everything else (standard logic as well as all other Badis here) will be skipped. I could imagine having sophisticated WOCR logic from a 3rd party somewhere in the cloud in the future (so this Badi could offer an API which could be consumed by an external solution):</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_07.png" alt="Enhance SAP EWM WOCRs_07" loading="lazy">
@@ -488,7 +488,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_09.png" alt="Enhance SAP EWM WOCRs_09" loading="lazy">
             </div>
-            <h2>3. /SCWM/EX_WHO_FLT_IL - Use Additional Filters at Item Level</h2>
+            <h2><strong>3. /SCWM/EX_WHO_FLT_IL - Use Additional Filters at Item Level</strong></h2>
             <p>The next one on our trip is Badi <code>/SCWM/EX_WHO_FLT_IL</code>, where we can apply additional filters at item level. We are importing table <code>it_to</code> (based on <code>ordim_o</code> structure (type <code>/scwm/tt_ordim_o_int</code>)) from where we can select the WTs which we want to filter out and write those WTs into changing table <code>ct_to_failed</code>. This table will be appended to internal table <code>et_failed</code>, which does already carry the WTs which had been filtered out before based on standard filter logic:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_10.png" alt="Enhance SAP EWM WOCRs_10" loading="lazy">
@@ -496,7 +496,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_11.png" alt="Enhance SAP EWM WOCRs_11" loading="lazy">
             </div>
-            <h2>4. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</h2>
+            <h2><strong>4. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</strong></h2>
             <p>Now we arrive at the first spot where we call Badi <code>/SCWM/EX_WHO_SORT</code>. The first sorting of WTs happens here before applying the subtotal filters. Here we have the option to influence the collection of WTs which are later grouped into one WO. You will see that we call this Badi a multiple times later again where it can be used to influence the sorting before packing and later within one WO. The custom sequence should be returned via changing table <code>ct_to</code>:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_12.png" alt="Enhance SAP EWM WOCRs_12" loading="lazy">
@@ -504,7 +504,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_13.png" alt="Enhance SAP EWM WOCRs_13" loading="lazy">
             </div>
-            <h2>5. /SCWM/EX_WHO_FLT_SL - Use Additional Filters at Subtotal Level</h2>
+            <h2><strong>5. /SCWM/EX_WHO_FLT_SL - Use Additional Filters at Subtotal Level</strong></h2>
             <p>The next we can do is apply additional Filters on Subtotal Level (level of consolidation group) by using Badi <code>/SCWM/EX_WHO_FLT_SL</code>. Here we could restrict based on any kind of characteristic cumulated over all WTs of a given consolidation group. Simply kick a consolidation group by setting the variable <code>cv_failed</code> to true.</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_14.png" alt="Enhance SAP EWM WOCRs_14" loading="lazy">
@@ -512,7 +512,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_15.png" alt="Enhance SAP EWM WOCRs_15" loading="lazy">
             </div>
-            <h2>6. /SCWM/EX_WHO_LIM_OVERRULE - Overwrite Limit Values</h2>
+            <h2><strong>6. /SCWM/EX_WHO_LIM_OVERRULE - Overwrite Limit Values</strong></h2>
             <p>The next one that we find during runtime is Badi <code>/SCWM/EX_WHO_LIM_OVERRULE</code> which can be used to change the limit values (adjust structure <code>ls_wcrlimit</code>). Note that we are doing nothing else than changing the limit values here before those limits are then being applied via standard coding:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_16.png" alt="Enhance SAP EWM WOCRs_16" loading="lazy">
@@ -523,7 +523,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_18.png" alt="Enhance SAP EWM WOCRs_18" loading="lazy">
             </div>
-            <h2>7. /SCWM/EX_WHO_PMAT_DET - Determine Possible Packaging Materials for Det. the HU</h2>
+            <h2><strong>7. /SCWM/EX_WHO_PMAT_DET - Determine Possible Packaging Materials for Det. the HU</strong></h2>
             <p>In EWM standard we can find packaging specifications via condition records in order to get packaging materials which are to be used for the planned pick-HUs. Pick-HUs can be created in the context of warehouse order creation rules via the packing profile. The Badi <code>/SCWM/EX_WHO_PMAT_DET</code> can be used to find packaging specifications based on custom logic instead of using the standard approach via condition records determining packaging specifications:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_19.png" alt="Enhance SAP EWM WOCRs_19" loading="lazy">
@@ -531,7 +531,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_20.png" alt="Enhance SAP EWM WOCRs_20" loading="lazy">
             </div>
-            <h2>8. /SCWM/EX_WHO_PMAT_CHECK - Check and Sort Found Packaging Materials</h2>
+            <h2><strong>8. /SCWM/EX_WHO_PMAT_CHECK - Check and Sort Found Packaging Materials</strong></h2>
             <p>The next stop on our Badi-Hike is include <code>/SCWM/LWHO_MAINF28</code>, where we call Badi <code>/SCWM/EX_WHO_PMAT_CHECK</code>. This Badi can be used to adjust the selection of packaging materials found by the standard before. So if we are not using Badi <code>/SCWM/EX_WHO_PMAT_DET</code> (see previous stop) but rather let the standard select packaging materials based on condition records, we can still manipulate the result here (even manipulate the master data of the materials which have been found via structure <code>ct_pmat</code>):</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_21.png" alt="Enhance SAP EWM WOCRs_21" loading="lazy">
@@ -542,7 +542,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_23.png" alt="Enhance SAP EWM WOCRs_23" loading="lazy">
             </div>
-            <h2>9. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</h2>
+            <h2><strong>9. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</strong></h2>
             <p>In case the pack mode is set to ‘A’ or ‘B’ in our packing profile, we will now be faced with Badi <code>/SCWM/EX_WHO_SORT</code> again. This time we can manipulate the sorting of WTs ahead of packing (so we can manipulate the assignment of WTs to the planned pick HUs). Note that this Badi will only be called in case a sort rule is maintained in the packing profile:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_23_1.png" alt="Enhance SAP EWM WOCRs_23_1" loading="lazy">
@@ -553,7 +553,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_23_3.png" alt="Enhance SAP EWM WOCRs_23_3" loading="lazy">
             </div>
-            <h2>10./SCWM/EX_WHO_PACK_CHECK - Check Whether WT Is to Be Packed into HU</h2>
+            <h2><strong>10./SCWM/EX_WHO_PACK_CHECK - Check Whether WT Is to Be Packed into HU</strong></h2>
             <p>In case the pack mode is set to ‘A’ or ‘B’ in our packing profile, we will now be faced with Badi <code>/SCWM/EX_WHO_PACK_CHECK</code>. The logic is pretty simple. We are looping over all WTs which are still left and have the option to suppress the assignment of the given WT to the given pre-planned pick-HU. In order to do so we must set the variable <code>cv_exit</code> to true within the implementation of the Badi.</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_24.png" alt="Enhance SAP EWM WOCRs_24" loading="lazy">
@@ -564,7 +564,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_26.png" alt="Enhance SAP EWM WOCRs_26" loading="lazy">
             </div>
-            <h2>11. /SCWM/EX_WHO_PACK_DIM - Check for Length, Width, Height</h2>
+            <h2><strong>11. /SCWM/EX_WHO_PACK_DIM - Check for Length, Width, Height</strong></h2>
             <p>Also Badi <code>/SCWM/EX_WHO_PACK_DIM</code> is only called in case the packing profile is set to ‘A’ or ‘B’ and in case the ‘dimension check’ is active in the packing profile of the WOCR. The first time when this Badi is called it is only called for HU warehouse tasks (Side note: Probably there are not many scenarios where you create HU WTs with a WOCR having a packing profile with active pick-HU creation). A couple of lines later it is called one more time for product warehouse tasks:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_27.png" alt="Enhance SAP EWM WOCRs_27" loading="lazy">
@@ -582,7 +582,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_31.png" alt="Enhance SAP EWM WOCRs_31" loading="lazy">
             </div>
-            <h2>12. /SCWM/EX_WHO_PACK_DSTGRP - Overwrite Consolidation Group</h2>
+            <h2><strong>12. /SCWM/EX_WHO_PACK_DSTGRP - Overwrite Consolidation Group</strong></h2>
             <p>Next stop - one more Badi which is only being called in case the packing profile is set to ‘A’ or ‘B’. Another precondition for the call it is that we have defined a maximum number of consolidation groups per HU in the WOCR customizing and our current basked of WTs has more than one consolidation group (we are looping over internal table <code>lt_sto</code> and only reach the Badi in case we find a new consolidation group during the loop).</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_32.png" alt="Enhance SAP EWM WOCRs_32" loading="lazy">
@@ -597,7 +597,7 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_35.png" alt="Enhance SAP EWM WOCRs_35" loading="lazy">
             </div>
-            <h2>13. /SCWM/EX_WHO_PACKING - HU Determination for Warehouse Order creation</h2>
+            <h2><strong>13. /SCWM/EX_WHO_PACKING - HU Determination for Warehouse Order creation</strong></h2>
             <p>In case the pack mode is set to ‘C’ instead we will pass Badi <code>/SCWM/EX_WHO_PACKING</code>, where we can implement our own pick-HU creation logic based on the packaging materials which had been determined before via standard or custom logic. Note that this Badi is only being called in case the pack mode is set to ‘C’ in packing profile of the WOCR:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_36.png" alt="Enhance SAP EWM WOCRs_36" loading="lazy">
@@ -608,12 +608,12 @@
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_38.png" alt="Enhance SAP EWM WOCRs_38" loading="lazy">
             </div>
-            <h2>14. /SCWM/EX_WHO_HDR_PROCTY - Overwrite Warehouse Process Type on Warehouse Order creation Level</h2>
+            <h2><strong>14. /SCWM/EX_WHO_HDR_PROCTY - Overwrite Warehouse Process Type on Warehouse Order creation Level</strong></h2>
             <p>Now we are almost done. The next one on our trip is Badi <code>/SCWM/EX_WHO_HDR_PROCTY</code> where we can overwrite the Warehouse Process Type on WO Level:</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_39.png" alt="Enhance SAP EWM WOCRs_39" loading="lazy">
             </div>
-            <h2>15. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</h2>
+            <h2><strong>15. /SCWM/EX_WHO_SORT - Use Additional WT Sorting</strong></h2>
             <p>We have almost reached our destination. Badi <code>/SCWM/EX_WHO_SORT</code> is the last Badi within our extensive WOCR hike here. Warehouse Orders have basically been fully created within the previous steps and even pick-HUs might already be there. With this Badi – which we actually call the 3rd time now – we have the option to manipulate the sorting of WTs within the single WOs. This could be useful e.g. to optimize the travel path for the picker or make sure to have heavy items at the bottom of the pick-HU.</p>
             <div class="screenshot-container">
                 <img src="../../assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_40.png" alt="Enhance SAP EWM WOCRs_40" loading="lazy">
@@ -650,14 +650,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -786,3 +786,8 @@
 
 </body>
 </html>
+
+
+
+
+

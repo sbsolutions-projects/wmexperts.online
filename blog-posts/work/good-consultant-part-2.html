@@ -3,61 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about 2-Step Picking.">
-    <meta name="keywords" content="SAP EWM, Warehouse Management, 2-Step Picking, Warehouse Tasks, ODO, Picking Optimization">
+    <meta name="description" content="Part 2 of my personal top list of skills which are required to become a good & successful EWM consultant - focusing on soft skills.">
+    <meta name="keywords" content="SAP EWM, Consultant, Soft Skills, Communication, Problem Solving">
     <meta name="author" content="Hendrik">
     <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Understand SAP EWM: 2-Step Picking | WMexperts">
-    <meta property="og:description" content="In-depth article about SAP EWM. Learn technical and functional details about 2-Step Picking.">
-    <meta property="article:published_time" content="2024-01-01">
-    <meta property="article:modified_time" content="2024-01-01">
+    <meta property="og:title" content="How to become a good SAP EWM Consultant – Part #2 | WMexperts">
+    <meta property="og:description" content="Part 2 of my personal top list of skills which are required to become a good & successful EWM consultant - focusing on soft skills.">
+    <meta property="og:image" content="../../assets/images/work/good-consultant/Skills-of-a-good-EMW-Consultant-Thumbnail-SKILLS-6-10.jpg">
+    <meta property="article:published_time" content="2025-06-17">
+    <meta property="article:modified_time" content="2025-06-17">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Article Title",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic].",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "How to become a good SAP EWM Consultant – Part #2",
+      "description": "Part 2 of my personal top list of skills which are required to become a good & successful EWM consultant. Part 2 covers the soft skills that complement your technical foundation.",
+      "image": "../../assets/images/work/good-consultant/Skills-of-a-good-EMW-Consultant-Thumbnail-SKILLS-6-10.jpg",
+      "datePublished": "2025-06-17",
+      "dateModified": "2025-06-17",
+      "author": {
+        "@type": "Person",
+        "name": "Hendrik"
       },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
-        }]
+      "publisher": {
+        "@type": "Organization",
+        "name": "WMexperts"
       }
-    ]
+    }
     </script>
 
-    <title>Understand SAP EWM: 2-Step Picking | WMexperts</title>
+    <title>How to become a good SAP EWM Consultant – Part #2 | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -108,31 +88,13 @@
 
         h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
 
-        /* --- RESPONSIVE VIDEO CONTAINER --- */
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            margin: 2.5rem 0;
-            border-radius: 12px;
-            background: #000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
         .content p { margin-bottom: 0.75rem; font-size: 1.1rem; }
         .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
         .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
         .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+        
+        .content a { color: var(--sap-blue); text-decoration: none; }
+        .content a:hover { text-decoration: underline; }
 
         /* --- TECHNICAL & IMAGE BLOCKS --- */
         .screenshot-container { margin: 1.75rem 0; text-align: center; }
@@ -151,32 +113,33 @@
 
         .screenshot-container img:hover { transform: scale(1.01); }
 
-        pre {
-            background: #F3F4F6;
-            padding: 1.25rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            border-left: 4px solid var(--sap-blue);
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
             margin: 2rem 0;
-            color: var(--text-dark);
         }
 
-        code {
-            font-family: 'Courier New', monospace;
-            background: #EEF2F6;
-            color: var(--sap-blue);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.95em;
-            font-weight: 500;
+        .content-grid.reverse {
+            direction: rtl;
         }
 
-        pre code {
-            background: none;
-            color: inherit;
-            padding: 0;
-            font-weight: normal;
+        .content-grid.reverse > * {
+            direction: ltr;
+        }
+
+        .content-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .content-grid img:hover {
+            transform: scale(1.01);
         }
 
         /* --- ENHANCED LIGHTBOX (ZOOM) STYLING --- */
@@ -216,7 +179,7 @@
         }
 
         /* Lightbox Controls */
-        .lightbox-close {
+        #lightbox-close {
             position: absolute;
             top: 20px;
             right: 30px;
@@ -232,14 +195,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: none;
+            border: none;
         }
 
-        .lightbox-close:hover {
+        #lightbox-close:hover {
             transform: rotate(90deg);
         }
 
-        .lightbox-prev,
-        .lightbox-next {
+        #lightbox-prev,
+        #lightbox-next {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -250,18 +215,20 @@
             transition: opacity 0.2s ease;
             user-select: none;
             z-index: 10000;
+            background: none;
+            border: none;
         }
 
-        .lightbox-prev:hover,
-        .lightbox-next:hover {
+        #lightbox-prev:hover,
+        #lightbox-next:hover {
             opacity: 0.7;
         }
 
-        .lightbox-prev {
+        #lightbox-prev {
             left: 20px;
         }
 
-        .lightbox-next {
+        #lightbox-next {
             right: 20px;
         }
 
@@ -276,6 +243,7 @@
             padding: 8px 16px;
             border-radius: 20px;
             z-index: 10000;
+            display: none;
         }
 
         @keyframes fadeIn {
@@ -366,7 +334,7 @@
         }
 
         .btn-subscribe:hover {
-            background: var(--sap-blue-light);
+            background: #004276;
         }
 
         .btn-youtube {
@@ -390,9 +358,21 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+            }
+
             .stay-updated {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
             }
         }
 
@@ -433,108 +413,89 @@
     </header>
 
     <article>
-        <div class="breadcrumb">Understand SAP EWM</div>
-        <h1>2-Step Picking</h1>
-
-        <div class="video-wrapper">
-            <iframe src="https://www.youtube-nocookie.com/embed/El-cZPaIp5U" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <div class="breadcrumb">Working as a SAP EWM Consultant</div>
+        <h1>How to become a good EWM Consultant? (Part &num;2)</h1>
 
         <div class="content">
-            <p><strong>Note</strong>: This post belongs to the blog-series ‘<em>Understand SAP EWM 2-step picking’</em>. The purpose of these series of blog-posts is to explain the concepts of the core features of SAP EWM in a simple way. We want to focus on the basic understanding rather than the smallest details.</p>
+            <p>Welcome to the second part of my top 10 list about the skills that will help you to become a successful EWM consultant. In <a href="good-consultant-part-1.html" target="_blank">Part 1</a>, I covered the technical and functional skills that form the foundation for EWM consultants – business processes, EWM-specific knowledge, ABAP, ERP processes, and process documentation. Now let's move into soft skills that build upon this foundation.</p>
+
+            <p>Now I invite you to read on, as I am presenting tips 6 to 10 that I consider valuable and important to become a good and successful EWM consultant.</p>
+
+            <h2><strong>6. Communication skills</strong></h2>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/work/good-consultant/Become%20a%20good%20SAP%20EWM%20consultant_06.png" alt="Communication skills" width="800" height="450" loading="lazy">
+            </div>
             
-            <p>As usual, we will go into the real world before we look into the system.</p>
+            <p><strong>Communication is the foundation of successful consulting.</strong> You'll constantly explain concepts to different stakeholders—from operational managers to technical developers. The ability to break down complex SAP EWM topics into understandable language for various audiences is crucial.</p>
+
+            <p>In my experience, the most effective consultants are those who can adapt their communication style. When explaining a process to business users, focus on outcomes and business value. When working with developers, dive into technical details. In stakeholder meetings, emphasize risks and benefits to the business. This flexibility prevents misunderstandings and builds trust across your project teams.</p>
+
+            <p>Invest time in improving your written and verbal communication. Clear documentation, concise emails, and effective presentations are invaluable skills. If English is not your native language, don't be discouraged. Many international projects benefit from diverse perspectives, and most colleagues will appreciate your effort to communicate clearly. Take courses, practice public speaking, and seek feedback from colleagues to continuously improve.</p>
+
+            <h2><strong>7. Problem-solving mindset</strong></h2>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/work/good-consultant/Become%20a%20good%20SAP%20EWM%20consultant_07.png" alt="Problem-solving" width="800" height="450" loading="lazy">
+            </div>
             
-            <p>We are sure that most of you have experienced or can still enjoy Sunday afternoon lunch with the whole family at your mother’s place. All your loved ones sitting around a big table, having some good food.</p>
+            <p><strong>EWM projects are rarely straightforward.</strong> You will encounter requirements that don't fit standard functionality, system integration challenges, and business processes that need refinement. A problem-solving mindset is what sets good consultants apart from great ones.</p>
+
+            <p>Approach problems systematically. When faced with a challenge, resist the urge to jump to the first solution. Instead, take time to understand the root cause. Ask "why" multiple times. Is it a system limitation, a configuration issue, a business process gap, or a user expectation problem? Once you understand the real issue, brainstorm multiple solutions before committing to one.</p>
+
+            <p>Learn to balance perfection with pragmatism. Not every solution needs to be perfect; sometimes a good solution is delivered on time better than a perfect one delivered late. At the same time, don't compromise on quality in areas where it matters. Develop judgment about which trade-offs are acceptable and which are not.</p>
+
+            <p>Finally, keep detailed notes about challenges you've faced and how you solved them. Create your own knowledge base. Over time, you'll recognize patterns and patterns will help you solve new problems faster. What seemed like a complex problem on your first project might be routine by your fifth project dealing with similar challenges.</p>
+
+            <h2><strong>8. Humility</strong></h2>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Understand SAP EWM 2-Step picking (17).jpg" alt="Understand SAP EWM 2-Step picking (17)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/work/good-consultant/Become%20a%20good%20SAP%20EWM%20consultant_08.png" alt="Humility" width="800" height="450" loading="lazy">
             </div>
-
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Understand SAP EWM 2-Step picking (1).jpg" alt="Understand SAP EWM 2-Step picking (1)" width="800" height="450" loading="lazy">
-            </div>
-
-            <p>Now imagine the way that the food has to take to get from the kitchen on your plate, banana leaf, bowl or whatever you are using. Usually your mum will not take your sisters plate fill it in the kitchen with all the components of the lunch, walk back to the living room, bring it to your sisters place at the table and to the same thing for everybody else.</p>
-
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Screenshot_18.png" alt="Analogy Step 1" width="675" height="258" loading="lazy">
-            </div>
-
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Screenshot_19.png" alt="Analogy Step 2" width="698" height="239" loading="lazy">
-            </div>
-
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Screenshot_20.png" alt="Analogy Step 3" width="711" height="252" loading="lazy">
-            </div>
-
-            <p>She will rather grab the all the different pots with the components and bring the pots to the table. Well-educated sons will of course help here but let us assume mum has to do everything on her own. So all pots are on the table and in this second step everybody grabs what she/he likes in order to fill her/his plate.</p>
-
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Screenshot_21.png" alt="Analogy Step 4" width="679" height="268" loading="lazy">
-            </div>
-
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Screenshot_22.png" alt="Analogy Step 5" width="683" height="277" loading="lazy">
-            </div>
-
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Screenshot_23.png" alt="Analogy Step 6" width="700" height="256" loading="lazy">
-            </div>
-
-            <p>You see that the total travel distance for your mum decreases a lot while the effort for grabbing and moving food from the pots to the plates stays the same. So in total - as long as your mum is not eating alone - we are better off the with second approach. At least in terms of total travel distance.</p>
             
-            <p>We think that was pretty easy to understand. So let us have a quick look on how this process can be setup in the system. Instead of the family sitting at the table waiting for food, we do now have a bunch of delivery items sitting in a wave, waiting to be released. You know this picture from previous blog posts we assume:</p>
+            <p><strong>EWM is complex.</strong> Even after years of experience, you won't know everything. Accepting this fact and approaching each project with humility is essential.</p>
+
+            <p>When you don't know something, say so. Your stakeholders will respect your honesty more than pretended expertise. Saying "I don't know, but I'll find out" followed by delivering the answer is far better than making up an answer that turns out to be wrong.</p>
+
+            <p>Avoid overconfidence, especially in early parts of projects. What looks simple on the surface often has hidden complexity. A process that worked perfectly in one company might have edge cases in another. Users might have workarounds that aren't documented. System configurations might have undocumented customizations. Approach each requirement with a mindset of discovery rather than assuming you already know the answer.</p>
+
+            <p>Be open to learning from others. Your colleagues might have insights you lack. Business users often have deep process knowledge. Even junior team members might spot issues that experienced consultants miss. Humility creates a culture of collaborative problem-solving where everyone contributes their best ideas.</p>
+
+            <h2><strong>9. Build network and help others</strong></h2>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Understand SAP EWM 2-Step picking (12).jpg" alt="Understand SAP EWM 2-Step picking (12)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/work/good-consultant/Become%20a%20good%20SAP%20EWM%20consultant_09.png" alt="Networking" width="800" height="450" loading="lazy">
             </div>
-
-            <p>Now the difference is that we do not only release the wave but rather release a first and then release a second step. Within the first step we combine delivery items requesting the same material into <code>warehouse tasks</code>. We create these <code>warehouse tasks</code> in order to move the total quantity for this material from the source bin to an intermediate bin.</p>
             
-            <p>This intermediate bin is our table where the whole family is sitting. Once the stock has arrived on this bin we release the wave a second time in order to create the <code>warehouse tasks</code> for the second step of the picking process. Within this second step we pick on delivery item level so we separate the total quantity which has been picked based on the requested quantity of each delivery item.</p>
+            <p><strong>The EWM community is relatively small.</strong> Building and maintaining a strong professional network is invaluable. Attend conferences, participate in online forums, connect with colleagues on LinkedIn, and engage in the SAP EWM ecosystem.</p>
+
+            <p>More importantly, be generous with your knowledge. Share your experiences on blogs, answer questions in forums, mentor junior consultants, and help colleagues when they're stuck. This generosity creates a positive reputation and builds goodwill. What goes around comes around—when you're stuck on a problem, others will be more willing to help if you've been helpful to them.</p>
+
+            <p>Networking isn't just transactional. Build genuine relationships with people in the EWM space. These relationships become valuable for collaboration, learning, and often lead to interesting new opportunities. Some of the best projects I've been involved in came through referrals from colleagues I had helped years earlier.</p>
+
+            <p>Also, remember that helping others doesn't diminish your value as a consultant. Some consultants worry that sharing knowledge will make them less valuable. In reality, the opposite is true. Generous consultants build stronger reputations, attract better projects, and create more opportunities for themselves long-term.</p>
+
+            <h2><strong>10. Take care of your well-being</strong></h2>
+
+            <div class="screenshot-container">
+                <img src="../../assets/images/work/good-consultant/Become%20a%20good%20SAP%20EWM%20consultant_10.png" alt="Well-being" width="800" height="450" loading="lazy">
+            </div>
             
-            <p>Depending on the <code>consolidation group</code> the stock might go into separate or shared <code>pick HUs</code> but - independent from this - both variants complete the picking process here and trigger the next step of our outbound storage process.</p>
+            <p><strong>Consulting is demanding.</strong> Long hours, tight deadlines, challenging problems, and the pressure to deliver results can take a toll if you're not careful. Protecting your mental and physical health is not a luxury—it's essential for a sustainable career.</p>
 
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Understand SAP EWM 2-Step picking (13).jpg" alt="Understand SAP EWM 2-Step picking (13)" width="800" height="450" loading="lazy">
-            </div>
+            <p>Make exercise a non-negotiable part of your routine. It doesn't have to be intense—a daily walk, yoga, swimming, or any activity you enjoy will help. Exercise reduces stress, improves focus, and gives you mental clarity to solve complex problems.</p>
 
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/SAP EWM 2-Step picking 02.png" alt="SAP EWM 2-Step picking 02" width="800" height="228" loading="lazy">
-            </div>
+            <p>Maintain healthy sleep patterns. When you're tired, decision-making deteriorates, and you become less effective. Going to bed at a reasonable hour is an investment in the quality of your work the next day.</p>
 
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/SAP EWM 2-Step picking 01.png" alt="SAP EWM 2-Step picking 01" width="800" height="248" loading="lazy">
-            </div>
+            <p>Set boundaries between work and personal life. When you're off work, truly disconnect. Don't check emails at night unless it's an emergency. Take your vacation days. Spend time with family and friends. Pursue hobbies that have nothing to do with SAP.</p>
 
-            <h2><strong>Process Summary</strong></h2>
-            <p>To sum it up from process perspective -</p>
-            <p>We optimize the picking by collectively removing products which are requested by multiple different <code>ODO</code> items. This way we minimize the picking operations and reduce the total travel distance.</p>
-            
-            <p>The customizing is pretty straightforward here. Just a quick look as the purpose of this video is not to guide you through the implementation.</p>
-            
-            <p>Apart from types &amp; bins for intermediate storage you need to activate <code>2-step picking</code> on warehouse level and assign a <code>warehouse process type</code> for the withdrawal step. In addition you need a dedicated <code>storage type search sequence</code> for the withdrawal step. This record is looking at the initial source bin. An additional record needs the intermediate storage type as a source bin to help creating the final <code>warehouse task</code> for the distribution from the intermediate bin.</p>
+            <p>Watch out for burnout. The signs include constant fatigue, loss of motivation, cynicism towards work, and reduced effectiveness. If you notice these signs, take action—reduce your workload, take time off, or consider changing your project situation. Your health is more important than any project.</p>
 
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/SAP EWM 2-Step picking 04.png" alt="SAP EWM 2-Step picking 04" width="800" height="361" loading="lazy">
-            </div>
+            <p>Finally, remember that being a good consultant isn't just about technical expertise or skills. It's about being a good professional and an even better human. Take care of yourself so you can bring your best self to work and to all the people around you.</p>
 
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/SAP EWM 2-Step picking 03.png" alt="SAP EWM 2-Step picking 03" width="800" height="288" loading="lazy">
-            </div>
+            <p>With these 10 skills and characteristics, I believe you have a solid foundation to succeed in the EWM consulting world. Master them, practice them, and refine them continuously. Your journey as an EWM consultant is a marathon, not a sprint. Enjoy the ride!</p>
 
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/2-step/Understand SAP EWM 2-Step picking (18).png" alt="Understand SAP EWM 2-Step picking 18" width="800" height="418" loading="lazy">
-            </div>
-
-            <p>For all products which have <code>2-step picking</code> activated in master data we will then pick as described above.</p>
-            <p>That’s it. 2-step picking!</p>
-            
-        </div>
-
-        <!-- STAY UPDATED SECTION -->
+         <!-- STAY UPDATED SECTION -->
         <div class="stay-updated">
             <!-- Newsletter Card -->
             <div class="stay-updated-card">
@@ -568,20 +529,29 @@
         </div>
     </article>
 
-    <!-- ENHANCED LIGHTBOX OVERLAY -->
-    <div id="lightbox">
-        <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <span class="lightbox-prev" id="lightbox-prev">&#8249;</span>
-        <span class="lightbox-next" id="lightbox-next">&#8250;</span>
-        <div class="lightbox-content">
-            <img id="lightbox-img" src="" alt="">
+            <div class="freelancer-cta">
+                <h2><strong>Need EWM Expertise?</strong></h2>
+                <p>Are you looking for a freelance SAP EWM consultant or developer for your project? With over 15 years of experience, I can help with implementation, optimization, and training.</p>
+                <a href="https://wmexperts.online/contact" class="btn-freelance" target="_blank">Get in Touch</a>
+            </div>
         </div>
-        <div class="lightbox-counter" id="lightbox-counter"></div>
-    </div>
+    </article>
 
-    <footer>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</footer>
+    <footer>
+        <p>&copy; 2026 WMexperts | Knowledge-Exchange around SAP EWM</p>
+    </footer>
 
     <!-- ENHANCED LIGHTBOX JAVASCRIPT -->
+    <div id="lightbox">
+        <button id="lightbox-close">&times;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Enlarged image">
+            <button id="lightbox-prev">&lt;</button>
+            <button id="lightbox-next">&gt;</button>
+            <div id="lightbox-counter" class="lightbox-counter"></div>
+        </div>
+    </div>
+
     <script>
         (function() {
             const lightbox = document.getElementById('lightbox');
@@ -693,6 +663,7 @@
 
 </body>
 </html>
+
 
 
 

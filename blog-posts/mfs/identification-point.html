@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -445,7 +445,7 @@
             
             <p>As with all posts of this series, the content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a style="color: #00ccff;" href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank" rel="noopener">website</a> in case you want to learn more about the services offered by @ Swisslog or to browse open positions within their EWM team!</p>
             
-            <h2>Agenda</h2>
+            <h2><strong>Agenda</strong></h2>
             <ul>
                 <li>Overview process flow at the I-Point</li>
                 <li>The hardware of the I-Point</li>
@@ -578,14 +578,14 @@
 
             <p>That means, within the following paragraphs I will answer the question about what actually happens within FM <code>/SCWM/MFSACT_SP</code> (not every detail but the most important steps). And again – yes there is a different FM for case conveyors but they do not differ that much and we keep focusing on the pallets here in order to gain a basic understanding!</p>
 
-            <h2>Step 3.1: Validate the HU</h2>
+            <h2><strong>Step 3.1: Validate the HU</strong></h2>
             <p>EWM tries to figure out whether the HU does actually exist. If not, a dummy HU is created (dummy packaging material assigned to a dummy number range) and the HU is later sent towards clearing:</p>
 
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_19.png" alt="SAP EWM MFS identification point_19" width="677" height="482" loading="lazy">
             </div>
 
-            <h2>Step 3.2: Adjust the location</h2>
+            <h2><strong>Step 3.2: Adjust the location</strong></h2>
             <p>In this step EWM posts the HU to the storage bin which is assigned to the i-point / communication point (table <code>/SCWM/MFSOBJMAP</code>). This is done via FM <code>/SCWM/MFS_HU_ADJ_LOC</code> which validates lots of different scenarios like shown in the 2nd screenshot below (based on the customizing of the i-point, the source/destination of the HU and potential waiting/active WTs) and calls BAdi <code>/SCWM/EX_MFS_HU_AT_CP</code> where you can also implement a custom logic for the acceptance/decline of a location adjustment (e.g. include a check for doublets):</p>
 
             <div class="screenshot-container">
@@ -608,7 +608,7 @@
                 <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_24.png" alt="SAP EWM MFS identification point_24" width="697" height="485" loading="lazy">
             </div>
 
-            <h2>Step 3.4: Update HU data</h2>
+            <h2><strong>Step 3.4: Update HU data</strong></h2>
             <p>Based on the data that we received from the subsystem or determined within the previous steps, EWM now updates the HU header data via FM <code>/SCWM/HUHDR_ATTR_CHANGE</code>:</p>
 
             <div class="screenshot-container">
@@ -618,7 +618,7 @@
                 <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_26.png" alt="SAP EWM MFS identification point_26" width="936" height="160" loading="lazy">
             </div>
 
-            <h2>Final step (Step 4)</h2>
+            <h2><strong>Final step (Step 4)</strong></h2>
             <p>Although the creation of the follow-up action (WT creation) technically also happens within FM <code>/SCWM/MFSACT_SP</code>, I decided to show this as a separate step in our flow-chart. Makes sense from my point of view logically and also makes it easier to keep an overview.</p>
             <p>No matter whether we are going to reject the HU towards clearing or whether we want to push it towards a final putaway bin, we need to create/activate a HU warehouse task. This is done at the end of our action FM by calling FM <code>/SCWM/TO_CREATE_MOVE_HU</code>.<br>As mentioned above, the destination might have been determined by a Z-logic in BAdi <code>/SCWM/EX_MFS_ACT_SP</code> already and filled into structure <code>ls_create_hu</code>. The warehouse process type to create the task is taken from the communication point customizing (so in case you do not determine a destination in the BAdi mentioned above, EWM will simply read the STSS and putaway rules based on the combination of this WPT and the standard customizing):</p>
 
@@ -638,7 +638,7 @@
                 <li>Create a WT in order to move the HU away from the I-point (<code>/SCWM/TO_CREATE_MOVE_HU</code>)</li>
             </ul>
 
-            <h2>Appendix</h2>
+            <h2><strong>Appendix</strong></h2>
             <p>As promised above, some final words about the differences in handling/processing between pallet (~ slow moving) and case (~ fast moving) environments. Note that I am only touching the surface with these comments. There is complex coding involved with lots of differences compared to the pallet environment, which are not in scope of this article.<br>In general though, the role of the I-point is similar to the one in a pallet environment (EWM provides FM <code>/SCWM/MFSACT_CASE_SP</code> for processing and a couple of other BAdis). In addition to this we have –</p>
             <ul>
                 <li>‚Rough‘ decisions in order to enable fast routings without interruption (so a slightly different way of Layout-oriented routing)</li>
@@ -647,7 +647,7 @@
             </ul>
             <p>…as I said – enough keywords to create separate posts about this topic but everything not essential in order to understand the setups, concepts and processes at &amp; around Identification-Points!</p>
 
-            <h2>Closure</h2>
+            <h2><strong>Closure</strong></h2>
             <p>For more technical details about the process of <u>receiving telegrams in EWM MFS</u>, make sure you read this wonderful <a href="https://blogs.sap.com/2020/11/23/sap-ewm-mfs-receiving-and-processing-telegrams/" target="_blank" rel="noopener noreferrer">blog post</a> written by Tobias &amp; Jörg!</p>
             <p>That is all for this month’s post! I hope you are familiar with the concept of the I-point now.</p>
         </div>
@@ -675,14 +675,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -811,3 +811,8 @@
 
 </body>
 </html>
+
+
+
+
+

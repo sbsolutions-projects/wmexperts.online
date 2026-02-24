@@ -1,19 +1,19 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="In-depth article about SAP EWM MFS. Learn technical and functional details about Task interleaving in an automated storage & retrieval system (ASRS).">
-    <meta name="keywords" content="SAP EWM, Warehouse Management, MFS, ASRS, Task Interleaving, /SCWM/MFS_WT_DT, Automation">
+    <meta name="description" content="Discover how SAP EWM MFS realizes task interleaving in an automatic storage & retrieval system (ASRS). Learn the technical details and implementation.">
+    <meta name="keywords" content="SAP EWM, MFS, Task Interleaving, ASRS, Automated Storage, Retrieval System, Warehouse Management">
     <meta name="author" content="Hendrik">
     <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Task interleaving in an automated storage & retrieval system (ASRS) | WMexperts">
-    <meta property="og:description" content="In-depth article about SAP EWM MFS. Learn technical and functional details about Task interleaving in an automated storage & retrieval system (ASRS).">
-    <meta property="article:published_time" content="2025-01-01">
-    <meta property="article:modified_time" content="2025-01-01">
+    <meta property="og:title" content="Discover SAP EWM MFS - Task Interleaving in an ASRS | WMexperts">
+    <meta property="og:description" content="How does SAP EWM MFS realize task interleaving in an automatic storage & retrieval system (ASRS)? Get the answer in this blog post!">
+    <meta property="article:published_time" content="2023-02-24">
+    <meta property="article:modified_time" content="2025-03-02">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -21,11 +21,11 @@
       {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "Task interleaving in an automated storage & retrieval system (ASRS)",
-        "description": "In-depth article about SAP EWM MFS. Learn technical and functional details about Task interleaving in an automated storage & retrieval system (ASRS).",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-01-01",
+        "headline": "Discover SAP EWM MFS - Task Interleaving in an ASRS",
+        "description": "How does SAP EWM MFS realize task interleaving in an automatic storage & retrieval system (ASRS)? Get the answer in this blog post!",
+        "image": "https://wmexperts.online/assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_00.png",
+        "datePublished": "2023-02-24",
+        "dateModified": "2025-03-02",
         "author": {
           "@type": "Person",
           "name": "Hendrik"
@@ -51,13 +51,13 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/sap-ewm-mfs.html"
+          "item": "https://wmexperts.online/blog-posts/category/mfs.html"
         }]
       }
     ]
     </script>
 
-    <title>Task interleaving in an automated storage & retrieval system (ASRS) | WMexperts</title>
+    <title>Discover SAP EWM MFS - Task Interleaving in an ASRS | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -133,6 +133,7 @@
         .content h2 { color: var(--text-dark); margin-top: 1.75rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; }
         .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
         .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+        .content ol { padding-left: 1.5rem; margin-bottom: 2rem; }
 
         /* --- TECHNICAL & IMAGE BLOCKS --- */
         .screenshot-container { margin: 1.75rem 0; text-align: center; }
@@ -428,145 +429,168 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
         <div class="breadcrumb">Discover SAP EWM MFS</div>
-        <h1>Task interleaving in an automated storage &amp; retrieval system (ASRS)</h1>
+        <h1>Task Interleaving in an ASRS</h1>
 
-        <div class="video-wrapper">
+		        <div class="video-wrapper">
             <iframe src="https://www.youtube-nocookie.com/embed/tDbgdVv1Ecs" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div class="content">
-            <p>This blog is part of the series ‘<em>SAP EWM meets Automation – Discover EWM MFS</em>’ and describes the concept for task interleaving in automated areas respectively in the context of SAP EWM MFS.</p>
-            <p>We will take a quick look at the approach taken in manually operated areas again, before we head over to the automated ones. As usual, I mixed technical details with practical examples in order to make it easier for you to digest the content.</p>
-            <p>Note that this blog post has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank" rel="noopener noreferrer">website</a> in case you want to learn more about the services offered by @ Swisslog or to browse open positions within their EWM team!</p>
-            <p><u>Agenda</u></p>
-            <ul>
-                <li>What is task interleaving at all?</li>
-                <li>Recap interleaving approach for manually operated areas in SAP EWM</li>
-                <li>Comparison of approaches for interleaving between manually operated and automated areas</li>
-                <li>Customizing &amp; Technical details for interleaving in automated areas</li>
-            </ul>
-            <p>Task interleaving describes a process or strategy by which tasks of different types are combined with each other in order to reduce the total travel time and / or distance. For those of you who are not familiar at all with this concept I would suggest reading this <a href="../understand/understand-interleaving.html" target="_blank" rel="noopener noreferrer">blog article</a> (or watching the corresponding <a href="https://youtu.be/1QnK3QPZPUM" target="_blank" rel="noopener noreferrer">video</a>) in order to get a basic understanding.</p>
+            <p>This blog is part of the series '<em>SAP EWM meets Automation – Discover EWM MFS</em>'. As with all posts of this series, the content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank">website</a> in case you want to learn more about the services offered by Swisslog or to browse open positions within their EWM team!</p>
+
+            <strong>What is task interleaving and why is it important for MFS environments?</strong>
+
+            <p>Before we dive into the technical details for interleaving in automated areas we should first clarify what task interleaving is from a functional perspective.</p>
+
+            <p>Task interleaving describes a process or strategy by which tasks of different types are combined with each other in order to reduce the total travel time and / or distance. For those of you who are not familiar at all with this concept I would suggest reading this <a href="../understand/understand-interleaving.html" target="_blank" rel="noopener">blog article</a> (or watching the corresponding <a href="https://youtu.be/1QnK3QPZPUM" target="_blank" rel="noopener">video</a>) in order to get a basic understanding.</p>
+
             <p>As an introduction into this article I will only give a very quick recap about how EWM implements interleaving in manually operated (e.g. via radio frequency based devices / dialogues) areas of the warehouse.</p>
+
             <p>We take this simple process as an example where we have forklift-operated movements of full pallets into and out of a pallet rack:</p>
-            <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_00.png" alt="SAP EWM MFS Task interleaving in ASRS_00" width="889" height="497">
-            </div>
-            <p>Instead of one team of operators executing the putaway and another team executing the pick tasks we want EWM to assign tasks in a way that every operator who completes a putaway tasks will get a removal tasks right away instead of driving back to the receiving area without any load in order to pick up the next putaway pallet. The same should be true for the picking process vice-versa. After dropping a picked pallet on the staging area the next task to be processed should be a putaway task. This way we are aiming to minimize the distance which is travelled without any load at all.</p>
-            <p>For this purpose we define two queues in EWM:</p>
-            <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_01.png" alt="SAP EWM MFS Task interleaving in ASRS_01" width="1024" height="237">
-            </div>
-            <p>For those queues we do not only have to define a sequence for the given resource group (which we would need for ‘simple’ system-guided RF processing with multiple queues) but also a sequence for the different <u>types</u> of queues:</p>
-            <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_04.png" alt="SAP EWM MFS Task interleaving in ASRS_04" width="935" height="854">
-            </div>
-            <p>This queue type sequence makes sure that the resources which are operating within the respective resource groups will always get the subsequent task from a queue with queue type B once they’ve completed a task in a queue of type A.</p>
-            <p>I do not want to dig deeper into the details of the logic for manually operated areas here as the focus should be on task interleaving in automated storage and retrieval systems.</p>
-            <p>Thus, let us proceed with a different example from here onwards. Imagine an automated pallet high-bay storage, operated by multiple different cranes. For the sake of simplicity, imagine this high-bay storage having one aisle only, operated by one crane:</p>
 
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_05.png" alt="SAP EWM MFS Task interleaving in ASRS_05">
+                <img width="889" height="497" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_00.png" alt="Task Interleaving Overview" loading="lazy">
             </div>
-            <p>Cranes in automated storage &amp; retrieval systems are created as resources in EWM. Check this <a href="../mfs/ewm-plc-integration.html" target="_blank" rel="noopener noreferrer">blog</a> (or this <a href="https://youtu.be/OfmAROIuV2Y" target="_blank" rel="noopener noreferrer">video</a>) in case you want to learn more about important MFS objects like 'resources'.</p>
+
+            <p>EWM creates tasks in two queues – one putaway queue and one removal queue. In the scenario shown above, the warehouse operator receives the following sequence: putaway – putaway – putaway – removal. Interleaving now tries to mix up this sequence in order to save travel time for the operator. The resulting sequence could look like: putaway – removal – putaway – removal – putaway.</p>
+
+            <p>This is achieved by flipping queues. At a certain point the system decides that it is time to jump from the putaway queue to the removal queue and vice versa.</p>
+
+            <div class="screenshot-container">
+                <img width="1355" height="237" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_01.png" alt="Queue Flipping Mechanism" loading="lazy">
+            </div>
+
+            <strong>How does interleaving work in a Material Flow System with ASRS?</strong>
+
+            <p>Cranes in automated storage &amp; retrieval systems are created as resources in EWM. Check this <a href="../mfs/ewm-plc-integration.html" target="_blank" rel="noopener">blog</a> (or this <a href="https://youtu.be/OfmAROIuV2Y" target="_blank" rel="noopener">video</a>) in case you want to learn more about important MFS objects like 'resources'.</p>
+
             <p>Other than RF resources, those MFS resources are assigned to exactly one queue and process warehouse orders from this queue in a specific sequence. So you might already notice that the approach with the queue sequencing (jumping in between putaway and removal queue types like described above) will not work here. So how does it work in such an environment?</p>
-            <p>In order to understand this we need to look into the code as the only customizing that EWM MFS offers for control here is this. Check this tiny little flag here along with a very lean documentation:</p>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_06.png" alt="SAP EWM MFS Task interleaving in ASRS_06" width="917" height="654">
+                <img width="935" height="854" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_04.png" alt="MFS Queue Structure" loading="lazy">
             </div>
-            <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_07.png" alt="SAP EWM MFS Task interleaving in ASRS_07" width="1024" height="422">
-            </div>
-            <p>At least we get a definition of Interleaving in an EWM MFS context:</p>
-            <p>“<em>By activating interleaving, you can avoid a situation where the resource travels empty from the aisle to the inclusion point, after putaway. Instead, the resource is given a new stock removal warehouse tasks before it returns. Interleaving therefore reduces the number of empty trips for the resource, and increases the throughput</em>.”</p>
-            <p>So we know now where to activate task interleaving for the ASRS crane (respectively its resource type) in our example but how does it technically work? We only have one queue with tasks which is assigned to our resource:</p>
-            <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_08.png" alt="SAP EWM MFS Task interleaving in ASRS_08" width="988" height="752">
-            </div>
-            <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_09.png" alt="SAP EWM MFS Task interleaving in ASRS_09" width="1024" height="306">
-            </div>
-            <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_10.png" alt="SAP EWM MFS Task interleaving in ASRS_10" width="857" height="579">
-            </div>
-            <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_11.png" alt="SAP EWM MFS Task interleaving in ASRS_11" width="1024" height="227">
-            </div>
+
+            <p>The answer is: EWM implements interleaving for MFS by determining the next warehouse order to be processed based on the <strong>characteristics of the warehouse order</strong> instead of using queue flipping! When you drill down into the customizing (shown in the figure below) you will see that there is a flag which allows you to activate interleaving on a resource type level. This makes sense as it is a decision on the type of resource and not on the individual resource.</p>
+
+            <p>If interleaving is active for a resource type, EWM will try to alternate between putaway and retrieval tasks. This helps to minimize travel time in an ASRS as the crane needs to move through the warehouse in order to reach the different destinations.</p>
+
+            <strong>Technical Implementation – Looking into the SAP EWM Code</strong>
+
             <p>In order to fully understand the interleaving approach for ASRS there is no other option than looking into the coding.</p>
-            <p>We start in function module <code>/SCWM/MFS_WT_DT</code>. For those of you who are following my blog this should sound familiar. This FM is responsible to decide which WT out of a pool of possible WTs (~ our crane queue) is the next one to be processed (check this <a href="../mfs/ewm-plc-integration.html" target="_blank" rel="noopener noreferrer">blog post</a> or <a href="https://youtu.be/DaV-p9twI9E" target="_blank" rel="noopener noreferrer">video</a> in order to learn more about the process of selecting WTs for telegram creation).</p>
-            <p>First EWM checks whether to execute interleaving at all. Subroutine <code>check_resource</code> sets variable <code>lv_intleav</code> with the help of FM <code>/SCWM/RSRC_TRSRC_TYP_READ</code>, based on the resource type customizing that I showed above:</p>
+
+            <p>We start in function module <code>/SCWM/MFS_WT_DT</code>. For those of you who are following my blog this should sound familiar. This FM is responsible to decide which WT out of a pool of possible WTs (~ our crane queue) is the next one to be processed (check this <a href="../mfs/ewm-plc-integration.html" target="_blank" rel="noopener">blog post</a> or <a href="https://youtu.be/DaV-p9twI9E" target="_blank" rel="noopener">video</a> in order to learn more about the process of selecting WTs for telegram creation).</p>
+
+            <p>First EWM checks whether to execute interleaving at all. Subroutine check_resource sets variable <em>lv_intleav</em> with the help of FM <code>/SCWM/RSRC_TRSRC_TYP_READ</code>, based on the resource type customizing that I showed above:</p>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_12.png" alt="SAP EWM MFS Task interleaving in ASRS_12" width="1024" height="299">
+                <img width="1024" height="306" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_09.png" alt="Check Resource Interleaving" loading="lazy">
             </div>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_13.png" alt="SAP EWM MFS Task interleaving in ASRS_13" width="1024" height="369">
+                <img width="857" height="579" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_10.png" alt="Resource Type Configuration" loading="lazy">
             </div>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_14.png" alt="SAP EWM MFS Task interleaving in ASRS_14" width="1024" height="757">
+                <img width="1024" height="227" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_11.png" alt="Interleaving Flag Details" loading="lazy">
             </div>
-            <p>We now have the answer to the questions whether interleaving is active or not (<code>lv_intleav</code>). For our example we assume it is active. Thus, EWM now calls subroutine <code>check_interleaving</code> in order to decide whether the next WT to be processed has to be</p>
+
+            <p>In order to fully understand the interleaving approach for ASRS we need to look at the actual implementation. We start in function module <code>/SCWM/MFS_WT_DT</code> which is responsible to decide which WT out of a pool of possible WTs (~ our crane queue) is the next one to be processed.</p>
+
+            <p>First EWM checks whether to execute interleaving at all. Subroutine check_resource sets variable <em>lv_intleav</em> with the help of FM <code>/SCWM/RSRC_TRSRC_TYP_READ</code>, based on the resource type customizing:</p>
+
+            <div class="screenshot-container">
+                <img width="1024" height="299" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_12.png" alt="Interleaving Variable Setup" loading="lazy">
+            </div>
+
+            <div class="screenshot-container">
+                <img width="1024" height="369" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_13.png" alt="Check Interleaving Logic" loading="lazy">
+            </div>
+
+            <div class="screenshot-container">
+                <img width="1024" height="757" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_14.png" alt="Interleaving Decision Tree" loading="lazy">
+            </div>
+
+            <p>We now have the answer to the questions whether interleaving is active or not (lv_intleav). For our example we assume it is active. Thus, EWM now calls subroutine <em>check_interleaving</em> in order to decide whether the next WT to be processed has to be</p>
+
             <ul>
                 <li>a movement which is supposed to putaway a HU,</li>
                 <li>or a movement which is supposed to retrieve a HU.</li>
             </ul>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_15.png" alt="SAP EWM MFS Task interleaving in ASRS_15" width="1024" height="408">
+                <img width="1024" height="408" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_15.png" alt="Interleaving Decision Strategy" loading="lazy">
             </div>
+
             <p>Remember, the main purpose of task interleaving is to realize a continuous cycle of putaway-retrieval-putaway-retrieval …. and so on.</p>
+
             <p>Thus, in order to decide about the direction of the next movement, we need to determine the direction of the last movement (as we know the next one should point towards the opposite direction). EWM uses a simple but effective trick here. Based on the fact that the coding is called during task confirmation, EWM knows that our resource is currently located at the destination bin of the last movement. This destination bin is</p>
+
             <ul>
                 <li>either a storage bin within our MFS storage type (in case the last movement has been a putaway task)</li>
                 <li>or a handover storage bin (which has to be a communication point in order to induce the next movement) outside of our MFS storage type (in case the last movement has been a retrieval task)</li>
             </ul>
-            <p>So EWM simply checks whether the current bin of the resource is a communication point or not. If yes, the last movement has been a retrieval task and if not, the last movement has been a putaway task. It’s as simple as that:</p>
+
+            <p>So EWM simply checks whether the current bin of the resource is a communication point or not. If yes, the last movement has been a retrieval task and if not, the last movement has been a putaway task. It's as simple as that:</p>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_16.png" alt="SAP EWM MFS Task interleaving in ASRS_16" width="1024" height="563">
+                <img width="1024" height="563" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_16.png" alt="Current Bin Communication Point Check" loading="lazy">
             </div>
-            <p>You can see in the screenshot above that our famous variable <code>cv_intleav</code> is filled with different values based on the result of the check described above.</p>
-            <p>This variable is then handed over to subroutine <code>select_wo</code> which finally makes the decision which concrete warehouse order is the next one to be processed (~ the next one for which EWM will create a telegram and send it to the subsystem):</p>
+
+            <p>You can see in the screenshot above that our famous variable <em>cv_intleav</em> is filled with different values based on the result of the check described above.</p>
+
+            <p>This variable is then handed over to subroutine select_wo which finally makes the decision which concrete warehouse order is the next one to be processed (~ the next one for which EWM will create a telegram and send it to the subsystem):</p>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_17.png" alt="SAP EWM MFS Task interleaving in ASRS_17" width="1024" height="536">
+                <img width="1024" height="536" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_17.png" alt="Warehouse Order Selection" loading="lazy">
             </div>
-            <ol>
-                <li>The internal table <code>lt_wo_rsrc_ty</code> holds all started or open tasks for the given resource. EWM sorts the records based on the latest start date</li>
-                <li>Based on the value of the local variable <code>iv_intleav</code>, EWM picks first the entry from the table in (1) which is supposed to be a picking/putaway task</li>
-                <li>If a WO has been found, it is attached to the internal table <code>et_who</code> which holds all warehouse orders which could be processed next, along with the optimal sequence (sorted by putaway vs. retrieval and within those 2 groups also sorted based on the latest start date). Note: You can see in the screenshot that multiple WOs are written into this table – this is just to be sure that there is a backup in case the first one(s) cannot be processed for any reason.</li>
-            </ol>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_18.png" alt="SAP EWM MFS Task interleaving in ASRS_18" width="1024" height="684">
+                <img width="1024" height="371" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_18.png" alt="Select Warehouse Order Logic Part 1" loading="lazy">
             </div>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_19.png" alt="SAP EWM MFS Task interleaving in ASRS_19" width="1024" height="371">
+                <img width="732" height="411" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_19.png" alt="Select Warehouse Order Logic Part 2" loading="lazy">
             </div>
+
             <p>You can see that SAP makes use of the content field from table <code>/SCWM/WO_RSRC_TY</code> (with this blog post we will not go into detail here about how this field is being filled – just keep it as a given that this table holds information which classifies a warehouse order as being a putaway or a retrieval task).</p>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_20.png" alt="SAP EWM MFS Task interleaving in ASRS_20" width="1024" height="533">
+                <img width="1024" height="533" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_20.png" alt="Warehouse Order Content Field" loading="lazy">
             </div>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_21.png" alt="SAP EWM MFS Task interleaving in ASRS_21" width="732" height="411">
+                <img width="732" height="411" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_21.png" alt="Content Field Mapping" loading="lazy">
             </div>
-            <p>From the perspective of interleaving there is nothing more important within the subroutine <code>select_wo</code>. At the end it hands over the local table <code>lt_who</code> carrying the selection of sorted warehouse orders back to FM <code>/SCWM/MFS_WT_DET</code>. The upcoming coding grabs the first WT from the table and tries to create a telegram for this WT. Telegram creation is triggered at the very end of this FM via FM <code>/SCWM/MFS_SEND</code>:</p>
+
+            <p>From the perspective of interleaving there is nothing more important within the subroutine select_wo. At the end it hands over the local table <em>lt_who</em> carrying the selection of sorted warehouse orders back to FM <code>/SCWM/MFS_WT_DET</code>. The upcoming coding grabs the first WT from the table and tries to create a telegram for this WT. Telegram creation is triggered at the very end of this FM via FM <code>/SCWM/MFS_SEND</code>:</p>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_22.png" alt="SAP EWM MFS Task interleaving in ASRS_22" width="1010" height="766">
+                <img width="1010" height="766" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_22.png" alt="Telegram Creation Flow Part 1" loading="lazy">
             </div>
+
             <div class="screenshot-container">
-                <img src="..\..\assets\images\mfs\mfs-interleaving/SAP EWM MFS Task interleaving in ASRS_23.png" alt="SAP EWM MFS Task interleaving in ASRS_23" width="1024" height="560">
+                <img width="1024" height="560" src="../../assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_23.png" alt="Telegram Creation Flow Part 2" loading="lazy">
             </div>
+
             <p>From here onwards the logic has nothing specific in the context of interleaving and should not be in scope of this blog post. I wrote a different one in this blog-series from which you can derive all details about how EWM creates and sends telegrams to a subsystem.</p>
-            <p><strong><u>Just a quick summary to close this one -</u></strong></p>
+
+            <strong><u>Summary</u></strong>
+
             <ul>
                 <li>Interleaving for MFS storage types is activated via the resource type customizing</li>
                 <li>In contrast to interleaving in manually operated storage types, we are not using different queue types and queue sequences assigned to resources</li>
                 <li>Every resource in a MFS environment is working with one queue only and thus, has to determine the next WO to be processed based on the WO characteristics instead of a queue flip-flop</li>
                 <li>EWM uses the current bin of the given resource in order to figure out whether the last processed WT has been a putaway or retrieval task</li>
+                <li>Based on this insight it selects the next WT for the opposite direction. For this selection it uses the content field from table <code>/SCWM/WO_RSRC_TY</code></li>
             </ul>
-            <p>Based on this insight it selects the next WT for the opposite direction. For this selection it uses the content field from table <code>/SCWM/WO_RSRC_TY</code></p>
-            </div>
+
+        </div>
 
         <!-- STAY UPDATED SECTION -->
         <div class="stay-updated">
@@ -591,14 +615,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -727,3 +751,8 @@
 
 </body>
 </html>
+
+
+
+
+

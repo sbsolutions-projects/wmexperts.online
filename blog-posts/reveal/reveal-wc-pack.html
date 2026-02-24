@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a packing process.">
     <meta name="keywords" content="SAP EWM, Warehouse Management, Work center determination, packing process, POSC">
     <meta name="author" content="Hendrik">
-    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    <link rel="icon" type="image/png" href="../../assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -446,12 +446,12 @@
             <p>Sidenote: In order to execute system-supported packing during an outbound process you need to make use of the <code>POSC</code> meaning you have to use a storage process with a packing step:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_01.png" alt="SAP EWM work center determination for packing_01" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_01.png" alt="SAP EWM work center determination for packing_01" loading="lazy">
             </div>
             
             <p>Of course you can create HUs also during picking without a packing step but we are focusing here on packing steps which are executed separately from the picking process at dedicated packing work centers.</p>
             
-            <h2>Agenda</h2>
+            <h2><strong>Agenda</strong></h2>
             <ul>
                 <li>Options for packing bin / work center determination</li>
                 <li>Rules-based vs. non-rules-based determination</li>
@@ -460,7 +460,7 @@
                 <li>Options for enhancements</li>
             </ul>
             
-            <h2>Options for packing bin / work center determination</h2>
+            <h2><strong>Options for packing bin / work center determination</strong></h2>
             <p>In general, we do have three options for the destination bin determination here. We can determine the packing bin / work center</p>
             <ol>
                 <li>based on type/section/bin in the given storage process step</li>
@@ -468,87 +468,87 @@
                 <li>based on the determination table</li>
             </ol>
             
-            <h2>Rules-based vs. non-rules-based determination</h2>
+            <h2><strong>Rules-based vs. non-rules-based determination</strong></h2>
             <p>We can separate those three options into rules-based and non-rules-based ones. Option (2) and (3) are rules-based and only relevant in case the corresponding flag is active for the packing step of the given storage process:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_02.png" alt="SAP EWM work center determination for packing_02" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_02.png" alt="SAP EWM work center determination for packing_02" loading="lazy">
             </div>
             
-            <h2>Deep-dive into the different options</h2>
+            <h2><strong>Deep-dive into the different options</strong></h2>
             <p>Option (1) is the easy one, which is relevant in case the rules-based flag is not active for the given process step. In this case EWM will just read the ‘fixed’ type/section/bin that you provide in the process step customizing:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_03_2.png" alt="SAP EWM work center determination for packing_03_2" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_03_2.png" alt="SAP EWM work center determination for packing_03_2" loading="lazy">
             </div>
             
             <p>That is all you need to know for the non-rules-based logic. Let us now have a look at the logic for rules-based work center determination!</p>
             <p>In general (there are some exceptions), the ‘Rules-based’ flags will determine the destination which is needed to complete the previous step of the storage process (so e.g. a record with step <code>OB02</code> will set the destination for step <code>OB01</code>):</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_04.png" alt="SAP EWM work center determination for packing_04" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_04.png" alt="SAP EWM work center determination for packing_04" loading="lazy">
             </div>
             
             <p>Function module <code>/SCWM/STORAGE_CONTROL_P_GET</code> is the most important player here. It calls the destination bin determination for the different kind of internal steps. For packing steps EWM determines the destination for the previous step (usually a picking step) via FM <code>/SCWM/DET_PACKING_STATION</code>.</p>
             <p>This FM first checks whether you gave a fixed destination via the warehouse order creation rule (this is option (2), mentioned above):</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_05.png" alt="SAP EWM work center determination for packing_05" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_05.png" alt="SAP EWM work center determination for packing_05" loading="lazy">
             </div>
             
             <p>Fun fact – you notice the comment with the ‘bundling rule’ in the screenshot above. Never heard that before as a synonym for a warehouse order creation rule but at least for a business user it is probably a more meaningful/helpful term.</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_06.png" alt="SAP EWM work center determination for packing_06" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_06.png" alt="SAP EWM work center determination for packing_06" loading="lazy">
             </div>
             
             <p>If it finds something, we are already done here. If it does not find something (~ fields are empty in the WOCR), it reads the work center determination table <code>/SCWM/TPACKSTDT</code> via FM <code>/SCWM/TPACKSTDT_READ_SINGLE</code>. Note that you can maintain records in this table via the easy access menu or directly call transaction <code>/SCWM/PACKSTDT</code>:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_08.png" alt="SAP EWM work center determination for packing_08" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_08.png" alt="SAP EWM work center determination for packing_08" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_07.png" alt="SAP EWM work center determination for packing_07" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_07.png" alt="SAP EWM work center determination for packing_07" loading="lazy">
             </div>
             
             <p>The FM first tries to read a record with the full key (route + activity area + consolidation group) before it applies the access sequence which you can define in customizing:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_09.png" alt="SAP EWM work center determination for packing_09" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_09.png" alt="SAP EWM work center determination for packing_09" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_10.png" alt="SAP EWM work center determination for packing_10" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_10.png" alt="SAP EWM work center determination for packing_10" loading="lazy">
             </div>
             
             <p>…and that’s it already. It is not foreseen to skip this step based on the rules-based flag. That means in case the rules-based flag is active and EWM neither finds a destination based on the 2 options described above (neither via the WOCR, nor in the work center determination table), you will receive an error message during warehouse task creation:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_11.png" alt="SAP EWM work center determination for packing_11" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_11.png" alt="SAP EWM work center determination for packing_11" loading="lazy">
             </div>
             
             <p>That also means that EWM will not consider the destination data from the process step in case the rules-based flag is active but the destination data is maintained (e.g. like in the screenshot below). Actually EWM will not even allow to save such a setup:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_14.png" alt="SAP EWM work center determination for packing_14" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_14.png" alt="SAP EWM work center determination for packing_14" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_13.png" alt="SAP EWM work center determination for packing_13" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_13.png" alt="SAP EWM work center determination for packing_13" loading="lazy">
             </div>
             
-            <h2>Sidenote - Consideration of the putaway strategy</h2>
+            <h2><strong>Sidenote - Consideration of the putaway strategy</strong></h2>
             <p>Note that for any of the three options described here it is possible to provide only the destination storage type but leave the storage section and/or bin empty. In this case, EWM will determine the actual bin via FM <code>/SCWM/PUT_BIN_DSTGRP</code>. However, this will only return anything, in case you are using putaway rule ‘3’ (consolidation group) for your work center storage type:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_12.png" alt="SAP EWM work center determination for packing_12" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_12.png" alt="SAP EWM work center determination for packing_12" loading="lazy">
             </div>
             
-            <h2>Options for enhancements</h2>
+            <h2><strong>Options for enhancements</strong></h2>
             <p>As usual, I close my blog by giving you some ideas and options that you can use to implement a custom logic.<br />In case what I described above is not sufficient to cover your requirements, you can add your own packing station determination rule here via BAdI <code>/SCWM/EX_WRKC_PACKDET</code> (Called at the end of FM <code>/SCWM/DET_PACKING_STATION</code>).<br />A second option is sitting at the end of the FM <code>/SCWM/STORAGE_CONTROL_P_GET</code>, where EWM calls BAdI <code>/SCWM/EX_CORE_PSC_PROCESS</code> which can be used to implement your very own rules-based determination of the destination data for any of the given <code>POSC</code> steps.</p>
             
-            <h2>Closure</h2>
+            <h2><strong>Closure</strong></h2>
             <p>As a resume I think we can agree that the work center or packing bin determination is very flexible but at the and not complex at all. I hope that I could explain and visualize everything in a way that it helps you within your current or any future projects!</p>
 
         </div>
@@ -576,14 +576,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -712,3 +712,7 @@
 
 </body>
 </html>
+
+
+
+

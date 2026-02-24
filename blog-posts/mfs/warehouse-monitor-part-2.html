@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -464,7 +464,7 @@
                 <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01.png" alt="SAP EWM MFS Warehouse Monitor_01" width="936" height="877">
             </div>
 
-            <h2>Handling Unit Move</h2>
+            <h2><strong>Handling Unit Move</strong></h2>
             <p>This node shows ‘rough destination bins’ for HU movements (those are not warehouse tasks!) which are used for routing decisions in case conveyor environments (the concept will not be explained in detail within this blog post).</p>
             
             <div class="screenshot-container">
@@ -483,7 +483,7 @@
             <p><u>Delete HU Move Entries</u>: FM <code>/SCWM/MFS_HU_MOVE_DEL_MON</code> calls FM <code>/SCWM/MFS_HUMOVE_DEL</code> in order to delete records from table <code>/SCWM/MFSHUMOVE</code> for the selected HUs</p>
             <p><u>Create Warehouse Task</u>: Uses FM <code>/SCWM/HU_CREATE_WT_MON</code> in order to open transaction <code>/SCWM/ADHU</code>, pre-filled with data for the selected HU</p>
 
-            <h2>Conveyor Segment Group</h2>
+            <h2><strong>Conveyor Segment Group</strong></h2>
             <p>This sub-node does nothing else than showing the conveyor segment groups along with their assigned segments which had been created via customizing. It adds potential exceptions which had been assigned to the segment groups:</p>
             <p><u>Set Exception:</u> Exceptions can be set via the only method here and will make sure that the affected segments are no longer considered for upcoming routing decisions (segments can be assigned to LOSC records):</p>
             
@@ -493,7 +493,7 @@
 
             <p>Technically this is done via FM <code>/SCWM/MFS_CSGR_SET_EXCC_MON</code>, which calls FM <code>/SCWM/MFS_CSGR_SET_STAT</code> to update table <code>/SCWM/MFSCSGR</code> (which holds the conveyor segment group customizing &amp; status) and call the exception handling for the given exception code plus the update of the status for all assigned segments via FM <code>/SCWM/MFS_CS_SET_STAT</code> (~ setting an exception to a segment group will set an exception to all assigned segments).</p>
 
-            <h2>Conveyor Segment</h2>
+            <h2><strong>Conveyor Segment</strong></h2>
             <p>This sub-node does nothing else than showing the conveyor segments which had been created via customizing. It adds potential exceptions which had been assigned to the segments:</p>
             
             <div class="screenshot-container">
@@ -508,7 +508,7 @@
 
             <p>Technically this is done via FM <code>/SCWM/MFS_CS_SET_EXCC_MON</code>, which calls FM <code>/SCWM/MFS_CS_SET_STAT</code> to update table <code>/SCWM/MFSCS</code> (which holds the conveyor segment customizing &amp; status) and call the exception handling for the given exception code.</p>
 
-            <h2>Resource</h2>
+            <h2><strong>Resource</strong></h2>
             <p>This node shows all MFS resources which have been created via customizing:</p>
             
             <div class="screenshot-container">
@@ -523,7 +523,7 @@
 
             <p><u>Set Exception</u>: FM <code>/SCWM/MFS_RSRC_SET_EXCC_MON</code> updates the exception on the resource via FM <code>/SCWM/MFS_RSRC_SET_STAT</code> which calls FM <code>/SCWM/MFS_EXCCODE_SET</code> for MFS exception handling. The latter triggers the standard exception code processing (incl. follow-up actions, workflow &amp; alert processing etc.). In case this function is used in order remove an existing exception code, EWM calls FM <code>/SCWM/MFS_WT_DET</code> right away in order to potentially find a WT in the queue for the given resource which can be processed (~ telegram can be created and sent to the PLC).</p>
             <p><u>Recalculate WTs</u>: Table <code>/SCWM/RSRC</code> always holds the actual number of open MFS tasks for a given resource in field <code>MFSACCTEL</code>. This information is used e.g. in order to decide whether telegrams for additional tasks can be sent to the resource or not. With this method, FM <code>/SCWM/MFS_RSRC_SET_COUNTER_MON</code> calls FM <code>/SCWM/RSRC_WT_RECALCULATE</code> in order to calculate the number of tasks which are being processed by the resource right now (tasks which are assigned to the resource but not confirmed yet + tasks for the PLC of the given queue which are pending in the outbound buffer (table <code>/SCWM/MFSDELAY</code>) but not acknowledged yet). The FM updates the field <code>/SCWM/RSRC-MFSACTTEL</code> based on the result.</p>
-            <p><u>Send Status Request</u>: This method allows the user to send a status request telegram to the PLC. It calls FM <code>/SCWM/MFS_RSRC_QRY_STAT_MON</code> which prepares everything in order to send a telegram via FM <code>/SCWM/MFS_SEND</code> (check this <a href="ewm-plc.html">blog post</a> in order to learn what happens within FM <code>/SCWM/MFS_SEND</code>). The result could look like shown in the screenshot below (CRQ is the status request from EWM to the PLC and CSR is the status telegram with the answer from the PLC to EWM &gt; note that the telegram type will differ depending on the subsystem vendor):</p>
+            <p><u>Send Status Request</u>: This method allows the user to send a status request telegram to the PLC. It calls FM <code>/SCWM/MFS_RSRC_QRY_STAT_MON</code> which prepares everything in order to send a telegram via FM <code>/SCWM/MFS_SEND</code> (check this <a href="ewm-plc.html" target="_blank">blog post</a> in order to learn what happens within FM <code>/SCWM/MFS_SEND</code>). The result could look like shown in the screenshot below (CRQ is the status request from EWM to the PLC and CSR is the status telegram with the answer from the PLC to EWM &gt; note that the telegram type will differ depending on the subsystem vendor):</p>
             
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_33.png" alt="SAP EWM MFS Warehouse Monitor_33" width="936" height="194">
@@ -531,7 +531,7 @@
 
             <p><u>Trigger Telegram Processing</u>: User FM <code>/SCWM/MFS_RSRC_WT_DET_MON</code> in order to call FM <code>/SCWM/MFS_WT_DET_PREP</code> to check explicitly for the queue of the given resource whether there is a telegram for any of the WTs in the queue can be sent to the subsystem</p>
 
-            <h2>Telegram Buffer – Incoming Telegram</h2>
+            <h2><strong>Telegram Buffer – Incoming Telegram</strong></h2>
             <p>This node shows the content of the inbound telegram buffer (~ content of table <code>/SCWM/MFSTELEQ</code>):</p>
             
             <div class="screenshot-container">
@@ -549,7 +549,7 @@
 
             <p>Check <a href="ewm-plc.html" target="_blank" rel="noopener">this post</a> in case you want to learn more about telegram processing in EWM and the usage of the telegram buffer for incoming telegrams.</p>
 
-            <h2>Telegram Buffer – Outgoing Telegram</h2>
+            <h2><strong>Telegram Buffer – Outgoing Telegram</strong></h2>
             <p>This node shows the content of the inbound telegram buffer (~ content of table <code>/SCWM/MFSDELAY</code>):</p>
             
             <div class="screenshot-container">
@@ -592,14 +592,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -728,3 +728,8 @@
 
 </body>
 </html>
+
+
+
+
+

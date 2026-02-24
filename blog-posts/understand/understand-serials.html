@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -62,7 +62,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -104,17 +104,23 @@
 
         .screenshot-container { margin: 2.5rem 0; text-align: center; }
         
-        .screenshot-container img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            background-color: var(--bg-light);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            cursor: zoom-in;
-            transition: transform 0.2s ease;
-        }
+.screenshot-container img {
+    width: 66.67%; 
+    max-width: 100%; 
+    /* NEW: This prevents portrait images from becoming too tall */
+    max-height: 65vh; 
+    /* This ensures the image stays centered and keeps its proportions */
+    object-fit: contain; 
+    
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    background-color: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
 
         .screenshot-container img:hover { transform: scale(1.01); }
 
@@ -272,8 +278,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../blog-overview.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -298,48 +304,48 @@
             <p>To enable the latter you need to implement the second approach. Here you check all movements into and out of your country at any given border. No exceptions - this is the only way to be able to know who is in at any given point in time.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 1.jpg" alt="Understand SAP EWM Serial number Management (1)" loading="lazy">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management (1).jpg" alt="Understand SAP EWM Serial number Management (1)" loading="lazy">
+            </div>
+
+            <div class="screenshot-container">(
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management (2).jpg" alt="Understand SAP EWM Serial number Management (2)" loading="lazy">
             </div>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 2.jpg" alt="Understand SAP EWM Serial number Management (2)" loading="lazy">
-            </div>
-
-            <div class="screenshot-container">
-                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 3.jpg" alt="Understand SAP EWM Serial number Management (3)" loading="lazy">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management (3).jpg" alt="Understand SAP EWM Serial number Management (3)" loading="lazy">
             </div>
 
             <p>Most restrictive and less libertarian countries might even go one step further. They want to know the whereabout of each individual at any given point in time. So after crossing the border everybody will receive a tracking device to enable monitoring or every single movement. Not a nice vision by the way..</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 4.jpg" alt="Understand SAP EWM Serial number Management (4)" loading="lazy">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management (4).jpg" alt="Understand SAP EWM Serial number Management (4)" loading="lazy">
             </div>
 
             <p>Anyhow - we think still a good summary to understand the three options that we have in <code>SAP EWM</code>. Although you will probably be able to draw the system-related conclusions on your own, we give you a quick overview about the corresponding system settings for each approach. These settings are captured on the <code>serial number profile</code> which is in turn assigned to the <code>product master data</code>. This also means you can make the decision about the degree of tracking on product level.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 6.jpg" alt="Understand SAP EWM Serial number Management (6)" loading="lazy">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management (6).jpg" alt="Understand SAP EWM Serial number Management (6)" loading="lazy">
             </div>
 
-            <h2>Tracking on document level</h2>
+            <h2><strong>Tracking on document level</strong></h2>
             <p>This approach is used to capture serials for specific delivery types - returns or kitting orders might be a common example.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 8.jpg" alt="Understand SAP EWM Serial number Management (8)" loading="lazy">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management (8).jpg" alt="Understand SAP EWM Serial number Management (8)" loading="lazy">
             </div>
 
-            <h2>Tracking on warehouse level</h2>
+            <h2><strong>Tracking on warehouse level</strong></h2>
             <p>Tracking on warehouse level means that you capture serials during all receiving or issuing processes. This enables you to know at any point in time which serials you have in the warehouse.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 9.jpg" alt="Understand SAP EWM Serial number Management (9)" loading="lazy">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management (9).jpg" alt="Understand SAP EWM Serial number Management (9)" loading="lazy">
             </div>
 
-            <h2>Tracking on movement level</h2>
+            <h2><strong>Tracking on movement level</strong></h2>
             <p>The last option is to capture the serial numbers (implicitly or explicitly) during every movement of the given object/quant. With this setting you can tell the exact bin for every serial number at any point in time.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management 10.jpg" alt="Understand SAP EWM Serial number Management (10)" loading="lazy">
+                <img src="../../assets/images/understand/serial-numbers/Understand SAP EWM Serial number Management (10).jpg" alt="Understand SAP EWM Serial number Management (10)" loading="lazy">
             </div>
 
             <p>Of course you also have the option not to track serial numbers at all - should be obvious but worth mentioning - some countries have not understood yet ;-)</p>
@@ -367,14 +373,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="https://www.linkedin.com/in/hendrik/" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="https://www.linkedin.com/in/hendrik/" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -447,3 +453,7 @@
 
 </body>
 </html>
+
+
+
+

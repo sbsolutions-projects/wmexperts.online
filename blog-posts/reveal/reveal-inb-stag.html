@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -579,7 +579,7 @@
             <p>It is important to understand that it is <u>not</u> foreseen to skip the unloading step entirely (like e.g. steps for quality inspection or deconsolidation during the inbound process). So in case you decided for the rules-based logic and the staging bin determination described above does <u>not</u> return a valid bin, EWM will give you an error message instead of skipping the step!</p>
             <p>As usual, I will close this post listing some options for you the enhance the EWM standard logic here.</p>
             
-            <h2>Options for enhancements</h2>
+            <h2><strong>Options for enhancements</strong></h2>
             <p>Badi for staging bin determination of delivery items: <code>/SCWM/EX_SR_STADET</code></p>
             <p>This Badi is called at the end of method <code>/SCWM/CL_AF_SR_CONFIG-/SCWM/IF_AF_SR_CONFIG~DETERMINE_STAGING_AREA_INB</code> (so after the standard bin determination for the delivery item has been processed) and also at the end of method <code>/SCWM/CL_SR_CONFIG-STAGE_AREA_DET_IN</code> (so after the standard bin determination based on the TU has been processed):</p>
             
@@ -625,14 +625,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -761,3 +761,7 @@
 
 </body>
 </html>
+
+
+
+

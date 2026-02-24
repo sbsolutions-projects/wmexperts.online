@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -392,8 +392,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -455,7 +455,7 @@
                 <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 3.png" alt="Understand SAP EWM Pick & pass (3)" width="800" height="450" loading="lazy">
             </div>
 
-            <h2>Main Components of Pick & Pass</h2>
+            <h2><strong>Main Components of Pick & Pass</strong></h2>
             <p>Before we investigate the system setups, we will describe the main components which are needed to conduct a <code>pick & pass</code> process in <code>SAP EWM</code></p>
             <p>First of all, we have two different kind of warehouse orders. 'Normal’ warehouse orders for each zone having the warehouse tasks assigned to it.<br />‘<code>Top warehouse orders</code>’ which group together all ‘normal’ warehouse orders which have been created for the different zones:</p>
 
@@ -472,7 +472,7 @@
                 <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 1.jpg" alt="Understand SAP EWM Pick & pass (1)" width="800" height="450" loading="lazy">
             </div>
 
-            <h2>System Setup</h2>
+            <h2><strong>System Setup</strong></h2>
             <p>Let us have a quick look at the most important point regarding the system setup. At first, we must create <code>activity areas</code> and join them. I do assume that you know what an <code>activity area</code> is and how it can be setup. The only thing you need to do (apart from setting up one <code>AA</code> for each zone) is to join and sort all those <code>activity areas</code> which should be part of one <code>pick & pass</code> run later:</p>
 
             <div class="screenshot-container">
@@ -503,7 +503,7 @@
                 <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 10.png" alt="Understand SAP EWM Pick & pass (10)" width="800" height="450" loading="lazy">
             </div>
 
-            <h2>The Picking Process</h2>
+            <h2><strong>The Picking Process</strong></h2>
             <p>The picking process itself from operator perspective is not different from picking non-joined warehouse orders. The only difference is the screen to handover to the next zone which will be displayed once all warehouse tasks for a given <code>sub warehouse order</code> have been completed:</p>
 
             <div class="screenshot-container">
@@ -548,14 +548,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -672,3 +672,7 @@
 
 </body>
 </html>
+
+
+
+

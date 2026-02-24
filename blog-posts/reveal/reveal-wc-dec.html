@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <meta name="description" content="In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a deconsolidation process.">
     <meta name="keywords" content="SAP EWM, Warehouse Management, Deconsolidation, Work Center Determination, POSC">
     <meta name="author" content="Hendrik">
-    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    <link rel="icon" type="image/png" href="../../assets/favicon/wmexperts%20favicon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -448,41 +448,41 @@
             <p>Before we look at the Agenda for this post, I would like to highlight one funny thing, that I noticed while reading the code. Some EWM standard constants and programming objects are referring to ‘spreading’ instead of ‘deconsolidating’ in the context we are talking about here. You might notice that in some of the screenshots below. Never heard that term before - seems they dropped it at some point and replaced it by ‘deconsolidation’. Maybe just ‘party knowledge’ but I think it kind of helps to understand the logic as we are actually ‘deconsolidating’ in case the goods will later be ‘spread’ into different areas of the warehouse. This is why I thought it would be worth sharing it here:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_01.png" alt="SAP EWM work center determination for deconsolidation_01" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_01.png" alt="SAP EWM work center determination for deconsolidation_01" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_02.png" alt="SAP EWM work center determination for deconsolidation_02" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_02.png" alt="SAP EWM work center determination for deconsolidation_02" loading="lazy">
             </div>
             
             <p>Enough for the introduction – let us look at the structure of this article.</p>
             
             <p><strong>Agenda</strong><br />- Rules-based vs. non-rules-based determination<br />- Deep-dive into the logic<br />- Option for enhancements</p>
             
-            <h2>Rules-based vs. non-rules-based determination</h2>
+            <h2><strong>Rules-based vs. non-rules-based determination</strong></h2>
             
             <p>In general, we can separate the options for the bin determination as part of the process-oriented storage control into rules-based and non-rules-based ones.</p>
             
             <p>As for the deconsolidation, the rules-based flags will be used to determine the destination which is needed to complete the previous step (so e.g. a record with <code>IB02</code> will set the destination for step <code>IB01</code>).<br />Alternatively, you can use the rather fixed, pre-given destination (storage type, section and bins) that you can maintain in each external step.</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_03.png" alt="SAP EWM work center determination for deconsolidation_03" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_03.png" alt="SAP EWM work center determination for deconsolidation_03" loading="lazy">
             </div>
             
             <p>The standard help text is very – let’s say ‘lean’ here:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_04.png" alt="SAP EWM work center determination for deconsolidation_04" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_04.png" alt="SAP EWM work center determination for deconsolidation_04" loading="lazy">
             </div>
             
-            <p>Based on this we know now that a rules-based determination of the destination data can be used for our deconsolidation step. Honestly – that help text here does not help at all. At least not when you are just starting your EWM journey.<br>Thus – the perfect feature for my blog series ‘<a href="https://wmexperts.online/what-is-sap-ewm-mfs/">Reveal SAP EWM</a>’. Within the following paragraphs I give you an in-depth technical review for the usage of this flag for internal process steps of the type ‘deconsolidate’.</p>
+            <p>Based on this we know now that a rules-based determination of the destination data can be used for our deconsolidation step. Honestly – that help text here does not help at all. At least not when you are just starting your EWM journey.<br>Thus – the perfect feature for my blog series ‘<a href="https://wmexperts.online/what-is-sap-ewm-mfs/" target="_blank">Reveal SAP EWM</a>’. Within the following paragraphs I give you an in-depth technical review for the usage of this flag for internal process steps of the type ‘deconsolidate’.</p>
             
-            <h2>Deep-dive into the determination logic</h2>
+            <h2><strong>Deep-dive into the determination logic</strong></h2>
             
             <p>The non-rules based option is the easy one of course. As mentioned above, you only need to maintain the destination data in the POSC customizing for the given step and it will be fixed for all HUs which fulfill the key-criteria:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_05.png" alt="SAP EWM work center determination for deconsolidation_05" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_05.png" alt="SAP EWM work center determination for deconsolidation_05" loading="lazy">
             </div>
             
             <p>The rules-based option is the more interesting one -<br />Function module <code>/SCWM/STORAGE_CONTROL_P_GET</code> is the most important player for all kind of rules-based bin determination (no matter whether we are talking about deconsolidation or any other step type).</p>
@@ -492,7 +492,7 @@
             <p>In the second step (2) – in case it could find product-WT(s) for the given HU(s) - it evaluates the deconsolidation rules via FM <code>/SCWM/SPREADING_RULES_EVALUATE</code>, in order to return a destination type, section and bin. So in this step EWM is actually executing the relevance-check:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_06.png" alt="SAP EWM work center determination for deconsolidation_06" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_06.png" alt="SAP EWM work center determination for deconsolidation_06" loading="lazy">
             </div>
             
             <p>FM <code>/SCWM/SPREADING_RULES_EVALUATE</code> executes the following logic –</p>
@@ -506,39 +506,39 @@
             <p>- It first determines the HU type group for the given HU as well as the source storage type (e.g. the staging bin or one from the door bin in case the HU is moved from a TU directly)<br />- Then it uses this data to read the deconsolidation work center determination table:<br />1. first time fully qualified<br />2. second time without the destination activity area<br />3. third time without storage type<br />4. fourth time without storage type &amp; activity area:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_07.png" alt="SAP EWM work center determination for deconsolidation_07" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_07.png" alt="SAP EWM work center determination for deconsolidation_07" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_08.png" alt="SAP EWM work center determination for deconsolidation_08" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_08.png" alt="SAP EWM work center determination for deconsolidation_08" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_09.png" alt="SAP EWM work center determination for deconsolidation_09" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_09.png" alt="SAP EWM work center determination for deconsolidation_09" loading="lazy">
             </div>
             
             <p>If one of the selects returned a unique result (exactly one matching record) it either returns the work station type and bin (1) (in case the record holds a work station > EWM reads the work station bin from its master data table <code>/SCWM/TWORKST</code>) or it returns the specific type, section and bin (2) (in case the record does not hold a work station):</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_11.png" alt="SAP EWM work center determination for deconsolidation_11" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_11.png" alt="SAP EWM work center determination for deconsolidation_11" loading="lazy">
             </div>
             
             <p>In case the subroutine could not find any matching record in the customizing table, it returns an error and does not create a task at all. The step is not being skipped here because deconsolidation had already been determined as being relevant. As mentioned above, skipping the step is only possible in case deconsolidation is found not to be relevant, based on the logic in FM <code>/SCWM/SPREADING_RULES_EVALUATE</code> (the FM returns its export parameters with initial values):</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_10.png" alt="SAP EWM work center determination for deconsolidation_10" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_10.png" alt="SAP EWM work center determination for deconsolidation_10" loading="lazy">
             </div>
             
             <p>Note that in case the rules-based flag is not set, the deconsolidation step is always relevant. In this case, EWM will try to read the destination data for the previous step from the customizing of the POSC deconsolidation step and throw an error in case it could not find any.</p>
             
-            <h2>Options for enhancements</h2>
+            <h2><strong>Options for enhancements</strong></h2>
             <p>In case what I described above is not sufficient to cover your requirements, you can use BAdI <code>/SCWM/EX_WRKC_DECON_DET</code> to potentially add a custom logic for the work center determination. With this BAdI you could overrule the error flag mentioned before and provide a destination based on your own rules:</p>
             
             <div class="screenshot-container">
-                <img src="../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_12.png" alt="SAP EWM work center determination for deconsolidation_12" loading="lazy">
+                <img src="../../assets/images/reveal/wc-det-deco/SAP EWM work center determination for deconsolidation_12.png" alt="SAP EWM work center determination for deconsolidation_12" loading="lazy">
             </div>
             
-            <h2>Closure</h2>
+            <h2><strong>Closure</strong></h2>
             <p>...nothing left to say. Hope you learned something new. At least the fact that ‘deconsolidation’ has once been ‘spreading’… ;-)</p>
 
         </div>
@@ -566,14 +566,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -702,3 +702,8 @@
 
 </body>
 </html>
+
+
+
+
+

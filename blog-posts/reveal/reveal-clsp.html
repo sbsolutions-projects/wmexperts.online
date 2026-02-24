@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -480,7 +480,7 @@
             
             <p>Based on this it seems to be obvious to sort bins based on the activity type ‘<code>PTWY</code> – Putaway’ in order to sort bins for the putaway process scenario described at the beginning of this post. Far from it!<br>The sequence numbers assigned to the bins for activity type ‘<code>PTWY</code>’ is only used for the sorting of putaway warehouse tasks within warehouse orders (e.g. for travel path optimization in case you assign multiple warehouse tasks for putaway to one warehouse order). It is not used to sort bins during the actual determination of the destination bin. EWM indeed uses the sequence number for this activity type during putaway task creation but only after the destination bin has already been determined (we will come back to this point later again!).<br>So if it is not the activity type <code>PTWY</code>, what else is being used in order to sort the bins during the destination bin determination for our example above? The answer to this question is the assignment of the combination of sort sequence numbers, activity area and the activity type ‘<code>CLSP</code> – Cross-Line Stock Putaway’ to the given bins.</p>
             
-            <h2>The configuration</h2>
+            <h2><strong>The configuration</strong></h2>
             <p>The creation of the activity area and its sorting can be done here:</p>
             <ul>
                 <li>Define an activity area via <code>SPRO</code>: <em>SCWM Extended Warehouse Management -&gt; Extended Warehouse Management -&gt; Master Data -&gt; Activities Areas -&gt; Define Activity Areas</em></li>
@@ -542,7 +542,7 @@
             
             <p>And that is it for this post! Pretty sure most of you are already using one or the other tool that I presented here. I hope that some of you still found something new here that helps you during your daily tasks in the future!</p>
             
-            <h2>The bin sorting</h2>
+            <h2><strong>The bin sorting</strong></h2>
             <p>Once the customizing is completed as shown above, the bins have to be sorted via transaction <code>/SCWM/SBST</code>:</p>
             
             <div class="screenshot-container">
@@ -559,7 +559,7 @@
                 <img src="../../assets/images/reveal/clsp/SAP EWM storage bin sorting CLSP_19.png" alt="SAP EWM storage bin sorting CLSP_19" width="1024" height="427" loading="lazy">
             </div>
             
-            <h2>The coding</h2>
+            <h2><strong>The coding</strong></h2>
             <p>It is interesting to observe that the although activity <code>CLSP</code> is not given as activity type in the customizing of the warehouse process type, it is still used for the sorting in our scenario:</p>
             
             <div class="screenshot-container">
@@ -630,7 +630,7 @@
                 <img src="../../assets/images/reveal/clsp/SAP EWM storage bin sorting CLSP_33.png" alt="SAP EWM storage bin sorting CLSP_33" width="1024" height="448" loading="lazy">
             </div>
             
-            <h2>Options for enhancements</h2>
+            <h2><strong>Options for enhancements</strong></h2>
             <p>As you know it from my previous blog posts, I use to give you some options to enhance the standard logic. This section is limited to the sorting of bins during the determination of the destination. Enhancements of the sorting within the WOs is not in scope here. You can look into this blog post in case you want to learn more about enhancing the WOCRs.</p>
             <p>Badi <code>/SCWM/EX_CORE_PTS_FILT_SORT</code> is one that will work here for sure, as the name already suggests:</p>
             
@@ -650,7 +650,7 @@
             
             <p>EWM delivers a sample implementation which might give you some good ideas about how to implement a custom sorting here (class <code>/SCWM/CL_EI_CORE_PTS_FILT_SORT</code>).</p>
             
-            <h2>Final thoughts &amp; remarks</h2>
+            <h2><strong>Final thoughts &amp; remarks</strong></h2>
             <ul>
                 <li>The sort sequence number for <code>CLSP</code> is only relevant in case multiple bins are available with the same characteristics related to your putaway strategy. EWM first determines optimal bins e.g. based on the bin type and/or the storage section. Only if multiple valid bins exist with the optimal combination, the sequence numbers for <code>CLSP</code> sorting are applied</li>
                 <li>You might have noticed that if you do not create the activity area and the sorting for the <code>CLSP</code> activity at all, you will still get a destination bin during putaway task creation. In this case, EWM will simply sort the bins by their names.</li>
@@ -684,14 +684,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -820,3 +820,7 @@
 
 </body>
 </html>
+
+
+
+

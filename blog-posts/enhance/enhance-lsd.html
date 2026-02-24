@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -441,7 +441,7 @@
         </div>
 
         <div class="content">
-            <h2>Latest Starting Date (LSD) Calculation</h2>
+            <h2><strong>Latest Starting Date (LSD) Calculation</strong></h2>
             <p>I closed my <a href="../reveal/reveal-lsd.html" target="_blank" rel="noopener">blog about the standard calculation of the LSD</a> with the option to change the result manually. I guess you all know that this can easily done via the warehouse monitor. FM <em><code>/SCWM/RSRC_WO_LSD_CHANGE_MON</code></em> takes care to write the update in all relevant tables.</p>		
             
             <div class="screenshot-container">
@@ -495,7 +495,7 @@
             </div>
             
             <p><strong><u>Options to change the </u></strong><u><b>planned movements duration</b></u><strong><u> calculation</u></strong></p>
-            <p>The movement duration can only be manipulated while using option 2 for the travel distance calculation (the 'new' way for the calculation which has to be activated on warehouse number level &gt; <a href="../reveal/reveal-lsd.html" target="_blank" rel="noopener">check my blog post </a><a href="_wp_link_placeholder">about the LSD calculation</a> if you are not familiar with the two different options here).</p>		
+            <p>The movement duration can only be manipulated while using option 2 for the travel distance calculation (the 'new' way for the calculation which has to be activated on warehouse number level &gt; <a href="../reveal/reveal-lsd.html" target="_blank" rel="noopener">check my blog post </a><a href="_wp_link_placeholder" target="_blank">about the LSD calculation</a> if you are not familiar with the two different options here).</p>		
             
             <div class="screenshot-container">
                 <img width="905" height="208" src="../../assets/images/enhance/lsd/SAP EWM Enhance LSD calculation 06.png" alt="SAP EWM Enhance LSD calculation 06" loading="lazy" />
@@ -620,14 +620,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -756,3 +756,8 @@
 
 </body>
 </html>
+
+
+
+
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -446,14 +446,14 @@
             <p>I’ll show you my ‘4-step Learning Method’ for learning SAP EWM using the Best Practices in a way that actually sticks.<br />This method comes along with a small e-book and a glossary  – I will explain later where you can download the files.</p>
             <p>Note that this method is essential for two types of EWM professionals: Obviously the Starters who are just diving into EWM, but also The Seniors who are responsible for mentoring those starters. Cause if you teach you might want to teach in a sustainable way.  </p>
             
-            <h2>Why do click instructions fail?</h2>
+            <h2><strong>Why do click instructions fail?</strong></h2>
             <p>The mistake that a lot of people make while learning SAP EWM – and this is especially true when you use the Best-Practices as a starting point -  is to start with the <strong>'how'</strong> (the clicks) instead of the <strong>'why'</strong> (the logistics). It’s like learning to use photoshop without ever having learned about design principles or user experience basics.</p>
             <p>The SAP’s Best Practice test scripts are designed for execution, not for learning.</p>
             <p>They’re fantastic for proving that a process works in the system or to use it as a prototype for the solution design (will tackle this in my next video btw), but if you go straight into the instructions, you’ll end up with what I call <em>“button-click knowledge.”</em></p>
             <p>Just clicking and thinking you will learn something is subject to fail. It fades quickly, and you’ll struggle to connect the dots when things get more complex.</p>
             <p>So, instead of diving headfirst into transactions, we need a learning flow that builds <strong>context</strong>, <strong>base knowledge</strong> and <strong>orientation</strong> before execution.</p>
             
-            <h2>My 4-step Learning Method</h2>
+            <h2><strong>My 4-step Learning Method</strong></h2>
             <p>Those 3 are also the base assumptions for what I call the 4-step Learning Method. I repeat one more time:</p>
             <ul>
                 <li><strong>Context: </strong>Execution without context leads to fragile learning. This finding is not new and not invented by myself, but I think for SAP EWM it is true more than anywhere else. I mentioned that already in post [LINK] where I explained how to start with EWM. With this video here I focus on how this idea can be applied to learning EWM with the BPs.</li>
@@ -469,7 +469,7 @@
             </ol>
             <p>Now let’s break each one down.</p>
             
-            <h2>Step 1: Logistics First</h2>
+            <h2><strong>Step 1: Logistics First</strong></h2>
             <p>Before you even touch SAP, you must understand the business processes and the intralogistics (real world) <strong>material flows</strong></p>
             <ul>
                 <li><em>What kind of business process triggers the material flow and which parties are involved?</em></li>
@@ -477,12 +477,12 @@
                 <li><em>What happens to the <u>physical</u> pallet during each step?</em></li>
                 <li><em>Where is it stored in the warehouse?</em></li>
             </ul>
-            <p>I highly recommend studying foundational texts like <strong>VDI 3601 - </strong>it provides the vendor-neutral, timeless logistics basics. I’ve created a short <a href="https://wmexperts.online/wp-content/uploads/2025/12/Intralogistics-Basics-for-SAP-EWM-Starters_v1.0_file.pdf"><strong>e-book</strong></a> for you, based on this VDI standard, breaking down the logistics basics and the material flow for every EWM scope item.</p>
+            <p>I highly recommend studying foundational texts like <strong>VDI 3601 - </strong>it provides the vendor-neutral, timeless logistics basics. I’ve created a short <a href="..\..\assets\files\Intralogistics Basics for SAP EWM Starters_v1.0_file.pdf" target="_blank" rel="noopener"><strong>e-book</strong></a> for you, based on this VDI standard, breaking down the logistics basics and the material flow for every EWM scope item.</p>
             
-            <h2>Step 2: EWM-specific Theory</h2>
-            <p>Now that you know the real-world process, read the corresponding chapter in your favorite EWM textbook, the official SAP Online Help or simply the <a href="https://wmexperts.online/wp-content/uploads/2025/11/Glossary-for-SAP-EWM-Best-Practice-Test-Scripts_v1.0.pdf" target="_blank" rel="noopener"><strong>EWM Best Practice Glossary</strong></a> that I created for this purpose. This is where you connect the real-world <strong>'why'</strong> to the SAP <strong>'what' </strong>- the technical terms, the software concepts (<code>WO</code>, <code>WT</code>, <code>PPF</code>, Queue, Storage process, <code>WPT</code> and so on…). This builds your mental model and ensures that when you see buttons and fields in SAP, you already (at least roughly) know <em>why they exist and what they are used to in the given context.</em></p>
+            <h2><strong>Step 2: EWM-specific Theory</strong></h2>
+            <p>Now that you know the real-world process, read the corresponding chapter in your favorite EWM textbook, the official SAP Online Help or simply the <a href="..\..\assets\files\Glossary for SAP EWM Best Practice Test Scripts_v1.0.pdf" target="_blank" rel="noopener"><strong>EWM Best Practice Glossary</strong></a> that I created for this purpose. This is where you connect the real-world <strong>'why'</strong> to the SAP <strong>'what' </strong>- the technical terms, the software concepts (<code>WO</code>, <code>WT</code>, <code>PPF</code>, Queue, Storage process, <code>WPT</code> and so on…). This builds your mental model and ensures that when you see buttons and fields in SAP, you already (at least roughly) know <em>why they exist and what they are used to in the given context.</em></p>
             
-            <h2>Step 3: Study the Flow Chart</h2>
+            <h2><strong>Step 3: Study the Flow Chart</strong></h2>
             <p>As the last step before you jump into the system, open the Best Practice flow chart from the SAP Process Navigator for the scope item that you want to tackle (the one with the swim lanes). This is your strategic map. By studying the flow before touching the system, you’ll see the big picture instead of getting lost in screens. This is like the racer going through the track one more time before then focusing on the details of each section during the execution/race.</p>
             
             <div class="screenshot-container">
@@ -493,32 +493,32 @@
                 <img src="../../assets/images/around/bp-4-step/SAP EWM Best Practices Method_002.png" alt="SAP EWM Best Practices Method_002" width="1024" height="589" loading="lazy">
             </div>
             
-            <h2>Step 4: Execute the Click Instructions</h2>
+            <h2><strong>Step 4: Execute the Click Instructions</strong></h2>
             <p>Now that you’ve built context in steps 1–3, the clicks will make much more sense. You’ll see <em>why</em> each step exists, not just <em>how</em> to do it. This is what transforms learning from <em>fragile</em> to <em>sticky</em>. (<em>of course at some points you will have to iterate back but you will know where to check, find the details and connect the dots</em>).</p>
             <p><em>By the way – </em></p>
             <p><em>If you would like to work with the best practices but you are missing access to an EWM system with the latest release and pre-installed BPs, I can recommend the offerings from <a href="http://www.ides24.de/en" target="_blank" rel="noopener noreferrer">IDES24</a>, which is partnering with my channel here. Visit their website, select the system that you would like to access, receive an e-mail with your credentials and login to your pre-configured system to start learning. You can use discount code WM-IDES24 to get 20% off for your order while supporting my channel/blog at the same time!</em></p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/around/bp-4-step/SAP EWM Best practices_07.png" alt="SAP EWM Best practices_07" width="1024" height="552" loading="lazy">
+                <img src="../../assets/images/around/bp-4-step/SAP EWM Best-practices_07.png" alt="SAP EWM Best practices_07" width="1024" height="552" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/around/bp-4-step/SAP EWM Best practices_06.png" alt="SAP EWM Best practices_06" width="1024" height="692" loading="lazy">
+                <img src="../../assets/images/around/bp-4-step/SAP EWM Best-practices_06.png" alt="SAP EWM Best practices_06" width="1024" height="692" loading="lazy">
             </div>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/around/bp-4-step/SAP EWM Best practices_08.png" alt="SAP EWM Best practices_08" width="906" height="331" loading="lazy">
+                <img src="../../assets/images/around/bp-4-step/SAP EWM Best-practices_08.png" alt="SAP EWM Best practices_08" width="906" height="331" loading="lazy">
             </div>
             
-            <h2>Tools &amp; Giveaways</h2>
-            <p>To make the application of this method easy &amp; painless I'm offering a free mini <a href="https://wmexperts.online/wp-content/uploads/2025/11/Intralogistics-Basics-for-SAP-EWM-Starters_v1.0.pdf" target="_blank" rel="noopener"><strong>Intralogistics ebook</strong></a> as well as a <a href="https://wmexperts.online/wp-content/uploads/2025/11/Glossary-for-SAP-EWM-Best-Practice-Test-Scripts_v1.0.pdf" target="_blank" rel="noopener"><strong>EWM Best Practice Glossary</strong></a>. The ebook helps you to learn the logistics basics and the glossary holds every EWM specific term you need to understand when clicking through the Best Practices.</p>
+            <h2><strong>Tools &amp; Giveaways</strong></h2>
+            <p>To make the application of this method easy &amp; painless I'm offering a free mini <a href="..\..\assets\files\Intralogistics Basics for SAP EWM Starters_v1.0_file.pdf" target="_blank" rel="noopener"><strong>Intralogistics ebook</strong></a> as well as a <a href="..\..\assets\files\Glossary for SAP EWM Best Practice Test Scripts_v1.0.pdf" target="_blank" rel="noopener"><strong>EWM Best Practice Glossary</strong></a>. The ebook helps you to learn the logistics basics and the glossary holds every EWM specific term you need to understand when clicking through the Best Practices.</p>
             <p>You will find a mapping table at the end of the ebook that maps each scope item to one or multiple chapters. The glossary is also structured based on the scope items. This way, you’ll always know what to study before jumping into the system.</p>
             
-            <h2>Summary </h2>
+            <h2><strong>Summary </strong></h2>
             <p>The standard approach is 4→3→2→1. The successful approach is 1→2→3→4: <strong>Logistics </strong><strong>→ Basics Theory → Overview → Execution.</strong> Use this 4-step method in the right sequence, and your EWM knowledge will stick.</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/around/bp-4-step/SAP EWM Best Practices Method_005 scaled.png" alt="SAP EWM Best Practices Method_005" width="1024" height="671" loading="lazy">
+                <img src="../../assets/images/around/bp-4-step/SAP EWM Best Practices Method_005.png" alt="SAP EWM Best Practices Method_005" width="1024" height="671" loading="lazy">
             </div>
             
             <p>If you’re a beginner, try it out with your next Best Practice exercise!<br />If you’re a senior consultant, use it to mentor juniors and watch how much faster they grow!</p>
@@ -548,14 +548,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -684,3 +684,8 @@
 
 </body>
 </html>
+
+
+
+
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -456,7 +456,7 @@
             </ul>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand SAP EWM PPF 11.jpg" alt="Understand SAP EWM PPF (11)" width="960" height="540" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (11).jpg" alt="Understand SAP EWM PPF (11)" width="960" height="540" loading="lazy">
             </div>
 
             <p>As usual we are going to look into the real world before we explain further details from an IT perspective. Let us take something that everybody knows - The ‘Health’</p>
@@ -464,40 +464,40 @@
             <p>So our application area is the health and our object is the human body:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand SAP EWM PPF 1.jpg" alt="Understand SAP EWM PPF (1)" width="960" height="640" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (1).jpg" alt="Understand SAP EWM PPF (1)" width="960" height="640" loading="lazy">
             </div>
 
             <p>In our first example the action is a treatment against a life threatening pain. Here we demonstrate how an <code>SAP</code> <code>PPF</code> action works which is setup to be executed immediately. Assume you have a car accident and you are injured. The treatment against this pain is an ambulance which is called to help you. So our schedule condition here is an injury which is causing life threatening pain. The action - the ambulance fixing your pain - is executed right away once it has been scheduled.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand SAP EWM PPF 2.png" alt="Understand SAP EWM PPF (2) Diagram" width="960" height="637" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (2).png" alt="Understand SAP EWM PPF (2) Diagram" width="960" height="637" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand SAP EWM PPF 2.jpg" alt="Understand SAP EWM PPF (2) Illustration" width="960" height="629" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (2).jpg" alt="Understand SAP EWM PPF (2) Illustration" width="960" height="629" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand EWM 06_PPF_14.jpg" alt="Understand-EWM-06_PPF_14" width="960" height="540" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (14).jpg" alt="Understand-EWM-06_PPF_14" width="960" height="540" loading="lazy">
             </div>
 
             <p>In our second example the action is a treatment against small pain. In this example the action is not executed immediately but rather by an executor at a later point in time. Imagine you feel a bit pain in your teeth which appears from time to time. This pain is disturbing but does not prevent you from doing your daily routines. Still you ask your doctor for an appointment as you want him to check what’s going on. The doctor will regularly check which patients are having an appointment and heal those patients. So our schedule condition here is the combination of a small pain and an appointment at the doctors (usually the doctors will not do anything without an appointment). The action itself is the doctor healing you. The execution does not happen immediately but only at the point in time when the doctor checks his calendar and sees that it is time for you to be treated.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand SAP EWM PPF 22.png" alt="Small pain analogy" width="388" height="418" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (22).png" alt="Small pain analogy" width="388" height="418" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand SAP EWM PPF 4.jpg" alt="Understand SAP EWM PPF (4)" width="960" height="565" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (4).jpg" alt="Understand SAP EWM PPF (4)" width="960" height="565" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand SAP EWM PPF 3.jpg" alt="Understand SAP EWM PPF (3)" width="960" height="642" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (3).jpg" alt="Understand SAP EWM PPF (3)" width="960" height="642" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand EWM 06_PPF_15.jpg" alt="Understand-EWM-06_PPF_15" width="960" height="540" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (15).jpg" alt="Understand-EWM-06_PPF_15" width="960" height="540" loading="lazy">
             </div>
 
             <p>We should mention here, that we could also consider the existence of an appointment as part of a condition for execution but as mentioned before we ignore such execution conditions here and in our example we would end up with the same result anyhow.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand EWM 06_PPF_16.jpg" alt="Understand-EWM-06_PPF_16" width="960" height="540" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (16).jpg" alt="Understand-EWM-06_PPF_16" width="960" height="540" loading="lazy">
             </div>
 
             <p>Now we go back to the system and take the delivery as an object instead of our body. So our application area is the part of the system which is processing the deliveries and our object is an outbound delivery.</p>
@@ -505,7 +505,7 @@
             <p>In our first example the action is a report which is printing delivery notes. We want a delivery note to be printed once a delivery is fully packed at the packing work center. So our schedule condition is the status for packing on the delivery header. The action is executed right away as we want to attach the delivery note to one of the <code>HU</code>s of the delivery once packing is physically completed.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/ppf/Understand SAP EWM PPF 15.jpg" alt="Understand SAP EWM PPF (15)" width="960" height="540" loading="lazy">
+                <img src="../../assets/images/understand/und-ppf/Understand SAP EWM PPF (15).jpg" alt="Understand SAP EWM PPF (15)" width="960" height="540" loading="lazy">
             </div>
 
             <p>In our second example we look at an action which is not executed immediately but rather by an executor. In <code>EWM</code> world this ‘executer’ could be a background job or a user executing the task manually. Usually we do not execute right away in case the execution is not too urgent and/or the resources for execution are not available at the point in time (remember our dentist example). This saves system resources and accelerates processing from user perspective.</p>
@@ -538,14 +538,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="#" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="#" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -674,3 +674,6 @@
 
 </body>
 </html>
+
+
+

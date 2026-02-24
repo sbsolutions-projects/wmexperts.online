@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -115,7 +115,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -479,7 +479,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -781,8 +781,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -799,19 +799,19 @@
             <p>Again we start with our warehouse request. Please refer to the post about wave & resource management to get a basic understanding of the terms warehouse request & warehouse request items.</p>
             
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM 1.jpg" alt="Wave templates in SAP EWM (1)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM (1).jpg" alt="Wave templates in SAP EWM (1)" width="800" height="450" loading="lazy">
             </div>
 
             <p>And again we – and also EWM - are only interested in the warehouse request items. So let us consider our bucket of warehouse request items for the following explanations:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM 3.jpg" alt="Wave templates in SAP EWM (3)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM (3).jpg" alt="Wave templates in SAP EWM (3)" width="800" height="450" loading="lazy">
             </div>
 
             <p>This bucket represents our total workload. Now we need to decide which parts of this total workload should be processed at what times respectively in which time windows: But how do we get here? Exactly at this point we make use of so called <strong>Wave Templates</strong>.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM 2.png" alt="Wave templates in SAP EWM (2)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM (2).png" alt="Wave templates in SAP EWM (2)" width="800" height="450" loading="lazy">
             </div>
 
             <p>To understand the functionalities around wave templates & wave template determination in <code>SAP EWM</code> we will use an analogy. Imagine a group of commuters having to come to their workplace in the morning via public transportation. Each of the individual commuters has his or her own requirements:</p>
@@ -837,7 +837,7 @@
             <p>So as mentioned above, this is exactly what is happening here:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM 4 1.png" alt="Wave templates in SAP EWM (4)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM (4).png" alt="Wave templates in SAP EWM (4)" width="800" height="450" loading="lazy">
             </div>
 
             <p>In the first step we check for each individual commuter where he or she has to be picked up, which class he/she wants to travel, what is his/her following connection etc.. Based on this we decide which bus line should be taken. So in EWM we decide for each warehouse request item which <strong>wave template</strong> should be applicable.</p>
@@ -849,11 +849,11 @@
             <p>Technically, EWM is comparing the planned <code>GI</code> date (in fact it is comparing the planned date/time for departure from yard but usually you map your planned <code>GI</code> date/time from <code>ERP</code> to this date type) with the times from the wave template option. Each wave template has one (or more) different options in the same way as a bus line has busses running at different times (above we called this the ‘runs’ of the bus line). So each wave running a specific option represents a bus operating one of the runs from the schedule:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM 5.png" alt="Wave templates in SAP EWM (5)" width="410" height="384" loading="lazy">
+                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM (5).png" alt="Wave templates in SAP EWM (5)" width="410" height="384" loading="lazy">
             </div>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM 6.png" alt="Wave templates in SAP EWM (6)" width="800" height="346" loading="lazy">
+                <img src="../../assets/images/understand/wave-templates/Wave templates in SAP EWM (6).png" alt="Wave templates in SAP EWM (6)" width="800" height="346" loading="lazy">
             </div>
 
             <p>So this template option - respectively our bus - decides now</p>
@@ -863,7 +863,7 @@
                 <li>Decide how many passengers can be on the bus at a time -> In <code>SAP EWM</code> this is controlled with the <strong>Capacity</strong> which can be set on level of the the template option</li>
             </ul>
 
-            <h2>Examples to understand the logic</h2>
+            <h2><strong>Examples to understand the logic</strong></h2>
             <ul>
                 <li>The first bus of line 100 starts Tuesday morning at 7am at station 1. It can carry up to 80 passengers and arrives at station 2 at 7.30am, station 3 at 8am and its final destination at 9.30am. It offers only 2nd class service</li>
                 <li>The second bus line 100 starts Tuesday morning at 8am at station 1. It can carry up to 80 passengers and arrives at station 2 at 8.30am, station 3 at 9am and its final destination at 10.30am. It offers only 2nd class service</li>
@@ -910,14 +910,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="https://wmexperts.online/freelancer-profile/" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="https://wmexperts.online/freelancer-profile/" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -1142,3 +1142,7 @@
 
 </body>
 </html>
+
+
+
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,7 +90,7 @@
             z-index: 100;
         }
 
-        .logo { font-weight: 600; font-size: 1.4rem; color: var(--text-dark); text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
         .logo span { color: var(--sap-blue); }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
 
@@ -428,8 +428,8 @@
 <body>
 
     <header>
-        <a href="../../index.html" class="logo">WM<span>experts</span></a>
-        <nav><a href="../../index.html">← Back to Blog</a></nav>
+        <a href="../../index.html" class="logo" target="_blank">WM<span style="color: var(--text-dark);">experts.online</span></a>
+        <nav><a href="../../index.html" target="_blank">← Back to Blog</a></nav>
     </header>
 
     <article>
@@ -455,7 +455,7 @@
 
             <p>If you want to compare it to a real-world example just imagine having invited your friends for dinner at your home. You’ve cooked lots of different dishes and once you want to start having dinner you will move the pots and pans with the dishes from the kitchen to the dining room. All your guests can grab from the pots/pans and drop the food they’d like to eat on their plates, banana leaves etc.<br />Once the dinner is over, you take the leftovers (partially filled pots &amp; pans) and move them back to the kitchen. </p>
             
-            <h2>Customizing Settings</h2>
+            <h2><strong>Customizing Settings</strong></h2>
             
             <p>Having said that, let us have a look at the customizing that is needed in order to make this work. We’ll start with the storage type settings. For the simple process described above you need at least two storage types. The one where the stock is stored (e.g. a high bay warehouse /ASRS). For this source storage type you need to activate the <code>Pick Pnt Active</code> parameter. If you do not set this parameter, EWM will also ignore the <code>LOSC</code> entry which controls the routing (details below):</p>
 
@@ -491,7 +491,7 @@
                 <img src="../../assets/images/understand/pick-point/Understand SAP EMW Pick Point_05.png" alt="LOSC Whole HU Flag" width="800" height="450" loading="lazy">
             </div>
 
-            <h2>The Process Flow</h2>
+            <h2><strong>The Process Flow</strong></h2>
             
             <p>As mentioned above, customizing is already done now.<br />Let us have a look at the process. </p>
             
@@ -612,14 +612,14 @@
                     <h3>▶️ YouTube Channel</h3>
                     <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
                 </div>
-                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+                <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube" >Subscribe on YouTube</a>
             </div>
         </div>
 
         <div class="freelancer-cta">
             <p><strong>Need EWM expertise within your project?</strong><br>
             WMexperts.online is a knowledge-sharing project of Hendrik, a Senior SAP EWM Freelancer.</p>
-            <a href="https://wmexperts.online/freelancer-profile/" class="btn-freelance">Explore my Freelance Profile →</a>
+            <a href="https://wmexperts.online/freelancer-profile/" class="btn-freelance" target="_blank">Explore my Freelance Profile →</a>
         </div>
     </article>
 
@@ -748,3 +748,7 @@
 
 </body>
 </html>
+
+
+
+
