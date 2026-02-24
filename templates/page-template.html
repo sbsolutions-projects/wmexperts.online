@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page description here">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wmexperts.online/page-name.html">
+    
+    <link rel="icon" type="image/png" href="assets/favicon/wmexperts%20favicon.png">
+    <title>Page Title | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sap-blue: #005597;
+            --sap-blue-light: #0066B3;
+            --bg-page: #F5F7FA;
+            --bg-card: #FFFFFF;
+            --text-dark: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --accent: #EEF6FC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--bg-card);
+            padding: 1.5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--sap-blue);
+            text-decoration: none;
+        }
+
+        nav a {
+            margin-left: 2.5rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--sap-blue);
+        }
+
+        nav a.active {
+            color: var(--sap-blue);
+            font-weight: 600;
+        }
+
+        /* --- PAGE CONTENT --- */
+        main {
+            padding: 3rem 8%;
+            max-width: 900px;
+        }
+
+        main h1 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        main p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 3rem 8%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            main h1 {
+                font-size: 1.8rem;
+            }
+
+            nav a {
+                margin-left: 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    {{HEADER}}
+
+    <main>
+        <h1>Page Title</h1>
+        <p>Your page content here...</p>
+    </main>
+
+    {{FOOTER}}
+
+</body>
+</html>

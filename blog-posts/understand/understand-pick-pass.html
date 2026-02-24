@@ -16,46 +16,55 @@
     <meta property="article:modified_time" content="2024-01-01">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Understand SAP EWM Pick & Pass",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about Pick & Pass processes.",
-        "image": "https://wmexperts.online/assets/images/understand/pick-pass/Understand SAP EWM Pick pass 4.jpg",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/understand/pick-pass.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Understand SAP EWM Pick & Pass",
+  "description": "In-depth article about SAP EWM. Learn technical and functional details about Pick & Pass processes.",
+  "image": "../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (4).jpg",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-01-01T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Understand SAP EWM",
+      "item": "https://wmexperts.online/blog-posts/understand/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Understand SAP EWM Pick & Pass",
+      "item": "https://wmexperts.online/blog-posts/understand/understand-pick-pass.html"
+    }
+  ]
+}
+</script>
 
     <title>Understand SAP EWM Pick & Pass | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -138,7 +147,8 @@
         .screenshot-container { margin: 1.75rem 0; text-align: center; }
         
         .screenshot-container img {
-            max-width: 100%;
+            max-width: 66.67%;
+            max-height: 50vh;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -147,6 +157,7 @@
             border-radius: 6px;
             cursor: zoom-in;
             transition: transform 0.2s ease;
+            object-fit: contain;
         }
 
         .screenshot-container img:hover { transform: scale(1.01); }
@@ -410,34 +421,34 @@
             <p>As usual, we start with an example from the real world. You might remember one blog article where we have been talking about the Sunday afternoon dinner with the whole family. Imagine the family (and so the table) a little bit bigger now and different kind of dishes placed all over the table. Everybody wants his/her plate to be filled with samples from all those dishes but if everybody fills the plate by himself/herself. It will be a chaotic having everybody running around the table.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 4.jpg" alt="Understand SAP EWM Pick & pass (4)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (4).jpg" alt="Understand SAP EWM Pick & pass (4)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 3.jpg" alt="Understand SAP EWM Pick & pass (3)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (3).jpg" alt="Understand SAP EWM Pick & pass (3)" width="800" height="450" loading="lazy">
             </div>
 
             <p>Usually we avoid this chaos intuitively just by giving the plate (or whatever you are using to place your food on) to the person who is sitting in front of the pot with the respective dishes. This person will put some food on your plate and handover to another person sitting in front of another dish. At the end your plate has been filled by different family members sitting in different areas of the table without anybody having to walk around the whole table.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 6.jpg" alt="Understand SAP EWM Pick & pass (6)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (6).jpg" alt="Understand SAP EWM Pick & pass (6)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 8.jpg" alt="Understand SAP EWM Pick & pass (8)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (8).jpg" alt="Understand SAP EWM Pick & pass (8)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 9.jpg" alt="Understand SAP EWM Pick & pass (9)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (9).jpg" alt="Understand SAP EWM Pick & pass (9)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 12.jpg" alt="Understand SAP EWM Pick & pass (12)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (12).jpg" alt="Understand SAP EWM Pick & pass (12)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 13.jpg" alt="Understand SAP EWM Pick & pass (13)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (13).jpg" alt="Understand SAP EWM Pick & pass (13)" width="800" height="450" loading="lazy">
             </div>
 
             <p>This is what we call ‘<code>Pick & Pass</code>’ in real world. You can probably imagine similar scenarios in your canteen or in big restaurant kitchens (I also remember times where it has been like this in McDonalds but last time I visited the big M it rather looked like consolidation of burgers, fries and drinks at the front desk).</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 1.png" alt="Understand SAP EWM Pick & pass (1)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (1).png" alt="Understand SAP EWM Pick & pass (1)" width="800" height="450" loading="lazy">
             </div>
 
             <p>OK - I think you see where we are looking at. So let’s jump into warehouse logistics now.<br />Imagine a large warehouse where you must pick lots of orders with small quantities of many different products. These products are stored in different areas of the warehouse. Those areas (which we will call ‘zones’ in the following minutes) can (or should) not be served by the same resource (e.g. because the distance is too long or in the different zones you have to use different equipment).</p>
@@ -452,72 +463,72 @@
             <p>Assume in our example picking is done manually from a rack and the transfer between the different zones is enabled by a conveyor system. This is probably the most common approach whereas the transfer can also be done by a manual transport from the given end point to the next starting point.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 3.png" alt="Understand SAP EWM Pick & pass (3)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (3).png" alt="Understand SAP EWM Pick & pass (3)" width="800" height="450" loading="lazy">
             </div>
 
-            <h2><strong>Main Components of Pick & Pass</strong></h2>
+            <strong>Main Components of Pick & Pass</strong>
             <p>Before we investigate the system setups, we will describe the main components which are needed to conduct a <code>pick & pass</code> process in <code>SAP EWM</code></p>
             <p>First of all, we have two different kind of warehouse orders. 'Normal’ warehouse orders for each zone having the warehouse tasks assigned to it.<br />‘<code>Top warehouse orders</code>’ which group together all ‘normal’ warehouse orders which have been created for the different zones:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 14.png" alt="Understand SAP EWM Pick & pass (14)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (14).png" alt="Understand SAP EWM Pick & pass (14)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 15.jpg" alt="Understand SAP EWM Pick & pass (15)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (15).jpg" alt="Understand SAP EWM Pick & pass (15)" width="800" height="450" loading="lazy">
             </div>
 
             <p>A <code>pick HU</code> which has to pass from one zone to the next zone and one <code>activity area</code> for each zone, having a start and end point (both are normal storage bins) assigned to it and one additional higher-level <code>activity area</code> which can be used as a bracked to join the other ones:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 1.jpg" alt="Understand SAP EWM Pick & pass (1)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (1).jpg" alt="Understand SAP EWM Pick & pass (1)" width="800" height="450" loading="lazy">
             </div>
 
-            <h2><strong>System Setup</strong></h2>
+            <strong>System Setup</strong>
             <p>Let us have a quick look at the most important point regarding the system setup. At first, we must create <code>activity areas</code> and join them. I do assume that you know what an <code>activity area</code> is and how it can be setup. The only thing you need to do (apart from setting up one <code>AA</code> for each zone) is to join and sort all those <code>activity areas</code> which should be part of one <code>pick & pass</code> run later:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 4.png" alt="Understand SAP EWM Pick & pass (4)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (4).png" alt="Understand SAP EWM Pick & pass (4)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 8.png" alt="Understand SAP EWM Pick & pass (8)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (8).png" alt="Understand SAP EWM Pick & pass (8)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 6.png" alt="Understand SAP EWM Pick & pass (6)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (6).png" alt="Understand SAP EWM Pick & pass (6)" width="800" height="450" loading="lazy">
             </div>
 
             <p>In addition to this we have to assign storage bins as start & end points for each <code>activity area</code>:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 7.png" alt="Understand SAP EWM Pick & pass (7)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (7).png" alt="Understand SAP EWM Pick & pass (7)" width="800" height="450" loading="lazy">
             </div>
 
             <p>Finally, we need a <code>warehouse order creation rule</code> (<code>WOCR</code>) which supports the <code>pick & pass</code> process (the only difference to the ‘normal’ <code>WOCR</code> is that this rule makes sure to create a <code>Top warehouse orders</code> to join the warehouse orders for the different zones. We assume a ‘system-driven’ approach here, which means that the sorting of the warehouse orders within the top warehouse order will be done according to the <code>AA</code> sequence defined above.</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 9.png" alt="Understand SAP EWM Pick & pass (9)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (9).png" alt="Understand SAP EWM Pick & pass (9)" width="800" height="450" loading="lazy">
             </div>
 
             <p>Later during processing, only one of the <code>sub warehouse orders</code> belonging to a top warehouse order will be in active status at a time:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 10.png" alt="Understand SAP EWM Pick & pass (10)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (10).png" alt="Understand SAP EWM Pick & pass (10)" width="800" height="450" loading="lazy">
             </div>
 
-            <h2><strong>The Picking Process</strong></h2>
+            <strong>The Picking Process</strong>
             <p>The picking process itself from operator perspective is not different from picking non-joined warehouse orders. The only difference is the screen to handover to the next zone which will be displayed once all warehouse tasks for a given <code>sub warehouse order</code> have been completed:</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 11.png" alt="Understand SAP EWM Pick & pass (11)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (11).png" alt="Understand SAP EWM Pick & pass (11)" width="800" height="450" loading="lazy">
             </div>
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 12.png" alt="Understand SAP EWM Pick & pass (12)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (12).png" alt="Understand SAP EWM Pick & pass (12)" width="800" height="450" loading="lazy">
             </div>
 
             <p>Physically this bin can either be a bin from which somebody manually picks up the <code>HUs</code> to transfer them to the next zone, or it is simply a conveyor to which the operator pushes the <code>pick HU</code>. The conveyor (respectively the <code>MFS</code> component of the solution – e.g. <code>EWM MFS</code>) will make use of the destination data (which is the start point of the <code>AA</code> which comes next in the sequence) to communicate to the <code>PLC</code> level to route the <code>HU</code> through the conveyer system.
             This process continues until all <code>sub warehouse orders</code> are completely picked and the <code>pick HU</code> is routed to the putaway bin of the next step in the given storage process (e.g. packing work center or staging area):</p>
 
             <div class="screenshot-container">
-                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick pass 13.png" alt="Understand SAP EWM Pick & pass (13)" width="800" height="450" loading="lazy">
+                <img src="../../assets/images/understand/pick-pass/Understand SAP EWM Pick & pass (13).png" alt="Understand SAP EWM Pick & pass (13)" width="800" height="450" loading="lazy">
             </div>
 
             <p>That’s it!</p>
@@ -672,6 +683,8 @@
 
 </body>
 </html>
+
+
 
 
 

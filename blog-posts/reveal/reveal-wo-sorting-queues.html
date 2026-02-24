@@ -15,46 +15,55 @@
     <meta property="article:modified_time" content="2025-03-22">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Reveal SAP EWM - Warehouse Order sorting in Queues",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order sorting in Queues.",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2025-03-22",
-        "dateModified": "2025-03-22",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/wo-sorting-in-queues.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Reveal SAP EWM - Warehouse Order sorting in Queues",
+  "description": "In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order sorting in Queues.",
+  "image": "../../assets/images/reveal/wo-sorting-queue/Warehouse order sorting in queues_01.png",
+  "datePublished": "2025-03-22T00:00:00Z",
+  "dateModified": "2025-03-22T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Reveal SAP EWM",
+      "item": "https://wmexperts.online/blog-posts/reveal/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Reveal SAP EWM - Warehouse Order sorting in Queues",
+      "item": "https://wmexperts.online/blog-posts/reveal/reveal-wo-sorting-queues.html"
+    }
+  ]
+}
+</script>
 
     <title>Reveal SAP EWM - Warehouse Order sorting in Queues | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -443,11 +452,11 @@
             <p>My new blog post is offers a comprehensive summary of warehouse order sorting in queues. I delve deep behind the scenes and reveal a few secrets along the way.</p>
             <p>The article begins with the basics, explains sorting with and without pre-assignment of warehouse orders to resources, and concludes with an analysis of the logic in the context of physical inventory and task interleaving.</p>
             
-            <h2><strong>Context</strong></h2>
+            <strong>Context</strong>
             <p>It is important to understand that we are only talking about the sorting within <u>one</u> queue. With a system-guided selection or with a task interleaving approach the resource group of the current resource might be assigned to multiple queues and the queue sequence as such is evaluated before the sorting within one queue becomes relevant. With this article however, we are looking at one single queue only and the sorting within this queue.</p>
             <p>Also certain warehouse orders in the queues might not be considered for the resource type of the resource which the current user used to login (e.g. resource execution constraints). This filtering of warehouse orders is also not in scope for this article as it has no impact on the actual sorting of applicable WOs. To say it again – Pure sorting, nothing else!</p>
             
-            <h2><strong>Agenda for this blog-post</strong></h2>
+            <strong>Agenda for this blog-post</strong>
             <ul>
                 <li><em>Main part: How are WOs technically being sorted in a queue?</em>
                     <ul>
@@ -464,7 +473,7 @@
                 </li>
             </ul>
 
-            <h2><strong>How does the sorting work?</strong></h2>
+            <strong>How does the sorting work?</strong>
             <p>Let us start again from the SAP help text</p>
             <p><em>If more than one WO falls within any of these queue classifications, the WOs are sorted as follows:</em><br><em>In ascending order, by latest starting date (LSD)</em><br><em>In descending order, by execution priority.</em></p>
             <p>So we learned that the sorting depends on two values:</p>
@@ -516,7 +525,7 @@
                 <img src="../../assets/images/reveal/wo-sorting-queue/Warehouse order sorting in queues_06.png" alt="Warehouse order sorting in queues_06" loading="lazy">
             </div>
 
-            <h2><strong>Options for enhancement</strong></h2>
+            <strong>Options for enhancement</strong>
             <p>What is surprising though, is that EWM offers an option for a custom sorting in the pre-assignment context, which is not offered in the scenario where the WOs are not pre-assigned.</p>
             <p>BAdI <code>/SCWM/EX_RSRC_PROC_SEL</code></p>
             <pre>* With this BAdI you can influence the WO selection.
@@ -545,7 +554,7 @@
                 <li>Prioritization: The prioritization as the second sorting criterion can be manipulated via a custom logic using BAdI <code>/SCWM/EX_RSRC_PROC_WO</code>.</li>
             </ul>
 
-            <h2><strong>Fun facts / Party-knowledge</strong></h2>
+            <strong>Fun facts / Party-knowledge</strong>
             <p><u>Sorting of WOs for physical inventory</u></p>
             <p>Nothing to reveal here. The sorting for PI WOs is based on the same criteria as for the normal WOs discussed above. As you learned in my campaign (video & blog-post) about the LSD calculation, for PI documents the LSD is derived from the planned count date. The priority is coming from the PI customizing.</p>
             <p><u>Sorting in case of Task Interleaving</u></p>
@@ -589,7 +598,7 @@
 
             <p>…and that completes the last subtopic that I wanted to address here. As usual, I will not let you go without a quick summary of the most important points.</p>
 
-            <h2><strong>Summary</strong></h2>
+            <strong>Summary</strong>
             <ul>
                 <li>Sorting is the same with or without manual pre-assignment of warehouse orders to resources (1.LSD > 2.Priority > 3.WO number)</li>
                 <li>Only with manual pre-assignment the sorting can be changed in a clean and simple way (EWM offers a BAdI). Without manual pre-assignment, LSD and priority have to be manipulated during WO creation in order to implicitly change the sorting later</li>
@@ -758,6 +767,8 @@
 
 </body>
 </html>
+
+
 
 
 

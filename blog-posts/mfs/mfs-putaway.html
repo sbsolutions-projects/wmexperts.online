@@ -16,46 +16,55 @@
     <meta property="article:modified_time" content="2024-01-01">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "MFS Putaway Strategy",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about MFS Putaway Strategy.",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "MFS Putaway Strategy",
+  "description": "In-depth article about SAP EWM. Learn technical and functional details about MFS Putaway Strategy.",
+  "image": "..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 1.png",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-01-01T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "SAP EWM MFS",
+      "item": "https://wmexperts.online/blog-posts/mfs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "MFS Putaway Strategy",
+      "item": "https://wmexperts.online/blog-posts/mfs/mfs-putaway.html"
+    }
+  ]
+}
+</script>
 
     <title>MFS Putaway Strategy | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -454,7 +463,7 @@
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 3.png" alt="SAP EWM MFS putaway strategy 3" loading="lazy">
             </div>
-            <h2><strong>Where do we find the standard MFS Putaway Strategy?</strong></h2>
+            <strong>Where do we find the standard MFS Putaway Strategy?</strong>
             <p>The EWM standard MFS putaway strategy is encapsulated in class <code>/SCWM/CL_CORE_PUTSTRA</code> which is not used for non-automated storage types.</p>
             <p>Customer classes can inherit from this class to influence the MFS putaway strategy. BAdIs <code>/SCWM/EX_MFS_ACT_CASE_RBD</code>, <code>/SCWM/EX_CORE_PTS_EMPTY_BIN</code> and <code>/SCWM/EX_CORE_PTS_MD_ADDBIN</code> can be used to implement a custom logic and make use of the class mentioned before. The idea of course is to re-use as much standard as possible only re-define certain methods to get to the desired behavior. </p>
             <p>We look at the empty bin determination as an example here -<br>In automated storage types EWM standard will handle the empty bin determination almost entirely separated from the empty bin determination of non-automated storage types.</p>
@@ -462,7 +471,7 @@
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 4.png" alt="SAP EWM MFS putaway strategy 4" loading="lazy">
             </div>
-            <h2><strong>Content/logic of the standard strategy</strong></h2>
+            <strong>Content/logic of the standard strategy</strong>
             <p>During runtime we are looping through the storage types given in the storage type search sequence while trying to find a putaway bin. Only if the given storage type is of role 'MFS', the fallback class becomes relevant and the standard putaway logic (which is e.g. used for non-automated storage types) will not be executed:</p>
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\mfs-putaway/SAP EWM MFS putaway strategy 5.png" alt="SAP EWM MFS putaway strategy 5" loading="lazy">
@@ -751,6 +760,8 @@
 
 </body>
 </html>
+
+
 
 
 

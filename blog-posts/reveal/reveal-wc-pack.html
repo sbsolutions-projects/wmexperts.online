@@ -16,46 +16,55 @@
     <meta property="article:modified_time" content="2024-01-01">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Work center determination for a packing process",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a packing process.",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Work center determination for a packing process",
+  "description": "In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a packing process.",
+  "image": "../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_01.png",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-01-01T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Reveal SAP EWM",
+      "item": "https://wmexperts.online/blog-posts/reveal/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Work center determination for a packing process",
+      "item": "https://wmexperts.online/blog-posts/reveal/reveal-wc-pack.html"
+    }
+  ]
+}
+</script>
 
     <title>Work center determination for a packing process | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -451,7 +460,7 @@
             
             <p>Of course you can create HUs also during picking without a packing step but we are focusing here on packing steps which are executed separately from the picking process at dedicated packing work centers.</p>
             
-            <h2><strong>Agenda</strong></h2>
+            <strong>Agenda</strong>
             <ul>
                 <li>Options for packing bin / work center determination</li>
                 <li>Rules-based vs. non-rules-based determination</li>
@@ -460,7 +469,7 @@
                 <li>Options for enhancements</li>
             </ul>
             
-            <h2><strong>Options for packing bin / work center determination</strong></h2>
+            <strong>Options for packing bin / work center determination</strong>
             <p>In general, we do have three options for the destination bin determination here. We can determine the packing bin / work center</p>
             <ol>
                 <li>based on type/section/bin in the given storage process step</li>
@@ -468,14 +477,14 @@
                 <li>based on the determination table</li>
             </ol>
             
-            <h2><strong>Rules-based vs. non-rules-based determination</strong></h2>
+            <strong>Rules-based vs. non-rules-based determination</strong>
             <p>We can separate those three options into rules-based and non-rules-based ones. Option (2) and (3) are rules-based and only relevant in case the corresponding flag is active for the packing step of the given storage process:</p>
             
             <div class="screenshot-container">
                 <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_02.png" alt="SAP EWM work center determination for packing_02" loading="lazy">
             </div>
             
-            <h2><strong>Deep-dive into the different options</strong></h2>
+            <strong>Deep-dive into the different options</strong>
             <p>Option (1) is the easy one, which is relevant in case the rules-based flag is not active for the given process step. In this case EWM will just read the ‘fixed’ type/section/bin that you provide in the process step customizing:</p>
             
             <div class="screenshot-container">
@@ -538,17 +547,17 @@
                 <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_13.png" alt="SAP EWM work center determination for packing_13" loading="lazy">
             </div>
             
-            <h2><strong>Sidenote - Consideration of the putaway strategy</strong></h2>
+            <strong>Sidenote - Consideration of the putaway strategy</strong>
             <p>Note that for any of the three options described here it is possible to provide only the destination storage type but leave the storage section and/or bin empty. In this case, EWM will determine the actual bin via FM <code>/SCWM/PUT_BIN_DSTGRP</code>. However, this will only return anything, in case you are using putaway rule ‘3’ (consolidation group) for your work center storage type:</p>
             
             <div class="screenshot-container">
                 <img src="../../assets/images/reveal/wc-det-pack/SAP EWM work center determination for packing_12.png" alt="SAP EWM work center determination for packing_12" loading="lazy">
             </div>
             
-            <h2><strong>Options for enhancements</strong></h2>
+            <strong>Options for enhancements</strong>
             <p>As usual, I close my blog by giving you some ideas and options that you can use to implement a custom logic.<br />In case what I described above is not sufficient to cover your requirements, you can add your own packing station determination rule here via BAdI <code>/SCWM/EX_WRKC_PACKDET</code> (Called at the end of FM <code>/SCWM/DET_PACKING_STATION</code>).<br />A second option is sitting at the end of the FM <code>/SCWM/STORAGE_CONTROL_P_GET</code>, where EWM calls BAdI <code>/SCWM/EX_CORE_PSC_PROCESS</code> which can be used to implement your very own rules-based determination of the destination data for any of the given <code>POSC</code> steps.</p>
             
-            <h2><strong>Closure</strong></h2>
+            <strong>Closure</strong>
             <p>As a resume I think we can agree that the work center or packing bin determination is very flexible but at the and not complex at all. I hope that I could explain and visualize everything in a way that it helps you within your current or any future projects!</p>
 
         </div>
@@ -712,6 +721,8 @@
 
 </body>
 </html>
+
+
 
 
 

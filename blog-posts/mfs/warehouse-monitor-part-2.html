@@ -16,46 +16,55 @@
     <meta property="article:modified_time" content="2024-01-01">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Discover SAP EWM MFS",
-        "description": "In-depth article about SAP EWM MFS. Learn technical and functional details about the MFS node in the Warehouse Monitor.",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/sap-ewm-mfs.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Discover SAP EWM MFS",
+  "description": "In-depth article about SAP EWM MFS. Learn technical and functional details about the MFS node in the Warehouse Monitor.",
+  "image": "..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01.png",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-01-01T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "SAP EWM MFS",
+      "item": "https://wmexperts.online/blog-posts/mfs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Discover SAP EWM MFS",
+      "item": "https://wmexperts.online/blog-posts/mfs/warehouse-monitor-part-2.html"
+    }
+  ]
+}
+</script>
 
     <title>Discover SAP EWM MFS | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -464,7 +473,7 @@
                 <img src="..\..\assets\images\mfs\mfs-node/SAP EWM MFS Warehouse Monitor_01.png" alt="SAP EWM MFS Warehouse Monitor_01" width="936" height="877">
             </div>
 
-            <h2><strong>Handling Unit Move</strong></h2>
+            <strong>Handling Unit Move</strong>
             <p>This node shows ‘rough destination bins’ for HU movements (those are not warehouse tasks!) which are used for routing decisions in case conveyor environments (the concept will not be explained in detail within this blog post).</p>
             
             <div class="screenshot-container">
@@ -483,7 +492,7 @@
             <p><u>Delete HU Move Entries</u>: FM <code>/SCWM/MFS_HU_MOVE_DEL_MON</code> calls FM <code>/SCWM/MFS_HUMOVE_DEL</code> in order to delete records from table <code>/SCWM/MFSHUMOVE</code> for the selected HUs</p>
             <p><u>Create Warehouse Task</u>: Uses FM <code>/SCWM/HU_CREATE_WT_MON</code> in order to open transaction <code>/SCWM/ADHU</code>, pre-filled with data for the selected HU</p>
 
-            <h2><strong>Conveyor Segment Group</strong></h2>
+            <strong>Conveyor Segment Group</strong>
             <p>This sub-node does nothing else than showing the conveyor segment groups along with their assigned segments which had been created via customizing. It adds potential exceptions which had been assigned to the segment groups:</p>
             <p><u>Set Exception:</u> Exceptions can be set via the only method here and will make sure that the affected segments are no longer considered for upcoming routing decisions (segments can be assigned to LOSC records):</p>
             
@@ -493,7 +502,7 @@
 
             <p>Technically this is done via FM <code>/SCWM/MFS_CSGR_SET_EXCC_MON</code>, which calls FM <code>/SCWM/MFS_CSGR_SET_STAT</code> to update table <code>/SCWM/MFSCSGR</code> (which holds the conveyor segment group customizing &amp; status) and call the exception handling for the given exception code plus the update of the status for all assigned segments via FM <code>/SCWM/MFS_CS_SET_STAT</code> (~ setting an exception to a segment group will set an exception to all assigned segments).</p>
 
-            <h2><strong>Conveyor Segment</strong></h2>
+            <strong>Conveyor Segment</strong>
             <p>This sub-node does nothing else than showing the conveyor segments which had been created via customizing. It adds potential exceptions which had been assigned to the segments:</p>
             
             <div class="screenshot-container">
@@ -508,7 +517,7 @@
 
             <p>Technically this is done via FM <code>/SCWM/MFS_CS_SET_EXCC_MON</code>, which calls FM <code>/SCWM/MFS_CS_SET_STAT</code> to update table <code>/SCWM/MFSCS</code> (which holds the conveyor segment customizing &amp; status) and call the exception handling for the given exception code.</p>
 
-            <h2><strong>Resource</strong></h2>
+            <strong>Resource</strong>
             <p>This node shows all MFS resources which have been created via customizing:</p>
             
             <div class="screenshot-container">
@@ -531,7 +540,7 @@
 
             <p><u>Trigger Telegram Processing</u>: User FM <code>/SCWM/MFS_RSRC_WT_DET_MON</code> in order to call FM <code>/SCWM/MFS_WT_DET_PREP</code> to check explicitly for the queue of the given resource whether there is a telegram for any of the WTs in the queue can be sent to the subsystem</p>
 
-            <h2><strong>Telegram Buffer – Incoming Telegram</strong></h2>
+            <strong>Telegram Buffer – Incoming Telegram</strong>
             <p>This node shows the content of the inbound telegram buffer (~ content of table <code>/SCWM/MFSTELEQ</code>):</p>
             
             <div class="screenshot-container">
@@ -549,7 +558,7 @@
 
             <p>Check <a href="ewm-plc.html" target="_blank" rel="noopener">this post</a> in case you want to learn more about telegram processing in EWM and the usage of the telegram buffer for incoming telegrams.</p>
 
-            <h2><strong>Telegram Buffer – Outgoing Telegram</strong></h2>
+            <strong>Telegram Buffer – Outgoing Telegram</strong>
             <p>This node shows the content of the inbound telegram buffer (~ content of table <code>/SCWM/MFSDELAY</code>):</p>
             
             <div class="screenshot-container">
@@ -728,6 +737,8 @@
 
 </body>
 </html>
+
+
 
 
 

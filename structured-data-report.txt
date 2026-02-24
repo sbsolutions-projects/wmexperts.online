@@ -1,0 +1,1119 @@
+﻿STRUCTURED DATA VERIFICATION REPORT
+====================================
+
+Generated: 02/24/2026 22:00:29
+Total files processed: 43
+Healthy files: 0
+Files with issues: 43
+
+FILES REQUIRING FIXES:
+=====================
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\around\around-4-step.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1202): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to Learn SAP EWM with Best Practices – My 4-step Method",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about SAP EWM Best Practices.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\around\around-what-how.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\enhance\enhance-lsd.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1231): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Enhance SAP EWM: Latest Starting Date (LSD) Calculation",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Enhance SAP EWM: Latest Starting Date (LSD) Calculation.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\enhance\enhance-put-bin-det.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1206): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Enhance SAP EWM: Putaway bin determination",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Putaway bin determination and strategies.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/enhance-sap-ewm.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\enhance\enhance-quant-det.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1218): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Quant determination for stock removal strategy",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about quant determination for stock removal strategies.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/enhance-sap-ewm.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\enhance\enhance-wocrs.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1287): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Enhance SAP EWM: Warehouse Order Creation Rules (WOCRs)",
+        "description": "In-depth article about SAP EWM Warehouse Order Creation Rules (WOCRs). Learn how to enhance functional areas using BAdIs and technical identifiers.",
+        "image": "https://wmexperts.online/assets/images/enhance/enh-wocrs/Enhance SAP EWM WOCRs_01-1.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/enhance-sap-ewm-wocrs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\deep-dive-losc.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1223): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS - Layout-oriented Storage Control",
+        "description": "Deep-dive into the technical details of the Layout-oriented storage control in SAP EWM MFS. Learn about /SCWM/TROUTL_DET and routing logic.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2022-08-27",
+        "dateModified": "2025-11-12",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/mfs-losc.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\ewm-plc-integration.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1167): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM MFS. Learn technical and functional details about the EWM-PLC integration.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/sap-ewm-mfs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\ewm-plc.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1267): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS - The communication from EWM to the PLC",
+        "description": "In-depth article about SAP EWM MFS communication to the PLC. Learn technical details about telegram creation, handshake, and function modules like /SCWM/MFS_SEND.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/mfs-automation.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\identification-point.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1199): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM MFS Identification Points. Learn technical and functional details about telegram processing and hardware.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\mfs-interleaving.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1313): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS - Task Interleaving in an ASRS",
+        "description": "How does SAP EWM MFS realize task interleaving in an automatic storage & retrieval system (ASRS)? Get the answer in this blog post!",
+        "image": "https://wmexperts.online/assets/images/mfs/mfs-interleaving/SAP%20EWM%20MFS%20Task%20interleaving%20in%20ASRS_00.png",
+        "datePublished": "2023-02-24",
+        "dateModified": "2025-03-02",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/mfs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\mfs-putaway.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1161): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MFS Putaway Strategy",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about MFS Putaway Strategy.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\mfs-rearrange.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1199): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Rearrange HUs in multi-depth storage bins",
+        "description": "SAP EWM standard logic for rearranging HUs in multi-depth storage bins, essential for automated warehouses with MFS.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/sap-ewm-mfs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\mfs-simulation-emulation.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1192): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM MFS Simulation and Emulation. Learn technical and functional details about standard emulation capabilities.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/mfs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\role-of-the-plc.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1197): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "Introduction to the role of Programmable Logic Controllers (PLCs) in SAP EWM MFS projects. Learn about PLC components and warehouse automation.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/mfs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\warehouse-monitor-part-1.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1177): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about the MFS node in the Warehouse Monitor.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/sap-ewm-mfs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\warehouse-monitor-part-2.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1181): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM MFS. Learn technical and functional details about the MFS node in the Warehouse Monitor.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/sap-ewm-mfs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\mfs\what-is-sap-ewm-mfs.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1215): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Discover SAP EWM MFS",
+        "description": "In-depth article about SAP EWM MFS. Learn what SAP EWM MFS is, how it connects to PLCs, and the role of the Material Flow System in automated warehouses.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/sap-ewm-mfs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-clsp.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-cond-rec.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-def-unde.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1186): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Warehouse Order Creation Rules DEF and UNDE",
+        "description": "Learn technical and functional details about Warehouse Order Creation Rules DEF and UNDE in SAP EWM.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-dest-load.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-inb-stag.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1187): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Inbound staging bin determination",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Inbound staging bin determination.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-lsd.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-sync-wo.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1211): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Synchronization of Warehouse Order completion",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Synchronization of Warehouse Order completion.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-wc-dec.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1231): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Work center determination for a deconsolidation process",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a deconsolidation process.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-wc-kts.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-wc-pack.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1215): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Work center determination for a packing process",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a packing process.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\reveal\reveal-wo-sorting-queues.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1203): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Reveal SAP EWM - Warehouse Order sorting in Queues",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order sorting in Queues.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2025-03-22",
+        "dateModified": "2025-03-22",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/wo-sorting-in-queues.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-2-step.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-interleaving.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-losc.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-pick-pass.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1211): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Understand SAP EWM Pick & Pass",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Pick & Pass processes.",
+        "image": "https://wmexperts.online/assets/images/understand/pick-pass/Understand SAP EWM Pick pass 4.jpg",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/understand/pick-pass.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-pick-points.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-ppf.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-serials.html
+  - JSON-LD script tag not found
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-wave-resource.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (234): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-wave-templates.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\understand\understand-wocrs.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1261): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Warehouse Order Creation Rules (WOCRs)",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order Creation Rules (WOCRs).",
+        "image": "https://wmexperts.online/assets/images/understand/und-wocrs/SAP EWM Warehouse order creation rules_01.png",
+        "datePublished": "2020-08-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Understand SAP EWM",
+          "item": "https://wmexperts.online/blog-posts/understand/und-wocrs.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\work\5-tools-consultants.html
+  - JSON parsing failed: Ein ungültiges Objekt wurde übergeben. Erwartet wurde ":" oder "}". (1183): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Working as a SAP EWM Consultant",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about Working as a SAP EWM Consultant.",
+        "image": "https://wmexperts.online/assets/images/placeholder.png",
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01",
+        "author": {
+          "@type": "Person",
+          "name": "Hendrik"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WMexperts",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://wmexperts.online/assets/logo.png"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wmexperts.online/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
+        }]
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\work\good-consultant-part-1.html
+  - JSON parsing failed: Ungültiger JSON-Primitiv: currentImageIndex.
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\work\good-consultant-part-2.html
+  - JSON parsing failed: Ungültiger JSON-Primitiv: currentImageIndex.
+
+C:\Swisslog Privat\WMexperts - WIP\GIT_wmexperts.online\wmexperts.online\blog-posts\work\start-with-ewm.html
+  - JSON parsing failed: Eine nicht abgeschlossene Zeichenfolge wurde übergeben. (229): [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article Title",
+        "description": "In-depth article about SAP EWM. Learn technical and functional details about [Topic]

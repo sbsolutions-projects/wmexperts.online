@@ -16,46 +16,55 @@
     <meta property="article:modified_time" content="2024-01-01">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Discover SAP EWM MFS",
-        "description": "In-depth article about SAP EWM MFS Identification Points. Learn technical and functional details about telegram processing and hardware.",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Discover SAP EWM MFS",
+  "description": "In-depth article about SAP EWM MFS Identification Points. Learn technical and functional details about telegram processing and hardware.",
+  "image": "..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_01.png",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-01-01T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "SAP EWM MFS",
+      "item": "https://wmexperts.online/blog-posts/mfs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Discover SAP EWM MFS",
+      "item": "https://wmexperts.online/blog-posts/mfs/identification-point.html"
+    }
+  ]
+}
+</script>
 
     <title>Discover SAP EWM MFS | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -445,7 +454,7 @@
             
             <p>As with all posts of this series, the content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a style="color: #00ccff;" href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank" rel="noopener">website</a> in case you want to learn more about the services offered by @ Swisslog or to browse open positions within their EWM team!</p>
             
-            <h2><strong>Agenda</strong></h2>
+            <strong>Agenda</strong>
             <ul>
                 <li>Overview process flow at the I-Point</li>
                 <li>The hardware of the I-Point</li>
@@ -578,14 +587,14 @@
 
             <p>That means, within the following paragraphs I will answer the question about what actually happens within FM <code>/SCWM/MFSACT_SP</code> (not every detail but the most important steps). And again – yes there is a different FM for case conveyors but they do not differ that much and we keep focusing on the pallets here in order to gain a basic understanding!</p>
 
-            <h2><strong>Step 3.1: Validate the HU</strong></h2>
+            <strong>Step 3.1: Validate the HU</strong>
             <p>EWM tries to figure out whether the HU does actually exist. If not, a dummy HU is created (dummy packaging material assigned to a dummy number range) and the HU is later sent towards clearing:</p>
 
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_19.png" alt="SAP EWM MFS identification point_19" width="677" height="482" loading="lazy">
             </div>
 
-            <h2><strong>Step 3.2: Adjust the location</strong></h2>
+            <strong>Step 3.2: Adjust the location</strong>
             <p>In this step EWM posts the HU to the storage bin which is assigned to the i-point / communication point (table <code>/SCWM/MFSOBJMAP</code>). This is done via FM <code>/SCWM/MFS_HU_ADJ_LOC</code> which validates lots of different scenarios like shown in the 2nd screenshot below (based on the customizing of the i-point, the source/destination of the HU and potential waiting/active WTs) and calls BAdi <code>/SCWM/EX_MFS_HU_AT_CP</code> where you can also implement a custom logic for the acceptance/decline of a location adjustment (e.g. include a check for doublets):</p>
 
             <div class="screenshot-container">
@@ -595,7 +604,7 @@
                 <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_21.png" alt="SAP EWM MFS identification point_21" width="876" height="590" loading="lazy">
             </div>
 
-            <h2>Step 3.3: Call BAdi <code>/SCWM/EX_MFS_ACT_SP</code></h2>
+            <strong>Step 3.3: Call BAdi <code>/SCWM/EX_MFS_ACT_SP</code></strong>
             <p>This BAdi can be used to change HU data (e.g. adjust the HU type based on the height measured by the I-point sensors), execute additional checks (e.g. compare subsystem with EWM data) and/or provide a destination bin (as part of the last step below EWM will create a follow-up WT and this BAdi can be used to set the destination of this WT):</p>
 
             <div class="screenshot-container">
@@ -608,7 +617,7 @@
                 <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_24.png" alt="SAP EWM MFS identification point_24" width="697" height="485" loading="lazy">
             </div>
 
-            <h2><strong>Step 3.4: Update HU data</strong></h2>
+            <strong>Step 3.4: Update HU data</strong>
             <p>Based on the data that we received from the subsystem or determined within the previous steps, EWM now updates the HU header data via FM <code>/SCWM/HUHDR_ATTR_CHANGE</code>:</p>
 
             <div class="screenshot-container">
@@ -618,7 +627,7 @@
                 <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_26.png" alt="SAP EWM MFS identification point_26" width="936" height="160" loading="lazy">
             </div>
 
-            <h2><strong>Final step (Step 4)</strong></h2>
+            <strong>Final step (Step 4)</strong>
             <p>Although the creation of the follow-up action (WT creation) technically also happens within FM <code>/SCWM/MFSACT_SP</code>, I decided to show this as a separate step in our flow-chart. Makes sense from my point of view logically and also makes it easier to keep an overview.</p>
             <p>No matter whether we are going to reject the HU towards clearing or whether we want to push it towards a final putaway bin, we need to create/activate a HU warehouse task. This is done at the end of our action FM by calling FM <code>/SCWM/TO_CREATE_MOVE_HU</code>.<br>As mentioned above, the destination might have been determined by a Z-logic in BAdi <code>/SCWM/EX_MFS_ACT_SP</code> already and filled into structure <code>ls_create_hu</code>. The warehouse process type to create the task is taken from the communication point customizing (so in case you do not determine a destination in the BAdi mentioned above, EWM will simply read the STSS and putaway rules based on the combination of this WPT and the standard customizing):</p>
 
@@ -629,7 +638,7 @@
                 <img src="..\..\assets\images\mfs\i-point/SAP EWM MFS identification point_28.png" alt="SAP EWM MFS identification point_28" width="936" height="414" loading="lazy">
             </div>
 
-            <h2>Summary of the things happening within the action function module <code>/SCWM/MFSACT_SP</code></h2>
+            <strong>Summary of the things happening within the action function module <code>/SCWM/MFSACT_SP</code></strong>
             <ul>
                 <li>Validate HU (check whether HU number is filled and exists in EWM)</li>
                 <li>Call FM <code>/SCWM/MFS_HU_ADJ_LOC</code> (+ Badi) to post the HU to the CP of the I-point (or reject it)</li>
@@ -638,7 +647,7 @@
                 <li>Create a WT in order to move the HU away from the I-point (<code>/SCWM/TO_CREATE_MOVE_HU</code>)</li>
             </ul>
 
-            <h2><strong>Appendix</strong></h2>
+            <strong>Appendix</strong>
             <p>As promised above, some final words about the differences in handling/processing between pallet (~ slow moving) and case (~ fast moving) environments. Note that I am only touching the surface with these comments. There is complex coding involved with lots of differences compared to the pallet environment, which are not in scope of this article.<br>In general though, the role of the I-point is similar to the one in a pallet environment (EWM provides FM <code>/SCWM/MFSACT_CASE_SP</code> for processing and a couple of other BAdis). In addition to this we have –</p>
             <ul>
                 <li>‚Rough‘ decisions in order to enable fast routings without interruption (so a slightly different way of Layout-oriented routing)</li>
@@ -647,7 +656,7 @@
             </ul>
             <p>…as I said – enough keywords to create separate posts about this topic but everything not essential in order to understand the setups, concepts and processes at &amp; around Identification-Points!</p>
 
-            <h2><strong>Closure</strong></h2>
+            <strong>Closure</strong>
             <p>For more technical details about the process of <u>receiving telegrams in EWM MFS</u>, make sure you read this wonderful <a href="https://blogs.sap.com/2020/11/23/sap-ewm-mfs-receiving-and-processing-telegrams/" target="_blank" rel="noopener noreferrer">blog post</a> written by Tobias &amp; Jörg!</p>
             <p>That is all for this month’s post! I hope you are familiar with the concept of the I-point now.</p>
         </div>
@@ -811,6 +820,8 @@
 
 </body>
 </html>
+
+
 
 
 

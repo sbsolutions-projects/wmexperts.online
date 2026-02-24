@@ -7,16 +7,10 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://wmexperts.online/blog-overview.html">
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wmexperts.online/blog-overview.html">
     <meta property="og:title" content="All Articles | WMexperts">
     <meta property="og:description" content="Browse all SAP EWM articles organized by category.">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="All Articles | WMexperts">
-    <meta property="twitter:description" content="Browse all SAP EWM articles organized by category.">
 
     <link rel="icon" type="image/png" href="assets/favicon/wmexperts%20favicon.png">
     <title>All Articles | WMexperts</title>
@@ -31,13 +25,14 @@
             --text-dark: #111827;
             --text-muted: #6B7280;
             --border: #E5E7EB;
-            --accent: #EEF6FC;
+            --accent: #EEF6FC; /* Einheitlicher heller Hintergrund für alle Icons */
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -57,7 +52,7 @@
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
@@ -77,19 +72,14 @@
             transition: color 0.2s;
         }
 
-        nav a:hover {
+        nav a:hover, nav a.active {
             color: var(--sap-blue);
-        }
-
-        nav a.active {
-            color: var(--sap-blue);
-            font-weight: 600;
         }
 
         /* --- PAGE HEADER --- */
         .page-header {
             padding: 4rem 8% 2rem 8%;
-            max-width: 900px;
+            max-width: 1000px;
         }
 
         .page-header h1 {
@@ -97,18 +87,43 @@
             color: var(--text-dark);
             margin-bottom: 1rem;
             font-weight: 700;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
         }
 
-        .page-header p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
+        /* --- QUICK JUMP NAV --- */
+        .quick-jump {
+            padding: 0 8% 2rem 8%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
         }
 
-        /* --- CATEGORY SECTION --- */
+        .jump-link {
+            text-decoration: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .jump-link:hover {
+            border-color: var(--sap-blue);
+            color: var(--sap-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* --- CATEGORY SECTIONS --- */
         .category-section {
-            padding: 3rem 8%;
-            margin-bottom: 2rem;
+            padding: 2rem 8%;
+            scroll-margin-top: 100px;
         }
 
         .category-header {
@@ -116,99 +131,106 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            padding-bottom: 0.75rem;
             border-bottom: 2px solid var(--border);
         }
 
         .category-icon {
-            width: 48px;
-            height: 48px;
+            font-size: 1.5rem;
+            width: 44px;
+            height: 44px;
             background: var(--accent);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+        }
+
+        /* Das Werkzeug-Icon wird hier gezielt abgedunkelt, ohne den Hintergrund zu ändern */
+        .tool-icon {
+            filter: brightness(0.7) contrast(1.2);
         }
 
         .category-header h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--text-dark);
             font-weight: 700;
         }
 
         .category-header .count {
             margin-left: auto;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+            font-size: 0.8rem;
             background: var(--bg-card);
-            padding: 6px 14px;
+            border: 1px solid var(--border);
+            padding: 4px 12px;
             border-radius: 20px;
-            border: 1px solid var(--border);
-        }
-
-        /* --- ARTICLE LIST --- */
-        .article-list {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .article-item {
-            background: var(--bg-card);
-            border-radius: 10px;
-            padding: 1.75rem;
-            text-decoration: none;
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-
-        .article-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-color: var(--sap-blue);
-        }
-
-        .article-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--sap-blue);
-            min-width: 40px;
-            opacity: 0.6;
-        }
-
-        .article-content {
-            flex: 1;
-        }
-
-        .article-item h3 {
-            font-size: 1.25rem;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
             font-weight: 600;
         }
 
-        .article-item p {
-            font-size: 0.95rem;
+        /* --- ARTICLE GRID --- */
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            height: 100%;
+        }
+
+        .article-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--sap-blue);
+            box-shadow: 0 12px 24px rgba(0, 85, 151, 0.08);
+        }
+
+        .article-number {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--sap-blue);
+            background: var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .article-card h3 {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin: 0.5rem 0 0.75rem 0;
+            line-height: 1.4;
+            padding-right: 2.5rem;
+        }
+
+        .article-card p {
+            font-size: 0.92rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .article-meta {
             display: flex;
-            gap: 1rem;
-            font-size: 0.85rem;
+            justify-content: space-between;
+            font-size: 0.8rem;
             color: var(--text-muted);
-        }
-
-        .article-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
         }
 
         /* --- FOOTER --- */
@@ -216,620 +238,484 @@
             padding: 3rem 8%;
             text-align: center;
             font-size: 0.9rem;
-            color: var(--text-muted);
             border-top: 1px solid var(--border);
             background: var(--bg-card);
             margin-top: 4rem;
         }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2.2rem;
-            }
-
-            .article-item {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .category-header {
-                flex-wrap: wrap;
-            }
-
-            .category-header .count {
-                margin-left: 0;
-            }
+            .page-header h1 { font-size: 2.2rem; }
+            .article-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo">WMexperts.online</a>
+        <a href="index.html" class="logo">WM<span style="color: var(--text-dark);">experts.online</span></a>
         <nav>
             <a href="index.html">Latest</a>
             <a href="blog-overview.html" class="active">All Articles</a>
-            <a href="#about">About</a>
+            <a href="about.html">About</a>
         </nav>
     </header>
 
     <section class="page-header">
         <h1>All Articles</h1>
-        <p>Browse through all blog articles, organized by category and release date.</p>
+        <p>Expert insights into SAP EWM, organized by category and technical depth.</p>
     </section>
 
-    <!-- UNDERSTAND SAP EWM -->
-    <section class="category-section">
+    <nav class="quick-jump">
+        <a href="#understand" class="jump-link"><span>🎓</span> Understand</a>
+        <a href="#around" class="jump-link"><span>🔄</span> Around</a>
+        <a href="#work" class="jump-link"><span>💼</span> Working</a>
+        <a href="#enhance" class="jump-link"><span>🔧</span> Enhance</a>
+        <a href="#reveal" class="jump-link"><span>🔍</span> Reveal</a>
+        <a href="#mfs" class="jump-link"><span>🏗️</span> MFS</a>
+    </nav>
+
+    <section id="understand" class="category-section">
         <div class="category-header">
-            <div class="category-icon">📚</div>
+            <div class="category-icon">🎓</div>
             <h2>Understand SAP EWM</h2>
             <span class="count">10 articles</span>
         </div>
-        <div class="article-list">
-            <a href="blog-posts/understand/understand-2-step.html" class="article-item">
+        <div class="article-grid">
+            <a href="blog-posts/understand/understand-wave-resource.html" class="article-card">
                 <span class="article-number">01</span>
-                <div class="article-content">
-                    <h3>2-Step Picking</h3>
-                    <p>Learn technical and functional details about 2-step picking in SAP EWM. Understand the warehouse task creation, intermediate storage, and customizing required for this two-step picking process.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>The purpose of wave management & resource management</h3>
+                <p>Learn about the purpose and functionalities of wave management & resource management in SAP EWM. Understand how warehous...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Dec 2017</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-interleaving.html" class="article-item">
+            <a href="blog-posts/understand/understand-wocrs.html" class="article-card">
                 <span class="article-number">02</span>
-                <div class="article-content">
-                    <h3>Task Interleaving</h3>
-                    <p>Understand how task interleaving works in SAP EWM. Learn about the intelligent order assignment and how it optimizes warehouse operations for both manual and automated areas.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Warehouse Order Creation Rules (WOCRs)</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order Creation Rules (WOCRs).</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Aug 2020</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-losc.html" class="article-item">
+            <a href="blog-posts/understand/understand-pick-points.html" class="article-card">
                 <span class="article-number">03</span>
-                <div class="article-content">
-                    <h3>The concept of Layout-oriented Storage Control (LOSC)</h3>
-                    <p>Explore the concept of Layout-oriented Storage Control in SAP EWM. Learn how LOSC optimizes storage strategies based on warehouse layout and routing logic.</p>
-                    <div class="article-meta">
-                        <span>🕒 11 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Pick Points</h3>
+                <p>In-depth article about SAP EWM Pick Points. Learn technical and functional details about storage type settings, work cen...</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Sep 2021</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-pick-pass.html" class="article-item">
+            <a href="blog-posts/understand/understand-2-step.html" class="article-card">
                 <span class="article-number">04</span>
-                <div class="article-content">
-                    <h3>Pick & Pass</h3>
-                    <p>Understand the Pick & Pass concept in SAP EWM. Learn how this warehouse strategy enables efficient picking and task distribution across multiple warehouse resources.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>2-Step Picking</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about 2-Step Picking.</p>
+                <div class="article-meta">
+                    <span>🕒 12 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-pick-points.html" class="article-item">
+            <a href="blog-posts/understand/understand-interleaving.html" class="article-card">
                 <span class="article-number">05</span>
-                <div class="article-content">
-                    <h3>Pick Points</h3>
-                    <p>Learn about Pick Points in SAP EWM. Understand how they support zone picking strategies and improve warehouse efficiency through dedicated picking areas.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Task Interleaving</h3>
+                <p>In-depth article about SAP EWM Task Interleaving. Learn how SAP EWM optimizes warehouse movements using an Oktoberfest a...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-ppf.html" class="article-item">
+            <a href="blog-posts/understand/understand-pick-pass.html" class="article-card">
                 <span class="article-number">06</span>
-                <div class="article-content">
-                    <h3>PPF (Post Processing Framework)</h3>
-                    <p>Discover the Post Processing Framework (PPF) in SAP EWM. Learn how this framework enables customization of post-processing activities and warehouse operations.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Pick & Pass</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Pick & Pass processes.</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-serials.html" class="article-item">
+            <a href="blog-posts/understand/understand-ppf.html" class="article-card">
                 <span class="article-number">07</span>
-                <div class="article-content">
-                    <h3>The different levels of Serial Number Management</h3>
-                    <p>In-depth article about SAP EWM. Learn technical and functional details about the different levels of Serial Number Management: document level, warehouse level, and movement level.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>PPF (Post Processing Framework)</h3>
+                <p>Learn the core concepts of SAP EWM Post Processing Framework (PPF) through simple real-world analogies and system exampl...</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-wave-resource.html" class="article-item">
+            <a href="blog-posts/understand/understand-serials.html" class="article-card">
                 <span class="article-number">08</span>
-                <div class="article-content">
-                    <h3>The Purpose of Wave Management & Resource Management</h3>
-                    <p>Understand the purpose and role of Wave Management and Resource Management in SAP EWM. Learn how these components optimize order fulfillment and resource allocation.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>The different levels of Serial Number Management</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about the different levels of Serial Number Manag...</p>
+                <div class="article-meta">
+                    <span>🕒 10 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-wave-templates.html" class="article-item">
+            <a href="blog-posts/understand/understand-wave-templates.html" class="article-card">
                 <span class="article-number">09</span>
-                <div class="article-content">
-                    <h3>The purpose & functionalities of wave templates</h3>
-                    <p>Learn about wave templates in SAP EWM. Understand how they support different warehouse strategies and enable flexible configuration of wave processing.</p>
-                    <div class="article-meta">
-                        <span>🕒 13 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>The purpose & functionalities of wave templates</h3>
+                <p>Learn about the purpose and functionalities of wave templates in SAP EWM. Understand wave template determination and opt...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/understand/understand-wocrs.html" class="article-item">
+            <a href="blog-posts/understand/understand-losc.html" class="article-card">
                 <span class="article-number">10</span>
-                <div class="article-content">
-                    <h3>Warehouse Order Creation Rules (WOCRs)</h3>
-                    <p>Master the Warehouse Order Creation Rules (WOCRs) in SAP EWM. Learn how they control warehouse task creation, optimization, and assignment strategies.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>The concept of Layout-oriented Storage Control (LOSC)</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Layout-oriented Storage Control (LOSC).</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2025</span>
                 </div>
             </a>
         </div>
     </section>
 
-    <!-- AROUND SAP EWM -->
-    <section class="category-section">
+    <section id="around" class="category-section">
         <div class="category-header">
             <div class="category-icon">🔄</div>
             <h2>Around SAP EWM</h2>
             <span class="count">2 articles</span>
         </div>
-        <div class="article-list">
-            <a href="blog-posts/around/around-4-step.html" class="article-item">
+        <div class="article-grid">
+            <a href="blog-posts/around/around-4-step.html" class="article-card">
                 <span class="article-number">01</span>
-                <div class="article-content">
-                    <h3>How to Learn SAP EWM with Best Practices – My 4-step Method</h3>
-                    <p>Learn my 4-step method for understanding SAP EWM with best practices. A practical approach to mastering SAP EWM concepts and applying them in real-world scenarios.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>How to Learn SAP EWM with Best Practices – My 4-step Method</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about SAP EWM Best Practices.</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/around/around-what-how.html" class="article-item">
+            <a href="blog-posts/around/around-what-how.html" class="article-card">
                 <span class="article-number">02</span>
-                <div class="article-content">
-                    <h3>SAP EWM Best-Practices explained – What & How</h3>
-                    <p>Understand best practices in SAP EWM. Learn the what and how behind successful warehouse management implementations and optimization strategies.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>SAP EWM Best-Practices explained – What &amp; How</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about [Topic].</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
         </div>
     </section>
 
-        <!-- WORKING AS A SAP EWM CONSULTANT -->
-    <section class="category-section">
+    <section id="work" class="category-section">
         <div class="category-header">
             <div class="category-icon">💼</div>
-            <h2>Working as a SAP EWM Consultant</h2>
+            <h2>Working as a EWM Consultant</h2>
             <span class="count">4 articles</span>
         </div>
-        <div class="article-list">
-            <a href="blog-posts/work/start-with-ewm.html" class="article-item">
+        <div class="article-grid">
+            <a href="blog-posts/work/5-tools-consultants.html" class="article-card">
                 <span class="article-number">01</span>
-                <div class="article-content">
-                    <h3>How to learn SAP EWM?</h3>
-                    <p>Discover the roadmap for mastering SAP EWM. Learn the essential steps, from understanding basic warehouse processes to deep technical MFS integration.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2026</span>
-                    </div>
+                <h3>5 Tools for EWM Consultants & Developers</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Working as a SAP EWM Consultant.</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/work/good-consultant-part-1.html" class="article-item">
+            <a href="blog-posts/work/start-with-ewm.html" class="article-card">
                 <span class="article-number">02</span>
-                <div class="article-content">
-                    <h3>How to become a good EWM Consultant? (Part #1)</h3>
-                    <p>Discover the essential technical and functional skills required to become a successful SAP EWM consultant. Part 1 covers 5 core competencies for your foundation.</p>
-                    <div class="article-meta">
-                        <span>🕒 15 min read</span>
-                        <span>📅 May 2026</span>
-                    </div>
+                <h3>How to learn SAP EWM? How to start with SAP EWM?</h3>
+                <p>How to learn SAP EWM? How to start with SAP EWM? Tips and ideas from 15 years of experience as a Consultant for SAP EWM.</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Apr 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/work/good-consultant-part-2.html" class="article-item">
+            <a href="blog-posts/work/good-consultant-part-1.html" class="article-card">
                 <span class="article-number">03</span>
-                <div class="article-content">
-                    <h3>How to become a good EWM Consultant? (Part #2)</h3>
-                    <p>Master the soft skills that set apart exceptional EWM consultants. Part 2 covers communication, problem-solving, humility, networking, and well-being.</p>
-                    <div class="article-meta">
-                        <span>🕒 14 min read</span>
-                        <span>📅 May 2026</span>
-                    </div>
+                <h3>How to become a good EWM Consultant? (Part &#35;1)</h3>
+                <p>With this post I give you my personal top list of skills which are required to become a good & successful EWM consultant...</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 May 2025</span>
                 </div>
             </a>
-
-            <a href="blog-posts/work/5-tools-consultants.html" class="article-item">
+            <a href="blog-posts/work/good-consultant-part-2.html" class="article-card">
                 <span class="article-number">04</span>
-                <div class="article-content">
-                    <h3>5 Essential Tools for EWM Developers</h3>
-                    <p>Explore the tools that streamline ABAP development and troubleshooting within the SAP EWM environment.</p>
-                    <div class="article-meta">
-                        <span>🕒 11 min read</span>
-                        <span>📅 Feb 2026</span>
-                    </div>
+                <h3>How to become a good EWM Consultant? (Part &#35;2)</h3>
+                <p>Part 2 of my personal top list of skills which are required to become a good & successful EWM consultant - focusing on s...</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jun 2025</span>
                 </div>
             </a>
         </div>
     </section>
 
-    <!-- ENHANCE SAP EWM -->
-    <section class="category-section">
+    <section id="enhance" class="category-section">
         <div class="category-header">
-            <div class="category-icon">⚡</div>
+            <div class="category-icon"><span class="tool-icon">🔧</span></div>
             <h2>Enhance SAP EWM</h2>
             <span class="count">4 articles</span>
         </div>
-        <div class="article-list">
-            <a href="blog-posts/enhance/enhance-lsd.html" class="article-item">
+        <div class="article-grid">
+            <a href="blog-posts/enhance/enhance-lsd.html" class="article-card">
                 <span class="article-number">01</span>
-                <div class="article-content">
-                    <h3>Latest Starting Date (LSD) Calculation</h3>
-                    <p>Explore how to enhance SAP EWM's Latest Starting Date (LSD) calculation. Learn about BAdIs and customizing options to optimize task scheduling and execution.</p>
-                    <div class="article-meta">
-                        <span>🕒 13 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Latest Starting Date (LSD) Calculation</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Enhance SAP EWM: Latest Starting Date (LSD)...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/enhance/enhance-put-bin-det.html" class="article-item">
+            <a href="blog-posts/enhance/enhance-put-bin-det.html" class="article-card">
                 <span class="article-number">02</span>
-                <div class="article-content">
-                    <h3>Putaway bin determination (Putaway strategy)</h3>
-                    <p>Learn how to enhance SAP EWM's putaway bin determination. Discover strategies and customizing options to optimize storage location selection.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Putaway bin determination (Putaway strategy)</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Putaway bin determination and strategies.</p>
+                <div class="article-meta">
+                    <span>🕒 12 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/enhance/enhance-quant-det.html" class="article-item">
+            <a href="blog-posts/enhance/enhance-quant-det.html" class="article-card">
                 <span class="article-number">03</span>
-                <div class="article-content">
-                    <h3>Quant determination for stock removal strategy</h3>
-                    <p>Understand quant determination in SAP EWM for stock removal strategies. Learn how to optimize quant selection and enhance warehouse picking efficiency.</p>
-                    <div class="article-meta">
-                        <span>🕒 11 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Quant determination for stock removal strategy</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about quant determination for stock removal strat...</p>
+                <div class="article-meta">
+                    <span>🕒 12 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/enhance/enhance-wocrs.html" class="article-item">
+            <a href="blog-posts/enhance/enhance-wocrs.html" class="article-card">
                 <span class="article-number">04</span>
-                <div class="article-content">
-                    <h3>Warehouse Order Creation Rules (WORCs)</h3>
-                    <p>Master warehouse order creation rules in SAP EWM. Learn enhancement techniques to customize and optimize your warehouse order creation logic.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Warehouse Order Creation Rules (WORCs)</h3>
+                <p>In-depth article about SAP EWM Warehouse Order Creation Rules (WOCRs). Learn how to enhance functional areas using BAdIs...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
         </div>
     </section>
 
-    <!-- REVEAL SAP EWM -->
-    <section class="category-section">
+    <section id="reveal" class="category-section">
         <div class="category-header">
             <div class="category-icon">🔍</div>
             <h2>Reveal SAP EWM</h2>
             <span class="count">11 articles</span>
         </div>
-        <div class="article-list">
-            <a href="blog-posts/reveal/reveal-clsp.html" class="article-item">
+        <div class="article-grid">
+            <a href="blog-posts/reveal/reveal-clsp.html" class="article-card">
                 <span class="article-number">01</span>
-                <div class="article-content">
-                    <h3>Storage bin sorting during putaway (CLSP)</h3>
-                    <p>Learn about storage bin sorting during putaway (CLSP) in SAP EWM. Understand the technical and functional details of bin sequence optimization.</p>
-                    <div class="article-meta">
-                        <span>🕒 11 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Storage bin sorting during putaway (CLSP)</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about [Topic].</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-cond-rec.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-cond-rec.html" class="article-card">
                 <span class="article-number">02</span>
-                <div class="article-content">
-                    <h3>Condition record determination for PPF actions</h3>
-                    <p>Discover condition record determination for Post Processing Framework (PPF) actions. Learn how configuration determines PPF action execution in warehouse processes.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Condition record determination for PPF actions</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about [Topic].</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-def-unde.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-def-unde.html" class="article-card">
                 <span class="article-number">03</span>
-                <div class="article-content">
-                    <h3>Warehouse Order Creation Rules DEF and UNDE</h3>
-                    <p>Understand the DEF (Default) and UNDE (Undo) warehouse order creation rules. Learn how these rules control task default and override behavior.</p>
-                    <div class="article-meta">
-                        <span>🕒 11 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Warehouse Order Creation Rules DEF and UNDE</h3>
+                <p>Learn technical and functional details about Warehouse Order Creation Rules DEF and UNDE in SAP EWM.</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-dest-load.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-dest-load.html" class="article-card">
                 <span class="article-number">04</span>
-                <div class="article-content">
-                    <h3>Options for the destination of loading tasks</h3>
-                    <p>Explore options for loading task destinations in SAP EWM. Learn about different destination strategies and how they impact warehouse operations.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Options for the destination of loading tasks</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about [Topic].</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-inb-stag.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-inb-stag.html" class="article-card">
                 <span class="article-number">05</span>
-                <div class="article-content">
-                    <h3>Inbound staging bin determination</h3>
-                    <p>Learn about inbound staging bin determination in SAP EWM. Understand the configuration and logic for staging bin selection during receiving processes.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Inbound staging bin determination</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Inbound staging bin determination.</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-lsd.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-lsd.html" class="article-card">
                 <span class="article-number">06</span>
-                <div class="article-content">
-                    <h3>Calculation of the Latest Starting Date (LSD)</h3>
-                    <p>Understand the Latest Starting Date (LSD) calculation in SAP EWM. Learn the algorithm and technical details behind task deadline calculations.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Calculation of the Latest Starting Date (LSD)</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about [Topic].</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-sync-wo.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-sync-wo.html" class="article-card">
                 <span class="article-number">07</span>
-                <div class="article-content">
-                    <h3>Synchronization of Warehouse Order completion</h3>
-                    <p>Learn about warehouse order completion synchronization in SAP EWM. Understand how WO completion is tracked and synchronized across systems.</p>
-                    <div class="article-meta">
-                        <span>🕒 11 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Synchronization of Warehouse Order completion</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Synchronization of Warehouse Order completi...</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-wc-dec.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-wc-dec.html" class="article-card">
                 <span class="article-number">08</span>
-                <div class="article-content">
-                    <h3>Work center determination for a deconsolidation process</h3>
-                    <p>Explore work center determination for deconsolidation processes in SAP EWM. Learn how resources are assigned to deconsolidation tasks.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Work center determination for a deconsolidation process</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a deconsolida...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-wc-kts.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-wc-kts.html" class="article-card">
                 <span class="article-number">09</span>
-                <div class="article-content">
-                    <h3>Work center determination in the context of Kit-to-stock (KTS)</h3>
-                    <p>Learn work center determination for Kit-to-stock (KTS) processes in SAP EWM. Understand resource assignment for kit assembly operations.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Work center determination in the context of Kit-to-stock (KTS)</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about [Topic].</p>
+                <div class="article-meta">
+                    <span>🕒 12 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-wc-pack.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-wc-pack.html" class="article-card">
                 <span class="article-number">10</span>
-                <div class="article-content">
-                    <h3>Work center determination for a packing process</h3>
-                    <p>Discover work center determination for packing processes in SAP EWM. Learn how packing resources are identified and managed.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Work center determination for a packing process</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Work center determination for a packing pro...</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/reveal/reveal-wo-sorting-queues.html" class="article-item">
+            <a href="blog-posts/reveal/reveal-wo-sorting-queues.html" class="article-card">
                 <span class="article-number">11</span>
-                <div class="article-content">
-                    <h3>Warehouse Order sorting in Queues</h3>
-                    <p>A comprehensive summary of warehouse order sorting in queues. Learn the technical and functional details about how warehouse orders are sorted, with and without pre-assignment.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Feb 2025</span>
-                    </div>
+                <h3>Warehouse Order sorting in Queues</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order sorting in Queues.</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Mar 2025</span>
                 </div>
             </a>
         </div>
     </section>
 
-    <!-- DISCOVER SAP EWM MFS -->
-    <section class="category-section">
+    <section id="mfs" class="category-section">
         <div class="category-header">
             <div class="category-icon">🏗️</div>
             <h2>Discover SAP EWM MFS</h2>
             <span class="count">12 articles</span>
         </div>
-        <div class="article-list">
-            <a href="blog-posts/mfs/what-is-sap-ewm-mfs.html" class="article-item">
+        <div class="article-grid">
+            <a href="blog-posts/mfs/deep-dive-losc.html" class="article-card">
                 <span class="article-number">01</span>
-                <div class="article-content">
-                    <h3>What is SAP EWM MFS?</h3>
-                    <p>In-depth article about SAP EWM MFS. Learn what SAP EWM MFS is, how it connects to PLCs, and the role of the Material Flow System in automated warehouses.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>Discover SAP EWM MFS - Layout-oriented Storage Control</h3>
+                <p>Deep-dive into the technical details of the Layout-oriented storage control in SAP EWM MFS. Learn about /SCWM/TROUTL_DET...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Aug 2022</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/mfs-putaway.html" class="article-item">
+            <a href="blog-posts/mfs/mfs-interleaving.html" class="article-card">
                 <span class="article-number">02</span>
-                <div class="article-content">
-                    <h3>MFS Putaway Strategy</h3>
-                    <p>An in-depth article about SAP EWM MFS Putaway Strategy in automated warehouses. Learn about the standard logic for putaway processes in material flow systems with practical examples.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>Task Interleaving in an ASRS</h3>
+                <p>Discover how SAP EWM MFS realizes task interleaving in an automatic storage & retrieval system (ASRS). Learn the technic...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Feb 2023</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/deep-dive-losc.html" class="article-item">
+            <a href="blog-posts/mfs/ewm-plc-integration.html" class="article-card">
                 <span class="article-number">03</span>
-                <div class="article-content">
-                    <h3>Discover SAP EWM MFS - Layout-oriented Storage Control</h3>
-                    <p>Deep-dive into the technical details of the Layout-oriented storage control (LOSC) in SAP EWM MFS. Learn about /SCWM/TROUTL_DET and routing logic with practical examples.</p>
-                    <div class="article-meta">
-                        <span>🕒 15 min read</span>
-                        <span>📅 Nov 2025</span>
-                    </div>
+                <h3>The EWM-PLC integration</h3>
+                <p>In-depth article about SAP EWM MFS. Learn technical and functional details about the EWM-PLC integration.</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/ewm-plc.html" class="article-item">
+            <a href="blog-posts/mfs/identification-point.html" class="article-card">
                 <span class="article-number">04</span>
-                <div class="article-content">
-                    <h3>Discover SAP EWM MFS - The communication from EWM to the PLC</h3>
-                    <p>Learn the technical details about EWM to PLC communication, including telegram creation, handshake process, and the function modules like /SCWM/MFS_SEND in MFS projects.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>The Identification-Point</h3>
+                <p>In-depth article about SAP EWM MFS Identification Points. Learn technical and functional details about telegram processi...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/ewm-plc-integration.html" class="article-item">
+            <a href="blog-posts/mfs/mfs-putaway.html" class="article-card">
                 <span class="article-number">05</span>
-                <div class="article-content">
-                    <h3>The EWM-PLC integration</h3>
-                    <p>An introduction to the EWM-PLC integration and the MFS component of EWM. Explore the most important objects used to represent physical material flow components and high-level integration details.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>MFS Putaway Strategy</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about MFS Putaway Strategy.</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/identification-point.html" class="article-item">
+            <a href="blog-posts/mfs/mfs-rearrange.html" class="article-card">
                 <span class="article-number">06</span>
-                <div class="article-content">
-                    <h3>The Identification-Point</h3>
-                    <p>Understand the hardware and software aspects of the Identification-Point (I-Point) in SAP EWM MFS. Learn how HUs are detected, processed, and communicated between EWM and the PLC.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>Rearrange HUs in multi-depth storage bins</h3>
+                <p>SAP EWM standard logic for rearranging HUs in multi-depth storage bins, essential for automated warehouses with MFS.</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/role-of-the-plc.html" class="article-item">
+            <a href="blog-posts/mfs/mfs-simulation-emulation.html" class="article-card">
                 <span class="article-number">07</span>
-                <div class="article-content">
-                    <h3>The role of the PLC</h3>
-                    <p>Get an introduction to Programmable Logic Controllers (PLCs) in the context of EWM MFS projects. Learn about PLC components, their role in warehouse automation, and how they integrate with EWM.</p>
-                    <div class="article-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>Simulation / Emulation</h3>
+                <p>In-depth article about SAP EWM MFS Simulation and Emulation. Learn technical and functional details about standard emula...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/mfs-interleaving.html" class="article-item">
+            <a href="blog-posts/mfs/warehouse-monitor-part-1.html" class="article-card">
                 <span class="article-number">08</span>
-                <div class="article-content">
-                    <h3>Task interleaving in an automated storage &amp; retrieval system (ASRS)</h3>
-                    <p>Learn how task interleaving works in automated warehouse areas using SAP EWM MFS. Discover the comparison between manually operated and automated areas with technical customizing details.</p>
-                    <div class="article-meta">
-                        <span>🕒 14 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>The MFS node in the Warehouse Monitor? (Part &#35;1)</h3>
+                <p>In-depth article about SAP EWM. Learn technical and functional details about the MFS node in the Warehouse Monitor.</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/mfs-rearrange.html" class="article-item">
+            <a href="blog-posts/mfs/warehouse-monitor-part-2.html" class="article-card">
                 <span class="article-number">09</span>
-                <div class="article-content">
-                    <h3>Rearrange HUs in multi-depth storage bins</h3>
-                    <p>Explore the technical details of rearranging handling units in multi-depth storage bins. Understand the EWM standard logic for managing LIFO/FIFO principles in automated warehouse storage.</p>
-                    <div class="article-meta">
-                        <span>🕒 13 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>The MFS node in the Warehouse Monitor? (Part &#35;2)</h3>
+                <p>In-depth article about SAP EWM MFS. Learn technical and functional details about the MFS node in the Warehouse Monitor.</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/mfs-simulation-emulation.html" class="article-item">
+            <a href="blog-posts/mfs/what-is-sap-ewm-mfs.html" class="article-card">
                 <span class="article-number">10</span>
-                <div class="article-content">
-                    <h3>Simulation / Emulation</h3>
-                    <p>Explore SAP EWM standard simulation and emulation capabilities for MFS projects. Learn how to test without real hardware and understand the differences between simulation and emulation approaches.</p>
-                    <div class="article-meta">
-                        <span>🕒 12 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>What is SAP EWM MFS?</h3>
+                <p>In-depth article about SAP EWM MFS. Learn what SAP EWM MFS is, how it connects to PLCs, and the role of the Material Flo...</p>
+                <div class="article-meta">
+                    <span>🕒 14 min</span>
+                    <span>📅 Jan 2024</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/warehouse-monitor-part-1.html" class="article-item">
+            <a href="blog-posts/mfs/ewm-plc.html" class="article-card">
                 <span class="article-number">11</span>
-                <div class="article-content">
-                    <h3>The MFS node in the Warehouse Monitor? (Part #1)</h3>
-                    <p>Unwrap the MFS warehouse monitor node and learn what data you can access with each sub-node. Part 1 covers Communication Channel through Handling Unit with technical insights and practical examples.</p>
-                    <div class="article-meta">
-                        <span>🕒 14 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>The communication from EWM to the PLC</h3>
+                <p>In-depth article about SAP EWM MFS communication to the PLC. Learn technical details about telegram creation, handshake,...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2025</span>
                 </div>
             </a>
-
-            <a href="blog-posts/mfs/warehouse-monitor-part-2.html" class="article-item">
+            <a href="blog-posts/mfs/role-of-the-plc.html" class="article-card">
                 <span class="article-number">12</span>
-                <div class="article-content">
-                    <h3>The MFS node in the Warehouse Monitor? (Part #2)</h3>
-                    <p>Continue exploring the MFS warehouse monitor node in part 2. Learn about Handling Unit Move through Telegram Buffer with methods available in EWM standard for each sub-node.</p>
-                    <div class="article-meta">
-                        <span>🕒 13 min read</span>
-                        <span>📅 Jan 2026</span>
-                    </div>
+                <h3>The role of the PLC</h3>
+                <p>Introduction to the role of Programmable Logic Controllers (PLCs) in SAP EWM MFS projects. Learn about PLC components an...</p>
+                <div class="article-meta">
+                    <span>🕒 16 min</span>
+                    <span>📅 Jan 2025</span>
                 </div>
             </a>
         </div>

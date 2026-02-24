@@ -16,46 +16,55 @@
     <meta property="article:modified_time" content="2024-01-01">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Warehouse Order Creation Rules DEF and UNDE",
-        "description": "Learn technical and functional details about Warehouse Order Creation Rules DEF and UNDE in SAP EWM.",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Warehouse Order Creation Rules DEF and UNDE",
+  "description": "Learn technical and functional details about Warehouse Order Creation Rules DEF and UNDE in SAP EWM.",
+  "image": "../../assets/images/reveal/def-unde/SAP EWM WOCR UNDE and DEF_02.png",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-01-01T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Reveal SAP EWM",
+      "item": "https://wmexperts.online/blog-posts/reveal/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Warehouse Order Creation Rules DEF and UNDE",
+      "item": "https://wmexperts.online/blog-posts/reveal/reveal-def-unde.html"
+    }
+  ]
+}
+</script>
 
     <title>Warehouse Order Creation Rules DEF and UNDE | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -471,7 +480,7 @@
             <p>While trying to structure this post, I decided to start by looking at the application area of the WOCR <code>DEF</code>, first in the context of putaway and internal tasks, and then in the context of stock removal. In the second part of this post, we will concentrate on the WOCR <code>UNDE</code> and again separate it by process category (putaway vs. removal).</p>
             <p>Throughout the whole article, I am working with test cases and examples to help you understand my findings. In addition to this, you will also find all repository objects that are responsible for controlling the logic.</p>
             
-            <h2><strong>ANALYSING the WOCR ‘DEF’</strong></h2>
+            <strong>ANALYSING the WOCR ‘DEF’</strong>
             <p>At first we want to understand the purpose of the WOCR <code>DEF</code> in detail. Remember, the HTG gave us the following information:</p>
             <p><em>If the system can’t find a warehouse order creation rule for an activity area in Customizing, the warehouse tasks are bundled with the warehouse order creation rule Default (<code>DEF</code>). […] except for the putaway warehouse tasks where the system creates one warehouse order for each putaway-HU warehouse task (fields <code>FLGHUTO</code> = X and <code>TRART</code> = <code>wmegc_trart_put</code> (1)).</em></p>
             <p>So, we start to analyze the behavior of the EWM standard in a situation where it cannot find any WOCR based on the given combination of activity area and activity. Let’s look at putaway and internal movements first, before we explore stock removal.</p>
@@ -573,7 +582,7 @@
             <p>…you do not have to configure a custom warehouse order creation rule for that but can keep it lean and work with the EWM standard default (<code>DEF</code>) rule.</p>
             <p>First part done. I think that was straightforward and easy to understand! Let us now have a look at the WOCR <code>UNDE</code>!</p>
             
-            <h2><strong>ANALYSING the WOCR ‘UNDE’</strong></h2>
+            <strong>ANALYSING the WOCR ‘UNDE’</strong>
             <p>The HTG gave us the following information for this scenario:</p>
             <p><em>If a warehouse task doesn't fit to any warehouse order creation rule, it's bundled with the rule Undefined (<code>UNDE</code>), together with all the other warehouse tasks that don’t fit to any warehouse order creation rule.</em></p>
             <p>That is not a lot of details and as you can see further below, this is not 100% true. Anyways - we now want to analyse the behavior of the EWM standard in a situation where it indeed finds a WOCR for the given combination of activity area and activity but it cannot apply this rule (e.g. because the WTs did not pass the item filter).</p>
@@ -662,7 +671,7 @@
             <p>…this is the example that I had in mind when I wrote that the statement from the how-to-guide is not 100% true:</p>
             <p><em>If a warehouse task doesn't fit to any warehouse order creation rule, it's bundled with the rule Undefined (<code>UNDE</code>), together with (!!) all the other (!!) warehouse tasks that don’t fit to any warehouse order creation rule.</em></p>
             
-            <h2><strong>Summary</strong></h2>
+            <strong>Summary</strong>
             <p>Unfortunately the help text included in the customizing does not help much here and also the functional books from the SAP press do only provide an absolute minimum of technical details. The HTG for WO enhancements gave us a good picture but again, a comprehensive understanding of how and why EWM applies the WOCRs <code>DEF</code> and <code>UNDE</code> could only be gathered based on a code-review.</p>
             <p>Key points that you should take away from this blog post:</p>
             <p>In case you do not define any WOCR at all for the given combination of activity area and activity, EWM applies the special rule <code>DEF</code></p>
@@ -846,6 +855,8 @@
 
 </body>
 </html>
+
+
 
 
 

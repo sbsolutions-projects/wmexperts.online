@@ -1,0 +1,25 @@
+# .gitignore recommendations for DRY component system
+
+# If using PYTHON BUILD SCRIPT approach:
+# Commit your source files with {{HEADER}} and {{FOOTER}} placeholders
+# The build.py script processes them and updates the files
+# Nothing extra to ignore - just commit everything as normal
+
+# If using JAVASCRIPT INJECTION approach:
+# Everything is committed as-is
+# No build artifacts to ignore
+
+# General recommendations for any static site:
+node_modules/
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/settings.json  # VS Code personal settings (keep extensions in repo)
+
+# If you add optional build tools later:
+dist/                  # If you minify CSS/JS
+build/                 # If you add a separate build directory
+.env                   # Environment files if you add them
+*.pyc                  # Python cache if running build.py
+__pycache__/           # Python cache directory

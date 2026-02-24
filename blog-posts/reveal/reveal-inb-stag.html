@@ -16,46 +16,55 @@
     <meta property="article:modified_time" content="2024-01-01">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Inbound staging bin determination",
-        "description": "In-depth article about SAP EWM. Learn technical and functional details about Inbound staging bin determination.",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2024-01-01",
-        "dateModified": "2024-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/article-slug.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Inbound staging bin determination",
+  "description": "In-depth article about SAP EWM. Learn technical and functional details about Inbound staging bin determination.",
+  "image": "../../assets/images/reveal/inb-stage/SAP EWM Inbound staging bin determination_01.png",
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-01-01T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Reveal SAP EWM",
+      "item": "https://wmexperts.online/blog-posts/reveal/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Inbound staging bin determination",
+      "item": "https://wmexperts.online/blog-posts/reveal/reveal-inb-stag.html"
+    }
+  ]
+}
+</script>
 
     <title>Inbound staging bin determination | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -579,7 +588,7 @@
             <p>It is important to understand that it is <u>not</u> foreseen to skip the unloading step entirely (like e.g. steps for quality inspection or deconsolidation during the inbound process). So in case you decided for the rules-based logic and the staging bin determination described above does <u>not</u> return a valid bin, EWM will give you an error message instead of skipping the step!</p>
             <p>As usual, I will close this post listing some options for you the enhance the EWM standard logic here.</p>
             
-            <h2><strong>Options for enhancements</strong></h2>
+            <strong>Options for enhancements</strong>
             <p>Badi for staging bin determination of delivery items: <code>/SCWM/EX_SR_STADET</code></p>
             <p>This Badi is called at the end of method <code>/SCWM/CL_AF_SR_CONFIG-/SCWM/IF_AF_SR_CONFIG~DETERMINE_STAGING_AREA_INB</code> (so after the standard bin determination for the delivery item has been processed) and also at the end of method <code>/SCWM/CL_SR_CONFIG-STAGE_AREA_DET_IN</code> (so after the standard bin determination based on the TU has been processed):</p>
             
@@ -761,6 +770,8 @@
 
 </body>
 </html>
+
+
 
 
 

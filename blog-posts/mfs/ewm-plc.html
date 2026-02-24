@@ -16,46 +16,55 @@
     <meta property="article:modified_time" content="2025-01-01">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Discover SAP EWM MFS - The communication from EWM to the PLC",
-        "description": "In-depth article about SAP EWM MFS communication to the PLC. Learn technical details about telegram creation, handshake, and function modules like /SCWM/MFS_SEND.",
-        "image": "https://wmexperts.online/assets/images/placeholder.png",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-01-01",
-        "author": {
-          "@type": "Person",
-          "name": "Hendrik"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WMexperts",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://wmexperts.online/assets/logo.png"
-          }
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://wmexperts.online/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog",
-          "item": "https://wmexperts.online/blog-posts/category/mfs-automation.html"
-        }]
-      }
-    ]
-    </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Discover SAP EWM MFS",
+  "description": "In-depth article about SAP EWM MFS communication to the PLC. Learn technical details about telegram creation, handshake, and function modules like /SCWM/MFS_SEND.",
+  "image": "..\..\assets\images\mfs\ewm-plc/SAP EWM MFS PLC communication_01.png",
+  "datePublished": "2025-01-01T00:00:00Z",
+  "dateModified": "2025-01-01T00:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "SAP EWM MFS",
+      "item": "https://wmexperts.online/blog-posts/mfs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Discover SAP EWM MFS",
+      "item": "https://wmexperts.online/blog-posts/mfs/ewm-plc.html"
+    }
+  ]
+}
+</script>
 
     <title>Discover SAP EWM MFS | WMexperts</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -448,7 +457,7 @@
                 <img src="..\..\assets\images\mfs\ewm-plc/SAP EWM MFS PLC communication_01.png" alt="SAP EWM MFS PLC communication_01" loading="lazy">
             </div>
             <p>However, the general approach is also applicable for other kinds of telegrams which are being sent from EWM to a subsystem via TCP/IP.<br>Note that with this post we will limit the scope to an APC (ABAP Push-Channel) communication based on the TCP/IP protocol suite. Up to EWM release 9.3 a TCP/IP-RFC converter is required which will not be in scope of this post.</p>
-            <p>Also note that the communication steps for the direction from the PLC to EWM will not be part of this post. For everybody who wants to understand how EWM receives telegrams I highly recommend the blog post published by Joerg and Tobias here.</p>
+            <p>Also note that the communication steps for the direction from the PLC to EWM will not be part of this post. For everybody who wants to understand how EWM receives telegrams I highly recommend the blog post published by <a href="https://de.linkedin.com/in/j%C3%B6rg-michaelis-82663766 " target="_blank" rel="noopener">Jörg Michaelis</a> about the topic of EWM PLC integration which you can find <a href="https://community.sap.com/t5/supply-chain-management-blog-posts-by-sap/blog-series-about-the-material-flow-system-component-of-sap-extended/ba-p/13467588" target="_blank" rel="noopener">here</a>.</p>
             <p>The content provided here has been created in cooperation with the SAP EWM team at Swisslog. Feel free to visit their <a href="https://www.swisslog.com/en-us/products-systems-solutions/software-inventory-management/sap-ewm-extended-warehouse-management" target="_blank" rel="noopener noreferrer">website</a> in case you want to learn more about the services offered by @ Swisslog or to browse open positions within their EWM team!</p>
             
             <p><strong>Agenda</strong></p>
@@ -489,7 +498,7 @@
             </div>
             <p>So imagine the handshake mechanism here as an approach where you only proceed with the next sentence once your kid has confirmed that he/she actually heard the previous sentence. As long as he/she ignores you, you will just proceed saying the same thing all over again. Not sure though how we can incorporate the restart of the channel after X attempts in this analogy. However, you might want to think about opening an additional channel and e.g. start communicating via Whatsapp only .</p>
             
-            <h2><strong>Step 1: Which WT to be processed?</strong></h2>
+            <strong>Step 1: Which WT to be processed?</strong>
             <p>WTs to be processed by resources are assigned to queues. Subsequently, in the first step we need to decide which of the WTs from the given queue is selected as the next one to be processed (~ sent to subsystem). This is done via FM <code>/SCWM/MFS_WT_DET</code>. This FM is called directly in the context of posting the WT creation and WT confirmation to the DB:</p>
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\ewm-plc/SAP EWM MFS PLC communication_09.png" alt="SAP EWM MFS PLC communication_09" loading="lazy">
@@ -528,7 +537,7 @@
                 <img src="..\..\assets\images\mfs\ewm-plc/SAP EWM MFS PLC communication_17_2.png" alt="SAP EWM MFS PLC communication_17" loading="lazy">
             </div>
             
-            <h2><strong>Step 2.1: Prepare the telegram creation</strong></h2>
+            <strong>Step 2.1: Prepare the telegram creation</strong>
             <p>Once a WT is selected, EWM triggers the creation and transmission of the telegram via function module <code>/SCWM/MFS_SEND</code>. This FM is the most important one from the perspective of this article here and is creating the outgoing telegram from technical perspective.</p>
             <p>Note that this FM is called from multiple other places (e.g. to trigger the creation of an acknowledgement telegram in the context of processing one which had been received from the subsystem). I limited the scope of the post to the context of the creation of a telegram for a warehouse task.</p>
             <p>The FM starts composing telegram content based on the WT data (mainly derived from <code>/SCWM/ORDIM_O</code> table). Note that this happens in case the FM is called directly from the WT creation.</p>
@@ -586,7 +595,7 @@
                 <img src="..\..\assets\images\mfs\ewm-plc/SAP EWM MFS PLC communication_33.png" alt="SAP EWM MFS PLC communication_33" loading="lazy">
             </div>
             
-            <h2><strong>Step 2.2: Create the telegram</strong></h2>
+            <strong>Step 2.2: Create the telegram</strong>
             <p>Let us assume, no waiting telegrams can be found in the buffer table. EWM now sends the current telegram to the subsystem directly. For this purpose we pull a sequence number for the telegram (this is essential for the communication protocol to work) via FM <code>/SCWM/MFS_SND_SEQNO_GET</code>. Based on the sequence number EWM is able to identify a telegram uniquely for a specific period of time (in combination with the channel and the direction). The number is pulled from the channel data, stored in table <code>/SCWM/MFSCCH</code>:</p>
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\ewm-plc/SAP EWM MFS PLC communication_34.png" alt="SAP EWM MFS PLC communication_34" loading="lazy">
@@ -609,7 +618,7 @@
             <p>The record for this telegram will be removed from the buffer table automatically in the context of processing the acknowledgement for the given telegram sequence number from the subsystem.</p>
             <p>The last step before we finally send the telegram is the activation of the log respectively to log the telegram data based on the given settings.</p>
             
-            <h2><strong>Step 2.3: Send the telegram</strong></h2>
+            <strong>Step 2.3: Send the telegram</strong>
             <p>Now we finally handover the telegram to the PLC based on the given communication method. This is done via FM <code>/SCWM/MFS_CL_CALL</code>. As part of this FM we first determine the communication details of the PLC (1) and the channel (2):</p>
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\ewm-plc/SAP EWM MFS PLC communication_39.png" alt="SAP EWM MFS PLC communication_39" loading="lazy">
@@ -631,14 +640,14 @@
             <p>As mentioned at the beginning of this article, the APC approach is in scope of this article. In this context, class <code>/SCWM/CL_APC_EXT_MFS_TCP_PLC</code> is called to execute the TCP/IP based communication with the subsystem:</p>
             <p>I decided to stop at this point and will not dig deeper into the details. From here onwards it is all about complex technical stuff in order to enable and execute the TCP/IP based communication. Not necessary to understand from my point of view, unless you want to become a MFS core developer or need to change/analyse something in this area of the coding (which should rarely happen as part of your MFS projects).<br>You should understand though, that the subsystem will send an acknowledgement telegram back to EWM and stores the telegram in its receiving buffer, before it actually processes it.</p>
             
-            <h2><strong>Step 3: Check whether we already received something</strong></h2>
+            <strong>Step 3: Check whether we already received something</strong>
             <p>At the very end of our Send-FM EWM tries to process the answer from the subsystem right away via FM <code>/SCWM/MFS_RECEIVE2</code>:</p>
             <div class="screenshot-container">
                 <img src="..\..\assets\images\mfs\ewm-plc/SAP EWM MFS PLC communication_44.png" alt="SAP EWM MFS PLC communication_44" loading="lazy">
             </div>
             <p>I stop here with a hint the blog <a href="https://blogs.sap.com/2020/11/23/sap-ewm-mfs-receiving-and-processing-telegrams/" target="_blank" rel="noopener">post</a> of Joerg and Tobias, where they will unveil the details of the logic to process incoming telegrams.</p>
             
-            <h2><strong>Side note</strong></h2>
+            <strong>Side note</strong>
             <p>I mentioned the Telegram Repetition Process via the Batch Job <code>MFS_PERIODCHECK</code> multiple times in this article. This job (respectively report: <code>/SCWM/R_MFS_PERIODCHK_PREP</code> / FM: <code>/SCWM/MFS_PERIODCHK</code>) is an essential component of the MFS logic and is mainly responsible to monitor the connections and trigger the repetition of telegrams. It is</p>
             <ul>
                 <li>responsible for all channels within warehouse number</li>
@@ -649,7 +658,7 @@
                 <li>repeating telegrams n times with the same sequence number before it closes and reopens the channel</li>
             </ul>
             
-            <h2><strong>Summary</strong></h2>
+            <strong>Summary</strong>
             <p>You should have a rough understanding about how EWM sends telegrams to subsystems like crane or conveyor PLCs. As an example we looked at the creation and communication of a telegram for a warehouse task which removes an HU from a ASRS. We saw how EWM decides whether a task is relevant for the subsystem and how it decides which task of a given queue is the next one to be processed. We learned how the telegram is created, buffered and finally pushed out of EWM to its destination.</p>
         </div>
 
@@ -812,6 +821,8 @@
 
 </body>
 </html>
+
+
 
 
 
