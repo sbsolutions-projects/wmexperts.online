@@ -12,6 +12,7 @@ This script:
 2. Injects them into pages that have {{HEADER}} and {{FOOTER}} placeholders
 3. Creates/updates the output files with fully resolved HTML
 4. Preserves all metadata and styling
+5. Automatically features the latest blog post on index.html
 
 GitHub Pages Deployment:
 - Commit source files with placeholders to a 'source' branch or folder
@@ -22,7 +23,9 @@ GitHub Pages Deployment:
 import os
 import sys
 import glob
+import re
 from pathlib import Path
+from datetime import datetime
 
 def load_template(template_name):
     """Load a template file from the templates directory."""
@@ -30,6 +33,52 @@ def load_template(template_name):
     if not template_path.exists():
         raise FileNotFoundError(f"Template not found: {template_path}")
     return template_path.read_text(encoding='utf-8')
+
+def feature_latest_article(content):
+    """
+    Parse article cards and feature the one with the latest date.
+    
+    Looks for cards with data-date attribute in YYYY-MM-DD format.
+    Adds the 'featured' class to the card with the latest date.
+    Also updates the tag to show "📌 Featured" for the featured article.
+    
+    Args:
+        content: HTML content string
+    
+    Returns:
+        Updated HTML content with latest article featured
+    """
+    # Find all article cards with data-date attribute
+    card_pattern = r'<a[^>]*class="card"[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*>(.*?)</a>'
+    
+    cards = list(re.finditer(card_pattern, content, re.DOTALL))
+    
+    if not cards:
+        return content  # No dated cards found
+    
+    # Find the card with the latest date
+    latest_idx = 0
+    latest_date = datetime.strptime(cards[0].group(1), '%Y-%m-%d')
+    
+    for i, match in enumerate(cards):
+        card_date = datetime.strptime(match.group(1), '%Y-%m-%d')
+        if card_date > latest_date:
+            latest_date = card_date
+            latest_idx = i
+    
+    # Add 'featured' class to the latest card
+    latest_card_full = cards[latest_idx].group(0)
+    updated_card = latest_card_full.replace('class="card"', 'class="card featured"')
+    
+    # Update the tag to show featured badge instead of regular tag
+    # Find the tag within this card
+    tag_pattern = r'<span class="tag">.*?</span>'
+    if re.search(tag_pattern, updated_card):
+        updated_card = re.sub(tag_pattern, '<span class="tag">📌 Featured</span>', updated_card, count=1)
+    
+    content = content.replace(latest_card_full, updated_card)
+    
+    return content
 
 def process_file(filepath, header, footer):
     """
@@ -47,11 +96,20 @@ def process_file(filepath, header, footer):
     
     # Check if file has placeholders
     if '{{HEADER}}' not in content and '{{FOOTER}}' not in content:
+        # For index.html, still process to feature latest article even without placeholders
+        if filepath.endswith('index.html'):
+            content = feature_latest_article(content)
+            Path(filepath).write_text(content, encoding='utf-8')
+            return True
         return False
     
     # Replace placeholders
     content = content.replace('{{HEADER}}', header)
     content = content.replace('{{FOOTER}}', footer)
+    
+    # If this is index.html, also feature the latest article
+    if filepath.endswith('index.html'):
+        content = feature_latest_article(content)
     
     # Write back to file
     Path(filepath).write_text(content, encoding='utf-8')
