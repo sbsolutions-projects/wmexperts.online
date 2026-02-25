@@ -251,14 +251,7 @@
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo">WM<span style="color: var(--text-dark);">experts.online</span></a>
-        <nav>
-            <a href="index.html">Latest</a>
-            <a href="blog-overview.html" class="active">All Articles</a>
-            <a href="about.html">About</a>
-        </nav>
-    </header>
+<header id="main-header"></header>
 
     <section class="page-header">
         <h1>All Articles</h1>
@@ -721,9 +714,13 @@
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</p>
-    </footer>
+    <footer id="main-footer"></footer>
+
+        <script>
+    // Load global components
+    fetch('/header-content.html').then(res => res.text()).then(html => document.getElementById('main-header').innerHTML = html);
+    fetch('/footer-content.html').then(res => res.text()).then(html => document.getElementById('main-footer').innerHTML = html);
+    </script>
 
 </body>
 </html>

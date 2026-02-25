@@ -194,14 +194,8 @@
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo">WM<span style="color: var(--text-dark);">experts.online</span></a>
-        <nav>
-            <a href="index.html#latest">Latest</a>
-            <a href="blog-overview.html">All Articles</a>
-            <a href="about.html" class="active">About</a>
-        </nav>
-    </header>
+    <header id="main-header"></header>
+
 
     <main class="content-container">
         <section class="profile-section">
@@ -220,11 +214,11 @@
                 </div>
 
                 <div class="bio-text">
-                    <p>I am one of the lucky few who found a genuine passion in my profession. In an era where AI can generate endless streams of information, I believe it is more important than ever to ground technical content in real-world human interaction & relationship.
+                    <p>I am one of the lucky few who found a genuine passion in my profession. My career is built at the intersection of complex software, physical automation, and the humans who make it all work. I specialize in translating the logic of SAP EWM into systems that material flow systems can execute and warehouse operators can actually use.</p>
                     
-                    <p>My career has been spent at the intersection of complex software, physical automation and the human dealing with that stuff. I specialize in translating the logic of SAP EWM into one that can be understood by automated material flow systems on the one side and human operators on the other.</p>
+                    <p>While I leverage modern tools like AI to streamline aspects from planning to coding, I've learned that the success of an EWM project is decided on the warehouse floor, not just on a screen. It requires deep human interaction and real-world problem-solving skills that artificial intelligence alone cannot provide.</p>
                     
-                    <p>I don’t just work with these systems; I enjoy the challenge they present. Sharing this knowledge and spending my time deep-diving into the the logic is how I choose to contribute to the intralogistics community.</p>
+                    <p>I don't just work with SAP EWM; I enjoy the specific challenges these intralogistics systems present. Deep-diving into this logic and sharing those human-centric insights is how I contribute to the community.</p>
                 </div>
 
                 <div class="connect-grid">
@@ -245,9 +239,13 @@
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 WMexperts.online • Functional & Technical SAP EWM Expertise</p>
-    </footer>
+    <footer id="main-footer"></footer>
+
+         <script>
+    // Load global components
+    fetch('/header-content.html').then(res => res.text()).then(html => document.getElementById('main-header').innerHTML = html);
+    fetch('/footer-content.html').then(res => res.text()).then(html => document.getElementById('main-footer').innerHTML = html);
+    </script>
 
 </body>
 </html>

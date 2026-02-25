@@ -50,8 +50,8 @@ h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom
 
 .screenshot-container { margin: 2rem 0; text-align: center; }
 .screenshot-container img { 
-    max-width: 66.67%; height: auto; display: block; margin: 0 auto; 
-    border: 1px solid var(--border); border-radius: 8px; cursor: zoom-in; 
+    max-width: 66.67%; max-height: 60vh; height: auto; display: block; margin: 0 auto; 
+    border: 1px solid var(--border); border-radius: 8px; cursor: zoom-in; object-fit: contain;
 }
 
 code { font-family: 'Courier New', monospace; background: #EEF2F6; color: var(--sap-blue); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
@@ -128,6 +128,8 @@ code { font-family: 'Courier New', monospace; background: #EEF2F6; color: var(--
     border-radius: 6px; 
     border: none; 
     font-weight: 600; 
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
     cursor: pointer; 
     transition: background 0.2s;
 }
@@ -139,10 +141,12 @@ code { font-family: 'Courier New', monospace; background: #EEF2F6; color: var(--
     justify-content: center;
     background: #ff0000; 
     color: #fff; 
-    padding: 12px 24px; 
+    padding: 12px 20px; 
     border-radius: 6px; 
     text-decoration: none; 
     font-weight: 600; 
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
     transition: background 0.2s;
 }
 .btn-youtube:hover { background: #cc0000; }
