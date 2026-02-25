@@ -1,0 +1,159 @@
+/* --- MASTER STYLESHEET: WMexperts.online --- */
+
+/* 1. VARIABLES & GLOBALS */
+:root {
+    --sap-blue: #005597;
+    --sap-blue-light: #0066B3;
+    --bg-page: #F5F7FA;
+    --bg-light: #F9FAFB;
+    --bg-card: #FFFFFF;
+    --text-dark: #111827;
+    --text-muted: #6B7280;
+    --border: #E5E7EB;
+    --accent: #EEF6FC;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--bg-page); color: var(--text-muted); line-height: 1.6; }
+main { background-color: #ffffff; }
+
+/* 2. HEADER & NAVIGATION */
+header {
+    background: var(--bg-card);
+    padding: 1.5rem 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    min-height: 80px;
+}
+.logo { font-weight: 700; font-size: 1.5rem; color: var(--sap-blue); text-decoration: none; }
+nav a { margin-left: 2.5rem; text-decoration: none; color: var(--text-muted); font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+nav a:hover, nav a.active { color: var(--sap-blue); }
+
+/* 3. ARTICLE STRUCTURE & TYPOGRAPHY */
+article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
+.breadcrumb { font-size: 0.75rem; color: var(--sap-blue); text-transform: uppercase; font-weight: 600; letter-spacing: 1px; margin-bottom: 1rem; }
+h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1.5px; font-weight: 700; }
+.content h2 { color: var(--text-dark); margin-top: 2rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; margin-bottom: 1rem; }
+.content p { margin-bottom: 1.25rem; font-size: 1.1rem; }
+.content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
+.content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
+
+/* 4. TECHNICAL BLOCKS (VIDEO, CODE, IMAGES) */
+.video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 2.5rem 0; border-radius: 12px; background: #000; }
+.video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+.screenshot-container { margin: 2rem 0; text-align: center; }
+.screenshot-container img { 
+    max-width: 66.67%; height: auto; display: block; margin: 0 auto; 
+    border: 1px solid var(--border); border-radius: 8px; cursor: zoom-in; 
+}
+
+code { font-family: 'Courier New', monospace; background: #EEF2F6; color: var(--sap-blue); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+
+/* 5. LIGHTBOX / ZOOM UI */
+#lightbox {
+    display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); cursor: zoom-out; align-items: center; justify-content: center;
+}
+#lightbox.active { display: flex; }
+#lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; }
+.lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 40px; color: #fff; cursor: pointer; }
+
+/* 6. CTA & STAY UPDATED CARDS */
+.stay-updated { 
+    margin-top: 3rem; 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 2rem; 
+}
+
+.stay-updated-card { 
+    background: var(--bg-light); 
+    padding: 1.5rem; 
+    border-radius: 12px; 
+    border: 1px solid var(--border); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; /* Ensures buttons stick to the bottom */
+}
+
+.stay-updated-card h3 {
+    color: var(--text-dark);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.stay-updated-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Newsletter Form & Input Styling */
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.newsletter-form input {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    border-color: var(--sap-blue);
+    box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
+}
+
+.btn-subscribe { 
+    background: var(--sap-blue); 
+    color: #fff; 
+    padding: 12px 20px; 
+    border-radius: 6px; 
+    border: none; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: background 0.2s;
+}
+.btn-subscribe:hover { background: var(--sap-blue-light); }
+
+.btn-youtube { 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+    background: #ff0000; 
+    color: #fff; 
+    padding: 12px 24px; 
+    border-radius: 6px; 
+    text-decoration: none; 
+    font-weight: 600; 
+    transition: background 0.2s;
+}
+.btn-youtube:hover { background: #cc0000; }
+
+/* 7. FOOTER */
+footer { padding: 3rem 8%; text-align: center; font-size: 0.9rem; border-top: 1px solid var(--border); background: var(--bg-card); margin-top: 4rem; }
+
+/* 8. RESPONSIVE */
+@media (max-width: 768px) {
+    header { padding: 1rem 5%; }
+    h1 { font-size: 2.2rem; }
+    .stay-updated { grid-template-columns: 1fr; }
+    .screenshot-container img { max-width: 100%; }
+}
