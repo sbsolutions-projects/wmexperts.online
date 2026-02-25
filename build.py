@@ -39,44 +39,65 @@ def feature_latest_article(content):
     Parse article cards and feature the one with the latest date.
     
     Looks for cards with data-date attribute in YYYY-MM-DD format.
-    Adds the 'featured' class to the card with the latest date.
-    Also updates the tag to show "📌 Featured" for the featured article.
+    Reorders cards so the latest one appears first and marks it as featured.
     
     Args:
         content: HTML content string
     
     Returns:
-        Updated HTML content with latest article featured
+        Updated HTML content with latest article featured and reordered
     """
-    # Find all article cards with data-date attribute
-    card_pattern = r'<a[^>]*class="card"[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*>(.*?)</a>'
+    # Find the entire grid container
+    grid_pattern = r'(<div class="grid">)\s*(.*?)\s*(<\/div>\s*<!-- VIEW ALL LINK -->)'
+    grid_match = re.search(grid_pattern, content, re.DOTALL)
     
-    cards = list(re.finditer(card_pattern, content, re.DOTALL))
+    if not grid_match:
+        return content  # No grid found
+    
+    grid_opening = grid_match.group(1)
+    grid_content = grid_match.group(2)
+    grid_closing = grid_match.group(3)
+    
+    # Find all article cards with data-date attribute
+    card_pattern = r'(<a[^>]*class="card[^"]*"[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*>.*?</a>)'
+    
+    cards = []
+    for match in re.finditer(card_pattern, grid_content, re.DOTALL):
+        card_html = match.group(1)
+        card_date_str = match.group(2)
+        card_date = datetime.strptime(card_date_str, '%Y-%m-%d')
+        cards.append({
+            'html': card_html,
+            'date': card_date,
+            'date_str': card_date_str
+        })
     
     if not cards:
         return content  # No dated cards found
     
-    # Find the card with the latest date
-    latest_idx = 0
-    latest_date = datetime.strptime(cards[0].group(1), '%Y-%m-%d')
+    # Sort cards by date, latest first
+    cards.sort(key=lambda x: x['date'], reverse=True)
     
-    for i, match in enumerate(cards):
-        card_date = datetime.strptime(match.group(1), '%Y-%m-%d')
-        if card_date > latest_date:
-            latest_date = card_date
-            latest_idx = i
+    # Update the first (latest) card to be featured
+    latest_card_html = cards[0]['html']
+    featured_card_html = latest_card_html.replace('class="card"', 'class="card featured"')
     
-    # Add 'featured' class to the latest card
-    latest_card_full = cards[latest_idx].group(0)
-    updated_card = latest_card_full.replace('class="card"', 'class="card featured"')
-    
-    # Update the tag to show featured badge instead of regular tag
-    # Find the tag within this card
+    # Replace the tag with featured badge
     tag_pattern = r'<span class="tag">.*?</span>'
-    if re.search(tag_pattern, updated_card):
-        updated_card = re.sub(tag_pattern, '<span class="tag">📌 Featured</span>', updated_card, count=1)
+    featured_card_html = re.sub(tag_pattern, '<span class="tag">📌 Featured</span>', featured_card_html, count=1)
     
-    content = content.replace(latest_card_full, updated_card)
+    # Reconstruct the grid with reordered cards
+    new_grid_content = '\n                ' + featured_card_html
+    
+    # Add remaining cards (without the latest one)
+    for card in cards[1:]:
+        new_grid_content += '\n\n                ' + card['html']
+    
+    # Reconstruct the full grid
+    new_grid = grid_opening + new_grid_content + '\n            ' + grid_closing
+    
+    # Replace the old grid with the new one
+    content = content[:grid_match.start()] + new_grid + content[grid_match.end():]
     
     return content
 
