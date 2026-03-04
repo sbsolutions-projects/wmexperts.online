@@ -14,7 +14,16 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background-color: var(--bg-page); color: var(--text-muted); line-height: 1.6; }
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg-page); 
+    background: linear-gradient(180deg,
+        rgba(0, 85, 151, 0.08) 0%,
+        rgba(0, 85, 151, 0.04) 25%,
+        transparent 60%);
+    color: var(--text-muted); 
+    line-height: 1.6; 
+}
 main { background-color: #ffffff; }
 
 /* 2. HEADER & NAVIGATION */
