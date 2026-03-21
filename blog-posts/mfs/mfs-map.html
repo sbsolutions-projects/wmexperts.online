@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn the basics of SAP EWM MFS with the #MFSMAP. A comprehensive reference model connecting Core EWM, MFS, and PLC layers.">
+    <meta name="keywords" content="SAP EWM, MFS, Material Flow System, PLC, Automation, #MFSMAP, SAP Consulting">
+    <meta name="author" content="Hendrik">
+    <link rel="icon" type="image/png" href="/assets/favicon/wmexperts%20favicon.png">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Understand the EWM MFS Basics - The MFS Map - A community project | WMexperts">
+    <meta property="og:description" content="Introducing the MFS MAP: A Reference Model connecting the 3 main layers of automated warehouses into one clear picture.">
+    <meta property="og:image" content="https://wmexperts.online/assets/images/mfs/mfs-map/SAP%20EWM%20MFS%20MAP_07.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    
+    <meta property="article:published_time" content="2026-03-21">
+    <meta property="article:modified_time" content="2026-03-21">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  "headline": "Understand the EWM MFS Basics - The MFS Map - A community project",
+  "description": "An introduction to all important MFS basic objects and their interaction via the #MFSMAP reference model.",
+  "image": "../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_07.png",
+  "datePublished": "2026-03-21T10:00:00Z",
+  "dateModified": "2026-03-21T10:00:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Hendrik"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WMexperts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wmexperts.online/assets/favicon/favicon-32x32.png"
+    }
+  }
+}
+    </script>
+    
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wmexperts.online/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "MFS",
+      "item": "https://wmexperts.online/blog-posts/mfs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "SAP EWM MFS Basics",
+      "item": "https://wmexperts.online/blog-posts/mfs/mfs-map.html"
+    }
+  ]
+}
+    </script>
+
+    <title>Understand the EWM MFS Basics - The MFS Map | WMexperts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="canonical" href="https://wmexperts.online/blog-posts/mfs/mfs-map.html">
+</head>
+<body>
+
+    <header id="main-header"></header>
+
+<article>
+    <div class="breadcrumb">Discover SAP EWM MFS</div>
+    
+    <h1>Understand the EWM MFS Basics - The MFS MAP - A community project</h1>
+
+    <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/64m0KrT3IcQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="content">
+        <p>Even if you’ve worked with EWM for many years already, its Material Flow System is definitely not easy to understand. With this blog-post, I will introduce all important MFS basic objects and how they interact. I am presenting to you what I call ‘The MFS MAP’.</p>
+        
+        <p>I've always been missing a 'Standard Map' for EWM MFS. So, I jumped in when I got the chance to mentor a student on his Bachelor thesis, who wanted to build something in that direction (<a href="https://www.linkedin.com/in/max-jelinski-5137691b9/" target="_blank" rel="noopener noreferrer">Max</a>). We created a Reference Model that connects the 3 main layers - EWM Core, EWM MFS, and the PLC - into one clear picture.</p>
+
+        <p>I am confident that only once you've understood how the main components on these 3 layers are interacting, you are able to dig deeper into the core MFS functionalities. This is especially true in the context of a project where you need to integrate automation equipment.</p>
+
+        <p>So I became one of the EWM Consultants that helped Max with his thesis and with the development of the reference model. After we handed it in at the beginning of the year, I've been fine-tuning the result regularly and have now reached a state where I am at least somewhat happy with it. Still waking up every morning with new ideas but at the state where it is right now, I decided to convert this into an open-source community project. At the end of this post I explain what I mean with this and I will give you an option to get access to the #MFSMAP so you can improve or use it.</p>
+
+        <h2>Breaking Down the Model</h2>
+        <p>Note that this reference model wants to show a comprehensive picture with all important components involved when MFS is used to automate the movement of stock (Handling Units). Even in this context, telegram types exist which are not related to HU movements - like status or life telegrams - and do not require any objects to be moved. Subsequently, they also do not involve all of the components shown here.</p>
+        
+        <p>Although its name is ‘Material Flow’ System, it is also possible to use the MFS layer solely as a base for communication of data which is not directly related to HU movements at all. For example, the integration of subsystems like Paternoster Racks, Pick-by-Light Systems, or any other external system which can communicate via direct TCP/IP socket connections or RFC-based middleware interfaces.</p>
+
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_Paternoster.jpg" alt="Paternoster" width="800" loading="lazy">
+        </div>
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_KBS_PBL.jpg" alt="PBL System Integration" width="800" loading="lazy">
+        </div>
+        <p>Those systems are not in scope here as they only require a subset of the components and we are interested in the full picture which is then able to reflect the components of an automated Material Flow. So, our scope here are systems moving handling units from A to B.</p>
+
+        <h2>The Components of the Model</h2>
+        <p>The foundation is the <strong>EWM Core master data and organizational structure</strong>. This represents the logical counterpart for the physical objects like conveyors, high-bays, and so on. I will not explain them in detail as I do assume that you have a basic understanding of the EWM core. Check the EWM online help if you are missing some definitions.</p>
+
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_02.png" alt="EWM Core Layer Master Data" width="1024" loading="lazy">
+        </div>
+
+                <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_Basics_graphic_01.png" alt="EWM Core Layer Master Data" width="1024" loading="lazy">
+        </div>
+
+        <p>On top of that, we have the <strong>MFS Basic objects</strong>. This layer is built upon the EWM Core and enhances its objects with additional features. You can understand a communication point like a storage bin with special features, such as a dedicated process type which is used to putaway from here or a clarification bin which is used as a destination for HUs with errors. Similarly, you can understand an MFS resource like a normal resource but with special features like the specific way of task confirmation.</p>
+
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_03.png" alt="MFS Basic Objects and Enhancements" width="1024" loading="lazy">
+        </div>
+
+                        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_Basics_graphic_02.png" alt="EWM Core Layer Master Data" width="1024" loading="lazy">
+        </div>
+
+        <p>Then there are the <strong>Handling Units</strong>. </p>
+                                    <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_Basics_graphic_03.png" alt="EWM Core Layer Master Data" width="1024" loading="lazy">
+        </div>
+
+            
+           <p> The HUs are shown here, but they could also be shown anywhere on the layout as everything is somewhat related to them. The HUs are our MVPs, representing the objects which are being moved by the automation equipment. They are the reason why we need everything else. It is best practice, highly recommended, and at many places technically required to work with HU and HU WTs when you implement EWM MFS. There are tricks to bypass this requirement, but I will not address this here. If you have technical questions about how to do that, you might want to reach out to technical experts like <a href="https://www.linkedin.com/in/mehmethangur/" target="_blank" rel="noopener noreferrer">Mehmethan</a> or <a href="https://www.linkedin.com/in/taraba/" target="_blank" rel="noopener noreferrer">Helios</a>.</p>
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_04.png" alt="Handling Units as MVPs in MFS" width="1024" loading="lazy">
+        </div>
+
+        <h2>Warehouse Tasks & Routing Logic</h2>
+        
+                        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_Basics_graphic_04.png" alt="EWM Core Layer Master Data" width="1024" loading="lazy">
+        </div>
+        <p>Warehouse tasks and orders are required in EWM to post Handling Units from one bin to another bin. This is not different with MFS. However, there is a big difference related to the usage of warehouse tasks between the two possible approaches for the routing. The routing logic determines intermediate destinations of the HU on its way to the final destination.</p>
+        
+        <p>With the <strong>LOSC-based approach</strong>, we always create a warehouse task in EWM first (determining the destination based on the LOSC customizing and the final destination of the HU) and then create the telegram based upon the task. No telegram without a warehouse task. That also means when the subsystem sends a task confirmation telegram to EWM, we always have to wait for the HU lock, the technical task confirmation, and the technical task creation before a follow-up telegram with the next destination can be sent. That takes time, though it's usually no problem in a pallet automation environment.</p>
+        
+        <p>With the <strong>Case conveyor routing approach</strong>, the telegram creation is 100% decoupled from the task creation. Once we've received a telegram for a task confirmation, we can create the telegram for the follow-up destination right away and do the movement posting of the HU afterwards. In this context we determine the destination based on the CC routing table, considering entries in the MFSHUMOVE table or open warehouse tasks. This roundtrip is much faster and allows quick responses in fast-moving environments.</p>
+        
+        <p>Theoretically, it would even be possible to work without any movement posting for intermediate steps and only confirm the overarching task once the HU has reached its destination. While this saves processing time, it is common best practice to post intermediate steps for transparency. This can be done 'after the fact' (ATF), independent and decoupled from the telegram processing.</p>
+        
+        <p>From an EWM perspective, the difference can also be described with a <strong>PULL vs. PUSH</strong> approach. With case conveyor routing (PULL), the subsystem actively asks for a destination, and only then EWM sends the telegram and updates the location. With LOSC (PUSH), the subsystem does not do anything as long as EWM does not create a task.</p>
+        
+        <p>For my map I decided not to work with the wording that SAP gives use here. "LOSC" and "Case Conveyor" both consider the 'layout' of the material flow system and both could be used for either cases or pallets. So my suggestion for a more meaningful wording would be 'WT-dependent' routing and 'WT-independent routing'. To credit the wording used in the SAP documents and to simplify the conversion, I call it 'WT-dependent routing based on the case conveyor logic' and 'WT-independent routing based on the LOSC' from here onwards.</p>
+        
+
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_05.png" alt="Warehouse Task and Routing Logic Comparison" width="1024" loading="lazy">
+        </div>
+        <p>There are many other things to explain about these approaches, such as when to use both within one MFS, but I will save those details for a separate post and concentrate on what I want you to learn from this post (which is rather the big picture).</p>
+
+        <h2>Communication, Middleware, and Hardware</h2>
+        <p>Next are the <strong>MFS Communication objects</strong>. The Master Data and Customizing for the PLC and communication channel hold the details about the telegram structure - formatting of header data, start/stop characters, handshake mechanisms, connection details like IP and port and many other things.</p>
+
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_06.png" alt="MFS Communication and Logical PLC" width="1024" loading="lazy">
+        </div>
+
+        <p>Then we have the <strong>Middleware</strong> as an optional component. You can implement another layer here if you cannot implement a direct TCP/IP connection (e.g., using SAP Plant Connectivity via RFC). You might see this in older projects from a time where EWM wasn't able to talk to the PLC directly via ABAP Push Channel Technology.</p>
+
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_07.png" alt="Optional Middleware Layer" width="1024" loading="lazy">
+        </div>
+
+        <p>The <strong>PLC layer</strong> is where the controls software runs and where the physical hardware is connected to. It maintains a direct, bidirectional connection to the field level - actuators and sensors - to exchange signals via industrial networks.</p>
+        
+                                <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_Basics_graphic_05.png" alt="EWM Core Layer Master Data" width="1024" loading="lazy">
+        </div>
+
+        <p>Finally, the <strong>Hardware layer</strong> encompasses the physical automation: sensors, motors, valves, scanners, and RFID. While these were mirrored as logical objects in our first layer, this is where the actual physical movement and data acquisition occur.</p>
+
+        <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_08.png" alt="PLC and Physical Hardware Layers" width="1024" loading="lazy">
+        </div>
+
+
+
+        <h2>Open-sourcing the #MFSMAP</h2>
+        <p>What we've built here is a tool for communication. For consultants and developers starting with MFS, it acts as a smooth entry point. For experienced pros, it is a great tool for communicating with non-EWM experts, like key-users or business teams, during design workshops or trainings.</p>
+        
+                <div class="screenshot-container">
+            <img src="../../assets/images/mfs/mfs-map/SAP_EWM_MFS_MAP_01.png" alt="PLC and Physical Hardware Layers" width="1024" loading="lazy">
+        </div>
+
+        <p>As you know it from my blog & youtube channel, I don't just want you to consume this - I want you to use it. It should become a living tool and community project. With this <a href="../../assets/files/WMexperts SAP EWM MFS MAP.drawio" target="_blank" rel="noopener noreferrer">DRAW.io File</a> or this link <a href="../../assets/files/WMexperts SAP EWM MFS MAP.drawio.pdf" target="_blank" rel="noopener noreferrer">PDF File</a>, you can download the file. Challenge it, improve it, and use it in your projects. All I am asking for is that you tell me where you think it should be changed. Put your proposals in the comments of the youtube video or post them on <a href="https://www.linkedin.com/in/hendrik-schulte-bahrenberg-9a415339/" target="_blank" rel="noopener noreferrer">LinkedIn</a> with the hashtag <strong>#MFSMAP</strong>. I will collect the best ideas and make an updated version – promoting your ideas - by the end of the year.</p>
+        
+        <p>Huge thanks to Max for the groundwork and inspiration. I hope you found this helpful and I hope to find you here on my blog again when I am releasing new posts in the future!</p>
+    </div>
+
+    <div class="stay-updated">
+        <div class="stay-updated-card">
+            <div>
+                <h3>📧 Newsletter</h3>
+                <p>Get updates about new blog posts directly in your inbox.</p>
+            </div>
+            <form action="https://online.us17.list-manage.com/subscribe/post?u=3dbafeb5441a290b4bfdeeb38&id=226759b4e6&f_id=00e24be0f0" method="post" class="newsletter-form" target="_blank" rel="noopener noreferrer">
+                <input type="email" name="EMAIL" placeholder="Your email" required>
+                <input type="text" name="FNAME" placeholder="First name">
+                <input type="text" name="LNAME" placeholder="Last name">
+                <input type="text" name="b_3dbafeb5441a290b4bfdeeb38_226759b4e6" style="display: none;" tabindex="-1">
+                <button type="submit" class="btn-subscribe">Subscribe</button>
+            </form>
+        </div>
+
+        <div class="stay-updated-card">
+            <div>
+                <h3>▶️ YouTube Channel</h3>
+                <p>Subscribe to my channel for regular tutorials & insights about SAP EWM.</p>
+            </div>
+            <a href="https://www.youtube.com/@sapewm?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn-youtube">Subscribe on YouTube</a>
+        </div>
+    </div>
+</article>
+
+    <footer id="main-footer"></footer>
+
+    <div id="lightbox">
+        <button id="lightbox-close">&times;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Enlarged image">
+            <button id="lightbox-prev">&lt;</button>
+            <button id="lightbox-next">&gt;</button>
+            <div id="lightbox-counter" class="lightbox-counter"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+            let images = [];
+            let currentImageIndex = 0;
+
+            function openLightbox(event) {
+                event.preventDefault();
+                images = Array.from(document.querySelectorAll('.screenshot-container img'));
+                currentImageIndex = images.indexOf(event.target);
+                if (currentImageIndex !== -1) {
+                    lightboxImg.src = images[currentImageIndex].src;
+                    lightboxImg.alt = images[currentImageIndex].alt;
+                    lightbox.classList.add('active');
+                    updateCounter();
+                }
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                lightboxImg.src = images[currentImageIndex].src;
+                lightboxImg.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            function updateCounter() {
+                if (images.length > 1) {
+                    lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+                    lightboxCounter.style.display = 'block';
+                } else {
+                    lightboxCounter.style.display = 'none';
+                }
+            }
+
+            lightboxClose.addEventListener('click', function(e) { e.stopPropagation(); closeLightbox(); });
+            lightboxPrev.addEventListener('click', function(e) { e.stopPropagation(); showPrevImage(); });
+            lightboxNext.addEventListener('click', function(e) { e.stopPropagation(); showNextImage(); });
+            lightbox.addEventListener('click', closeLightbox);
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowLeft') showPrevImage();
+                else if (e.key === 'ArrowRight') showNextImage();
+            });
+
+            document.querySelectorAll('.screenshot-container img').forEach(img => {
+                img.addEventListener('click', openLightbox);
+                img.style.cursor = 'pointer';
+            });
+        })();
+    </script>
+
+    <script>
+        fetch('/header-content.html').then(res => res.text()).then(html => document.getElementById('main-header').innerHTML = html);
+        fetch('/footer-content.html').then(res => res.text()).then(html => document.getElementById('main-footer').innerHTML = html);
+    </script>
+
+</body>
+</html>
