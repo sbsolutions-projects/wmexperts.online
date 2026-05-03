@@ -190,7 +190,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            color: var(--sap-blue);
             flex-shrink: 0;
         }
 
@@ -357,11 +357,73 @@
                 gap: 1rem;
             }
         }
+
+        .card-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .card-meta svg {
+            color: var(--sap-blue);
+            flex-shrink: 0;
+        }
     </style>
     <link rel="canonical" href="https://wmexperts.online/index.html">
     </head>
 <body>
 
+
+    <!-- SVG icon definitions -->
+    <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Graduation cap: Understand -->
+        <symbol id="icon-understand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </symbol>
+        <!-- File/document: Around -->
+        <symbol id="icon-around" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+        </symbol>
+        <!-- Briefcase: Working -->
+        <symbol id="icon-work" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+        </symbol>
+        <!-- Wrench: Enhance -->
+        <symbol id="icon-enhance" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </symbol>
+        <!-- Magnifying glass: Reveal -->
+        <symbol id="icon-reveal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </symbol>
+        <!-- Roller conveyor with tote: MFS -->
+        <symbol id="icon-mfs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="10" rx="1"/>
+            <line x1="1" y1="16" x2="23" y2="16"/>
+            <line x1="1" y1="22" x2="23" y2="22"/>
+            <line x1="5" y1="16" x2="5" y2="22"/>
+            <line x1="10" y1="16" x2="10" y2="22"/>
+            <line x1="15" y1="16" x2="15" y2="22"/>
+            <line x1="20" y1="16" x2="20" y2="22"/>
+        </symbol>
+        <!-- Star: Featured -->
+        <symbol id="icon-featured" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </symbol>
+        <!-- Calendar: article date -->
+        <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+        </symbol>
+    </svg>
     <header id="main-header"></header>
 
     <main>
@@ -381,86 +443,79 @@
                                                                                     <div class="grid" id="posts-grid">
                 <a href="blog-posts/mfs/mfs-map.html" class="card featured" data-date="2026-03-21">
                     <div class="card-header">
-                        <div class="icon">🏗️</div>
-                        <span class="tag">📌 Featured</span>
+                        <div class="icon"><svg width="22" height="22"><use href="#icon-mfs"/></svg></div>
+                        <span class="tag"><svg width="11" height="11" style="vertical-align:-1px"><use href="#icon-featured"/></svg> Featured</span>
                     </div>
                     <h3>Understand the EWM MFS Basics - The MFS Map - A community project</h3>
                     <p>Introducing the MFS MAP: A Reference Model connecting the 3 main layers of automated warehouses into one clear picture.</p>
                     <div class="card-meta">
-                        <span>🕒 16 min read</span>
-                        <span>📅 Mar 2026</span>
+                        <span><svg width="13" height="13"><use href="#icon-calendar"/></svg> Mar 2026</span>
                     </div>
                 </a>
                 <a href="blog-posts/around/around-AI-response.html" class="card" data-date="2026-03-11">
                     <div class="card-header">
-                        <div class="icon">📊</div>
+                        <div class="icon"><svg width="22" height="22"><use href="#icon-around"/></svg></div>
                         <span class="tag">Around SAP EWM</span>
                     </div>
                     <h3>Will AI Really Kill SAP Functional Consulting? (Why Noel D’Costa is Only Half Right)</h3>
                     <p>Exploring the future of SAP EWM consulting in the age of AI. Why deep domain knowledge remains the key to effective automation.</p>
                     <div class="card-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Mar 2026</span>
+                        <span><svg width="13" height="13"><use href="#icon-calendar"/></svg> Mar 2026</span>
                     </div>
                 </a>
                 <a href="blog-posts/around/around-4-step.html" class="card" data-date="2025-12-22">
                     <div class="card-header">
-                        <div class="icon">📊</div>
+                        <div class="icon"><svg width="22" height="22"><use href="#icon-around"/></svg></div>
                         <span class="tag">Around SAP EWM</span>
                     </div>
                     <h3>How to Learn SAP EWM with Best Practices – My 4-step Method</h3>
                     <p>In-depth article about SAP EWM. Learn technical and functional details about SAP EWM Best Practices.</p>
                     <div class="card-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Dec 2025</span>
+                        <span><svg width="13" height="13"><use href="#icon-calendar"/></svg> Dec 2025</span>
                     </div>
                 </a>
                 <a href="blog-posts/around/around-what-how.html" class="card" data-date="2025-12-06">
                     <div class="card-header">
-                        <div class="icon">📊</div>
+                        <div class="icon"><svg width="22" height="22"><use href="#icon-around"/></svg></div>
                         <span class="tag">Around SAP EWM</span>
                     </div>
                     <h3>SAP EWM Best Practices Explained – What & How</h3>
                     <p>In-depth article about SAP EWM best practices. Learn technical and functional details about the what and how of implementing SAP EWM best practices.</p>
                     <div class="card-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Dec 2025</span>
+                        <span><svg width="13" height="13"><use href="#icon-calendar"/></svg> Dec 2025</span>
                     </div>
                 </a>
                 <a href="blog-posts/work/good-consultant-part-2.html" class="card" data-date="2025-05-31">
                     <div class="card-header">
-                        <div class="icon">💼</div>
+                        <div class="icon"><svg width="22" height="22"><use href="#icon-work"/></svg></div>
                         <span class="tag">Working as a SAP EWM Consultant</span>
                     </div>
                     <h3>How to become a good SAP EWM Consultant – Part #2</h3>
                     <p>Part 2 of my personal top list of skills which are required to become a good & successful EWM consultant - focusing on soft skills.</p>
                     <div class="card-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 May 2025</span>
+                        <span><svg width="13" height="13"><use href="#icon-calendar"/></svg> May 2025</span>
                     </div>
                 </a>
                 <a href="blog-posts/work/good-consultant-part-1.html" class="card" data-date="2025-05-17">
                     <div class="card-header">
-                        <div class="icon">💼</div>
+                        <div class="icon"><svg width="22" height="22"><use href="#icon-work"/></svg></div>
                         <span class="tag">Working as a SAP EWM Consultant</span>
                     </div>
                     <h3>How to become a good SAP EWM Consultant – Part #1</h3>
                     <p>With this post I give you my personal top list of skills which are required to become a good & successful EWM consultant.</p>
                     <div class="card-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 May 2025</span>
+                        <span><svg width="13" height="13"><use href="#icon-calendar"/></svg> May 2025</span>
                     </div>
                 </a>
                 <a href="blog-posts/reveal/reveal-wo-sorting-queues.html" class="card" data-date="2025-03-22">
                     <div class="card-header">
-                        <div class="icon">🔍</div>
+                        <div class="icon"><svg width="22" height="22"><use href="#icon-reveal"/></svg></div>
                         <span class="tag">Reveal SAP EWM</span>
                     </div>
                     <h3>Reveal SAP EWM - Warehouse Order sorting in Queues</h3>
                     <p>In-depth article about SAP EWM. Learn technical and functional details about Warehouse Order sorting in Queues.</p>
                     <div class="card-meta">
-                        <span>🕒 10 min read</span>
-                        <span>📅 Mar 2025</span>
+                        <span><svg width="13" height="13"><use href="#icon-calendar"/></svg> Mar 2025</span>
                     </div>
                 </a>
             </div>
