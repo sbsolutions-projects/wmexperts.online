@@ -62,13 +62,14 @@
         <a href="/index.html#latest">Latest</a>
         <a href="/blog-overview.html">All Articles</a>
         <a href="/about.html">About</a>
-        <a href="/privacy.html">Privacy</a>
+        <a href="/privacy.html">Privacy Policy</a>
     </nav>
 </div>
 
 <div class="footer-bottom">
     <span>&copy; 2026 WMexperts.online</span>
     <span class="footer-tagline">Functional &amp; Technical SAP EWM Expertise</span>
+    <a href="/privacy.html" style="font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='var(--sap-blue)'" onmouseout="this.style.color='var(--text-muted)'">Privacy Policy</a>
 </div>
 
 <!-- Cookie Banner -->
@@ -107,12 +108,13 @@
         document.getElementById('cookie-banner').style.display = 'none';
     }
 
-    window.onload = function() {
+    // Run immediately — fetch resolves after page load so DOM is ready
+    (function initCookieBanner() {
         const consent = localStorage.getItem('cookie-consent');
         if (!consent) {
             document.getElementById('cookie-banner').style.display = 'flex';
         } else if (consent === 'accepted') {
             loadGA();
         }
-    };
+    })();
 </script>

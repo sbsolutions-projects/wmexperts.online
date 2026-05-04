@@ -1,8 +1,5 @@
 /* --- MASTER STYLESHEET: WMexperts.online --- */
 
-/* 0. FONTS */
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600;700&display=swap');
-
 /* 1. VARIABLES & GLOBALS */
 :root {
     --sap-blue: #005597;
@@ -14,19 +11,18 @@
     --text-muted: #6B7280;
     --border: #E5E7EB;
     --accent: #EEF6FC;
-    --font-display: 'DM Serif Display', Georgia, serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-page);
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg-page); 
     background: linear-gradient(180deg,
         rgba(0, 85, 151, 0.08) 0%,
         rgba(0, 85, 151, 0.04) 25%,
         transparent 60%);
-    color: var(--text-muted);
-    line-height: 1.6;
+    color: var(--text-muted); 
+    line-height: 1.6; 
 }
 main { background-color: #ffffff; }
 
@@ -50,71 +46,9 @@ nav a:hover, nav a.active { color: var(--sap-blue); }
 
 /* 3. ARTICLE STRUCTURE & TYPOGRAPHY */
 article { max-width: 800px; margin: 4rem auto; padding: 0 20px; }
-
-.breadcrumb {
-    display: inline-block;
-    font-size: 0.7rem;
-    color: var(--sap-blue);
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    margin-bottom: 1.25rem;
-    background: var(--accent);
-    padding: 5px 14px;
-    border-radius: 30px;
-    border: 1px solid rgba(0, 85, 151, 0.12);
-}
-
-h1 {
-    font-family: var(--font-display);
-    font-size: 2.9rem;
-    color: var(--text-dark);
-    line-height: 1.15;
-    margin-bottom: 1rem;
-    letter-spacing: -0.5px;
-    font-weight: 400;
-}
-
-/* Author + date row below article h1 */
-.article-byline {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.article-byline .author-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--sap-blue);
-    font-weight: 700;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    border: 1px solid rgba(0, 85, 151, 0.12);
-}
-
-.article-byline strong { color: var(--text-dark); font-weight: 600; }
-
-.content h2 {
-    font-family: var(--font-display);
-    color: var(--text-dark);
-    margin-top: 2.5rem;
-    font-size: 1.75rem;
-    font-weight: 400;
-    line-height: 1.25;
-    padding-left: 1rem;
-    border-left: 3px solid var(--sap-blue);
-    margin-bottom: 1rem;
-}
+.breadcrumb { font-size: 0.75rem; color: var(--sap-blue); text-transform: uppercase; font-weight: 600; letter-spacing: 1px; margin-bottom: 1rem; }
+h1 { font-size: 2.8rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1.5px; font-weight: 700; }
+.content h2 { color: var(--text-dark); margin-top: 2rem; font-size: 1.8rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 0.5rem; margin-bottom: 1rem; }
 .content p { margin-bottom: 1.25rem; font-size: 1.1rem; }
 .content ul { padding-left: 1.5rem; margin-bottom: 2rem; }
 .content li { margin-bottom: 0.75rem; font-size: 1.05rem; }
@@ -124,38 +58,12 @@ h1 {
 .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
 .screenshot-container { margin: 2rem 0; text-align: center; }
-.screenshot-container img {
-    max-width: 66.67%; max-height: 60vh; height: auto; display: block; margin: 0 auto;
+.screenshot-container img { 
+    max-width: 66.67%; max-height: 60vh; height: auto; display: block; margin: 0 auto; 
     border: 1px solid var(--border); border-radius: 8px; cursor: zoom-in; object-fit: contain;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
-code {
-    font-family: 'Courier New', monospace;
-    background: var(--accent);
-    color: var(--sap-blue);
-    padding: 0.2rem 0.45rem;
-    border-radius: 4px;
-    font-size: 0.88em;
-    border: 1px solid rgba(0, 85, 151, 0.12);
-}
-
-pre {
-    background: #F1F5F9;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1.5rem;
-    overflow-x: auto;
-}
-
-pre code {
-    background: none;
-    border: none;
-    padding: 0;
-    color: var(--text-dark);
-    font-size: 0.9rem;
-}
+code { font-family: 'Courier New', monospace; background: #EEF2F6; color: var(--sap-blue); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
 
 /* 5. LIGHTBOX / ZOOM UI */
 #lightbox {
@@ -167,43 +75,45 @@ pre code {
 .lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 40px; color: #fff; cursor: pointer; }
 
 /* 6. CTA & STAY UPDATED CARDS */
-.stay-updated {
-    margin-top: 3rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+.stay-updated { 
+    margin-top: 3rem; 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 2rem; 
 }
 
-.stay-updated-card {
-    background: var(--bg-light);
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+.stay-updated-card { 
+    background: var(--bg-light); 
+    padding: 1.5rem; 
+    border-radius: 12px; 
+    border: 1px solid var(--border); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; /* Ensures buttons stick to the bottom */
 }
 
 .stay-updated-card h3 {
     color: var(--text-dark);
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-weight: 600;
 }
 
 .stay-updated-card p {
     color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
     line-height: 1.6;
 }
 
 /* Newsletter Form & Input Styling */
-.newsletter-form { display: flex; flex-direction: column; gap: 0.75rem; }
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
 
 .newsletter-form input {
     padding: 12px;
@@ -220,30 +130,30 @@ pre code {
     box-shadow: 0 0 0 3px rgba(0, 85, 151, 0.1);
 }
 
-.btn-subscribe {
-    background: var(--sap-blue);
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 6px;
-    border: none;
-    font-weight: 600;
+.btn-subscribe { 
+    background: var(--sap-blue); 
+    color: #fff; 
+    padding: 12px 20px; 
+    border-radius: 6px; 
+    border: none; 
+    font-weight: 600; 
     font-size: 0.95rem;
     font-family: 'Inter', sans-serif;
-    cursor: pointer;
+    cursor: pointer; 
     transition: background 0.2s;
 }
 .btn-subscribe:hover { background: var(--sap-blue-light); }
 
-.btn-youtube {
-    display: inline-flex;
-    align-items: center;
+.btn-youtube { 
+    display: inline-flex; 
+    align-items: center; 
     justify-content: center;
-    background: #ff0000;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
+    background: #ff0000; 
+    color: #fff; 
+    padding: 12px 20px; 
+    border-radius: 6px; 
+    text-decoration: none; 
+    font-weight: 600; 
     font-size: 0.95rem;
     font-family: 'Inter', sans-serif;
     transition: background 0.2s;

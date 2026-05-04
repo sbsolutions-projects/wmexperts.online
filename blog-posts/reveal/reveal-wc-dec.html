@@ -356,8 +356,20 @@
 
     <script>
     // Load global components
-    fetch('/header-content.html').then(res => res.text()).then(html => document.getElementById('main-header').innerHTML = html);
-    fetch('/footer-content.html').then(res => res.text()).then(html => document.getElementById('main-footer').innerHTML = html);
+    function loadComponent(id, url) {
+        fetch(url).then(r => r.text()).then(html => {
+            const el = document.getElementById(id);
+            el.innerHTML = html;
+            el.querySelectorAll('script').forEach(oldScript => {
+                const newScript = document.createElement('script');
+                [...oldScript.attributes].forEach(a => newScript.setAttribute(a.name, a.value));
+                newScript.textContent = oldScript.textContent;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+        });
+    }
+    loadComponent('main-header', '/header-content.html');
+    loadComponent('main-footer', '/footer-content.html');
     </script>
 
 </body>

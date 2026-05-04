@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBB3944TFW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KBB3944TFW');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Privacy Policy for WMexperts.online">
+    <meta name="robots" content="noindex, follow">
+    <link rel="icon" type="image/png" href="assets/favicon/wmexperts%20favicon.png">
+    <title>Privacy Policy | WMexperts.online</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="canonical" href="https://wmexperts.online/privacy.html">
+</head>
+<body>
+
+    <header id="main-header"></header>
+
+    <article>
+        <div class="breadcrumb">Legal</div>
+        <h1>Privacy Policy</h1>
+
+        <div class="article-byline">
+            <div class="author-avatar">H</div>
+            <span><strong>WMexperts.online</strong> · Last updated: May 2026</span>
+        </div>
+
+        <div class="content">
+
+            <h2>1. Who is responsible</h2>
+            <p>This website is operated by Hendrik Schulte-Bahrenberg, a SAP EWM consultant based in Germany. If you have any questions about how your data is handled, you can reach out via <a href="https://www.linkedin.com/in/hendrik-schulte-bahrenberg-9a415339/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+
+            <h2>2. What data is collected and why</h2>
+            <p>This website collects data in two ways:</p>
+            <ul>
+                <li><strong>Google Analytics (GA4)</strong> — only if you accept cookies. GA4 collects anonymized usage data such as pages visited, time on page, and approximate geographic region. This data is used solely to understand which content is useful to readers. No personal profiles are built and no data is sold to third parties.</li>
+                <li><strong>Newsletter (Mailchimp)</strong> — if you choose to subscribe, your email address and optionally your name are stored by Mailchimp (an Intuit company) to send you updates about new articles. You can unsubscribe at any time via the link in any newsletter email.</li>
+            </ul>
+
+            <h2>3. Cookies</h2>
+            <p>This website uses a single cookie consent mechanism. If you decline cookies, no tracking cookies are set and Google Analytics is not loaded. Your choice is saved in your browser's <code>localStorage</code> so you are not asked again on future visits.</p>
+            <p>If you accepted cookies and want to withdraw consent, you can clear your browser's local storage for this site at any time.</p>
+
+            <h2>4. Google Analytics</h2>
+            <p>If you accept cookies, this site uses Google Analytics 4 (GA4), a service provided by Google LLC. Data is transmitted to Google servers, which may be located in the United States. Google processes this data according to their own <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>. IP anonymization is enabled.</p>
+
+            <h2>5. Newsletter / Mailchimp</h2>
+            <p>The newsletter subscription form is processed by Mailchimp (The Rocket Science Group LLC d/b/a Mailchimp, a subsidiary of Intuit Inc.). By subscribing you agree to your email address being stored and processed by Mailchimp for the purpose of sending you newsletter emails. You can unsubscribe at any time. Mailchimp's <a href="https://mailchimp.com/legal/privacy/" target="_blank" rel="noopener">Privacy Policy</a> applies to this data.</p>
+
+            <h2>6. YouTube embeds</h2>
+            <p>Some pages embed YouTube videos using the privacy-enhanced mode (<code>youtube-nocookie.com</code>). YouTube may still set cookies when you interact with a video. Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> applies.</p>
+
+            <h2>7. Your rights (GDPR)</h2>
+            <p>If you are located in the European Union, you have the right to access, correct, or delete any personal data held about you, as well as the right to object to processing or request its restriction. To exercise these rights, please contact me via LinkedIn. You also have the right to lodge a complaint with your national data protection authority.</p>
+
+            <h2>8. Changes to this policy</h2>
+            <p>This privacy policy may be updated from time to time. The date at the top of this page reflects the most recent revision. Continued use of the site after changes are published constitutes acceptance of the updated policy.</p>
+
+        </div>
+    </article>
+
+    <footer id="main-footer"></footer>
+
+    <script>
+    function loadComponent(id, url) {
+        fetch(url).then(r => r.text()).then(html => {
+            const el = document.getElementById(id);
+            el.innerHTML = html;
+            // Re-execute any scripts in the injected HTML
+            el.querySelectorAll('script').forEach(oldScript => {
+                const newScript = document.createElement('script');
+                [...oldScript.attributes].forEach(a => newScript.setAttribute(a.name, a.value));
+                newScript.textContent = oldScript.textContent;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+        });
+    }
+    loadComponent('main-header', '/header-content.html');
+    loadComponent('main-footer', '/footer-content.html');
+    </script>
+
+</body>
+</html>

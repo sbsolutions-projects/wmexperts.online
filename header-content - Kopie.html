@@ -3,12 +3,60 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-KBB3944TFW'); 
+  gtag('config', 'G-KBB3944TFW');
 </script>
 
-    <div class="inside-header grid-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-    <a href="/index.html" class="logo">WM<span style="color: var(--text-dark);">experts.online</span></a>
+<style>
+    .inside-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .inside-header .logo {
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: var(--sap-blue);
+        text-decoration: none;
+        letter-spacing: -0.3px;
+    }
+
+    .inside-header .logo span {
+        color: var(--text-dark);
+    }
+
+    .inside-header nav {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .inside-header nav a {
+        margin-left: 0;
+        padding: 6px 14px;
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 6px;
+        transition: background 0.15s, color 0.15s;
+    }
+
+    .inside-header nav a:hover,
+    .inside-header nav a.active {
+        color: var(--sap-blue);
+        background: var(--accent);
+    }
+
+    @media (max-width: 500px) {
+        .inside-header { flex-direction: column; gap: 0.5rem; padding: 0.25rem 0; }
+        .inside-header nav a { font-size: 0.82rem; padding: 5px 10px; }
+    }
+</style>
+
+<div class="inside-header">
+    <a href="/index.html" class="logo">WM<span>experts.online</span></a>
     <nav>
         <a href="/index.html#latest">Latest</a>
         <a href="/blog-overview.html">All Articles</a>
