@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Legal notice / imprint for WMexperts.online">
+    <meta name="robots" content="noindex, follow">
+    <link rel="icon" type="image/png" href="assets/favicon/wmexperts%20favicon.png">
+    <title>Imprint | WMexperts.online</title>
+    <link rel="stylesheet" href="/assets/fonts/inter.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="canonical" href="https://wmexperts.online/imprint.html">
+</head>
+<body>
+
+    <header id="main-header"></header>
+
+    <article>
+        <div class="breadcrumb">Legal</div>
+        <h1>Imprint</h1>
+
+        <div class="article-byline">
+            <div class="author-avatar">H</div>
+            <span><strong>WMexperts.online</strong> &middot; Information pursuant to Section 5 DDG</span>
+        </div>
+
+        <div class="content">
+            <h2>Service provider</h2>
+            <p>Hendrik Schulte-Bahrenberg<br>
+            SAP EWM Consultant<br>
+            Sundernholz 29<br>
+            45134 Essen<br>
+            Germany</p>
+
+            <h2>Contact</h2>
+            <p>Phone: +49 (0) 15158036308<br>
+            Email: <a href="mailto:contact@wmexperts.consulting">contact@wmexperts.consulting</a></p>
+
+            <h2>VAT identification number</h2>
+            <p>VAT identification number according to Section 27a of the German VAT Act (UStG):<br>
+            DE313643259</p>
+
+            <h2>Responsible for content</h2>
+            <p>Responsible for content pursuant to Section 18(2) of the German Interstate Media Treaty (MStV):<br>
+            Hendrik Schulte-Bahrenberg<br>
+            Sundernholz 29<br>
+            45134 Essen<br>
+            Germany</p>
+
+            <h2>Consumer dispute resolution / universal arbitration board</h2>
+            <p>I am not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board.</p>
+
+            <h2>Liability for content</h2>
+            <p>The content of this website has been created with the greatest possible care. However, I cannot guarantee the accuracy, completeness, or timeliness of the content. As a service provider, I am responsible for my own content on these pages under general law. Obligations to remove or block the use of information under general law remain unaffected.</p>
+
+            <h2>Liability for links</h2>
+            <p>This website contains links to external websites of third parties whose content I have no influence over. I cannot accept liability for this third-party content. The respective provider or operator of the linked pages is always responsible for the content of those pages.</p>
+
+            <h2>Copyright</h2>
+            <p>The content and works on this website created by the site operator are subject to German copyright law. Duplication, processing, distribution, or any form of commercialisation of such material beyond the scope of copyright law requires the written consent of its respective author or creator.</p>
+        </div>
+    </article>
+
+    <footer id="main-footer"></footer>
+
+    <script>
+    function loadComponent(id, url) {
+        fetch(url).then(r => r.text()).then(html => {
+            const el = document.getElementById(id);
+            el.innerHTML = html;
+            el.querySelectorAll('script').forEach(oldScript => {
+                const newScript = document.createElement('script');
+                [...oldScript.attributes].forEach(a => newScript.setAttribute(a.name, a.value));
+                newScript.textContent = oldScript.textContent;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+        });
+    }
+    loadComponent('main-header', '/header-content.html');
+    loadComponent('main-footer', '/footer-content.html');
+    </script>
+
+</body>
+</html>
